@@ -14,6 +14,7 @@
     "jslint": "npx eslint .",
     "csslint": "npx stylelint stylesheets/",
     "htmllint": "npx htmlhint",
+    "lint": "npm run jslint; npm run csslint; npm run htmllint",
     "docs": "./node_modules/.bin/jsdoc ./scripts -r -d docs"
   },
   "type": "module",
