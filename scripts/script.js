@@ -12,8 +12,6 @@ function addNumbers() {
 function init() {
     const addButton = document.getElementById("add-button");
 
-    let bad_variable_name = 1234;
-
     addButton.addEventListener("click", () => {
         addNumbers();
     })
