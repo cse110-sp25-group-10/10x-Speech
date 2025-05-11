@@ -42,26 +42,26 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
   
-  generate-docs:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with: 
-          node-version: 18
-      - name: Install Dependencies
-        run: npm install
-      - name: Generate JSDocs
-        run: ./node_modules/.bin/jsdoc ./scripts -r -d docs
-      - name: Commit and push docs
-        env: 
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${PERSONAL_ACCESS_TOKEN}@github.com/cse110-sp25-group-10/Flashcard-Project.git
-          git add docs -f
-          git commit -m "Auto-generate JSDocs" || echo "No changes to commit"
-          git push origin main --force
+  # generate-docs:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v4
+  #       with: 
+  #         node-version: 18
+  #     - name: Install Dependencies
+  #       run: npm install
+  #     - name: Generate JSDocs
+  #       run: ./node_modules/.bin/jsdoc ./scripts -r -d docs
+  #     - name: Commit and push docs
+  #       env: 
+  #         GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  #       run: |
+  #         git config --global user.name "github-actions[bot]"
+  #         git config --global user.email "github-actions[bot]@users.noreply.github.com"
+  #         git remote set-url origin https://x-access-token:${PERSONAL_ACCESS_TOKEN}@github.com/cse110-sp25-group-10/Flashcard-Project.git
+  #         git add docs -f
+  #         git commit -m "Auto-generate JSDocs" || echo "No changes to commit"
+  #         git push origin main --force
