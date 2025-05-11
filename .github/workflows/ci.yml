@@ -1,0 +1,38 @@
+name: CI/CD
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs: # the things being executed
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install Dependencies
+        run: npm install
+      - name: Unit Test
+        run: npm test
+
+  lint: 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install Dependencies
+        run: npm install
+      - name: JS Lint
+        run: npm run jslint
+      - name: CSS Lint
+        run: npm run csslint
+      - name: HTML Lint
+        run: npm run htmllint
