@@ -64,4 +64,4 @@ jobs:
           git remote set-url origin https://x-access-token:${PERSONAL_ACCESS_TOKEN}@github.com/cse110-sp25-group-10/Flashcard-Project.git
           git add docs -f
           git commit -m "Auto-generate JSDocs" || echo "No changes to commit"
-          git push origin main
+          git push origin main --force
