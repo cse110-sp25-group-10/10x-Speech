@@ -69,6 +69,13 @@
     transition: transform, 150ms
 }
 
+#hover-demo-C:hover {
+    transform:
+        perspective(1000px)
+        rotateY(10deg)
+        rotateX(10deg);
+}
+
 
 
 
@@ -90,6 +97,6 @@ body {
     margin-top: 2.5rem;
 }
 
-#hover-demo-A, #hover-demo-B {
+#hover-demo-A, #hover-demo-B, #hover-demo-C {
     margin-top: 2.5rem;
 }
