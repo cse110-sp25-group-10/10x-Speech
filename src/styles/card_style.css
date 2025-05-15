@@ -1,20 +1,39 @@
+:root {
+    /** Sizing Variables */
+    --card-width: 45rem;                /* Note: Width = 2*height */
+    --card-height: 22.5rem;
+    --card-border-width: 0.5rem;
+    --card-border-radius: 0.5rem;
+
+    /** Color Variables */
+    --card-background-color:  rgb(230, 235, 242);
+    --card-border-color: rgb(159, 192, 245);
+
+    /** Other Variables */
+    --card-border-style: solid;
+
+    /** Text variables */
+    --card-font: 'Inter';
+    --card-text-size: 3rem;
+}
+
 .card {
     /* card background color */
     background-color: rgb(230, 235, 242);
     
     /* card border styling */
-    border-style: solid;
-    border-radius: 0.1em;
-    border-color: rgb(159, 192, 245);
-    border-width: 0.1em;
+    border-style: var(--card-border-style);
+    border-radius: var(--card-border-radius);
+    border-color: var(--card-border-color);
+    border-width: var(--card-border-width);
 
     /* card font */
-    font-family: 'Inter';
-    font-size: 5em;
+    font-family: var(--card-font);
+    font-size: var(--card-text-size);
 
     /* card size/shape */
-    width: 9em;
-    height: 4.5em;
+    width: var(--card-width);
+    height: var(--card-height);
 
     /* text alignment */
     display: flex;
@@ -23,6 +42,7 @@
 
 .card p {
     margin: auto;
+    padding: auto;
 }
 
 #back-card {
