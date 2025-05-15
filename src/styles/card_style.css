@@ -7,20 +7,21 @@
     --card-content-horizontal-padding: 1rem;
 
     /** Color Variables */
-    --card-background-color:  rgb(230, 235, 242);
-    --card-border-color: rgb(159, 192, 245);
+    --card-background-color:  rgb(241, 236, 254);
+    --card-border-color: rgb(176, 202, 227);
 
     /** Other Variables */
     --card-border-style: solid;
 
     /** Text variables */
-    --card-font: 'Inter';
+    --card-font: 'Rubik';
+    --card-font-serif: sans-serif;
     --card-text-size: 3rem;
 }
 
 .card {
     /* card background color */
-    background-color: rgb(230, 235, 242);
+    background-color: var(--card-background-color);
     
     /* card border styling */
     border-style: var(--card-border-style);
@@ -29,7 +30,7 @@
     border-width: var(--card-border-width);
 
     /* card font */
-    font-family: var(--card-font);
+    font-family: var(--card-font), var(--card-font-serif);
     font-size: var(--card-text-size);
 
     /* card size/shape */
@@ -39,6 +40,8 @@
     /* text alignment */
     display: flex;
     text-align: left; 
+
+    cursor: pointer;
 }
 
 .card-content {
@@ -47,13 +50,23 @@
     padding-right: var(--card-content-horizontal-padding);
 }
 
+#hover-demo-A {
+    transition: box-shadow 150ms
+}
+
 #hover-demo-A:hover {
     box-shadow: 0rem 0rem 1rem 0.1rem var(--card-border-color);
+    transition: box-shadow 150ms
+}
+
+#hover-demo-B {
+    transition: transform, 150ms
 }
 
 #hover-demo-B:hover {
     box-shadow: 0rem 0.5rem 1rem -0.5rem black;
-    transform: translateY(-0.5rem);
+    transform: translateY(-0.75rem);
+    transition: transform, 150ms
 }
 
 
@@ -65,6 +78,7 @@ body {
     margin: auto;
     place-items: center;
     padding: 5rem;
+    background-color: rgb(19,16,45);
 }
 
 #back-card {
