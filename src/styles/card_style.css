@@ -17,12 +17,12 @@
     height: 4.5em;
 
     /* text alignment */
-    align-content: center;
+    display: flex;
     text-align: center; 
 }
 
 .card p {
-    margin-top: 0em;
+    margin: auto;
 }
 
 #back-card {
