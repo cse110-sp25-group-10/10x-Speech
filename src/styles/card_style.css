@@ -37,13 +37,12 @@
 
     /* text alignment */
     display: flex;
-    text-align: center; 
+    text-align: left; 
 }
 
-.card p {
+.card-content {
     margin: auto;
-    padding: auto;
-}
+    }
 
 #back-card {
     /* temporary margin to space from front card on top */
