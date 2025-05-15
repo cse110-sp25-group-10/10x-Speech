@@ -69,10 +69,11 @@
     transition: transform, 150ms;
 }
 
-#hover-demo-C {
+/**#hover-demo-C {
     transition: translateZ, 150ms;
-}
+}*/
 
+/**
 #hover-demo-C:hover {
     transform:
         perspective(1000px)
@@ -81,7 +82,7 @@
         rotateX(var(--rotateX));
     
     transition: translateZ, 50ms
-}
+}*/
 
 
 
