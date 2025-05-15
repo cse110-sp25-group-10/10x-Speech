@@ -4,6 +4,7 @@
     --card-height: 22.5rem;
     --card-border-width: 0.5rem;
     --card-border-radius: 0.5rem;
+    --card-content-horizontal-padding: 1rem;
 
     /** Color Variables */
     --card-background-color:  rgb(230, 235, 242);
@@ -42,11 +43,26 @@
 
 .card-content {
     margin: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    }
+    padding-left: var(--card-content-horizontal-padding);
+    padding-right: var(--card-content-horizontal-padding);
+}
+
+#hover-demo-A:hover {
+    color: red;
+}
+
+
+
 
 #back-card {
     /* temporary margin to space from front card on top */
-    margin-top: 0.5em;
+    margin-top: 2.5rem;
+}
+
+#full-card {
+    margin-top: 2.5rem;
+}
+
+#hover-demo-A {
+    margin-top: 2.5rem;
 }
