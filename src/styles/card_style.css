@@ -48,11 +48,24 @@
 }
 
 #hover-demo-A:hover {
-    color: red;
+    box-shadow: 0rem 0rem 1rem 0.1rem var(--card-border-color);
+}
+
+#hover-demo-B:hover {
+    box-shadow: 0rem 0.5rem 1rem -0.5rem black;
+    transform: translateY(-0.5rem);
 }
 
 
 
+
+/** Non-functional CSS - Demo Layout */
+
+body {
+    margin: auto;
+    place-items: center;
+    padding: 5rem;
+}
 
 #back-card {
     /* temporary margin to space from front card on top */
@@ -63,6 +76,6 @@
     margin-top: 2.5rem;
 }
 
-#hover-demo-A {
+#hover-demo-A, #hover-demo-B {
     margin-top: 2.5rem;
 }
