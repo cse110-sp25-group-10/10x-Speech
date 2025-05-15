@@ -51,29 +51,36 @@
 }
 
 #hover-demo-A {
-    transition: box-shadow 150ms
+    transition: box-shadow 150ms;
 }
 
 #hover-demo-A:hover {
-    box-shadow: 0rem 0rem 1rem 0.1rem var(--card-border-color);
-    transition: box-shadow 150ms
+    box-shadow: 0rem 0rem 1rem 0.5rem var(--card-border-color);
+    transition: box-shadow 150ms;
 }
 
 #hover-demo-B {
-    transition: transform, 150ms
+    transition: transform, 150ms;
 }
 
 #hover-demo-B:hover {
     box-shadow: 0rem 0.5rem 1rem -0.5rem black;
     transform: translateY(-0.75rem);
-    transition: transform, 150ms
+    transition: transform, 150ms;
+}
+
+#hover-demo-C {
+    transition: translateZ, 150ms;
 }
 
 #hover-demo-C:hover {
     transform:
         perspective(1000px)
-        rotateY(10deg)
-        rotateX(10deg);
+        translateZ(1em)
+        rotateY(var(--rotateY))
+        rotateX(var(--rotateX));
+    
+    transition: translateZ, 50ms
 }
 
 
