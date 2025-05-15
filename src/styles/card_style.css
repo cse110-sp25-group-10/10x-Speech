@@ -1,0 +1,31 @@
+.card {
+    /* card background color */
+    background-color: rgb(230, 235, 242);
+    
+    /* card border styling */
+    border-style: solid;
+    border-radius: 0.1em;
+    border-color: rgb(159, 192, 245);
+    border-width: 0.1em;
+
+    /* card font */
+    font-family: 'Inter';
+    font-size: 5em;
+
+    /* card size/shape */
+    width: 9em;
+    height: 4.5em;
+
+    /* text alignment */
+    align-content: center;
+    text-align: center; 
+}
+
+.card p {
+    margin-top: 0em;
+}
+
+#back-card {
+    /* temporary margin to space from front card on top */
+    margin-top: 0.5em;
+}
