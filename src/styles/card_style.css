@@ -17,6 +17,15 @@
     --card-font: 'Rubik';
     --card-font-serif: sans-serif;
     --card-text-size: 3rem;
+
+    /** Timing Variables */
+    --card-transition-timing: 150ms;
+
+    /** Transition A Variables */
+    --card-box-shadow-no-offset: 0rem;
+    --card-box-shadow-blur-radius: 1rem;
+    --card-box-shadow-scaling: 0.5rem;
+
 }
 
 .card {
@@ -41,6 +50,7 @@
     display: flex;
     text-align: left; 
 
+    /* This tells desktop users that the cards are clickable */
     cursor: pointer;
 }
 
@@ -51,39 +61,27 @@
 }
 
 #hover-demo-A {
-    transition: box-shadow 150ms;
+    transition: box-shadow var(--card-transition-timing);
 }
 
 #hover-demo-A:hover {
-    box-shadow: 0rem 0rem 1rem 0.5rem var(--card-border-color);
-    transition: box-shadow 150ms;
+    box-shadow: var(--card-box-shadow-no-offset) 
+                var(--card-box-shadow-no-offset)
+                var(--card-box-shadow-blur-radius) 
+                var(--card-box-shadow-scaling) 
+                var(--card-border-color);
+    transition: box-shadow var(--card-transition-timing);
 }
 
 #hover-demo-B {
-    transition: transform, 150ms;
+    transition: transform, var(--card-transition-timing);
 }
 
 #hover-demo-B:hover {
     box-shadow: 0rem 0.5rem 1rem -0.5rem black;
     transform: translateY(-0.75rem);
-    transition: transform, 150ms;
+    transition: transform, var(--card-transition-timing);
 }
-
-/**#hover-demo-C {
-    transition: translateZ, 150ms;
-}*/
-
-/**
-#hover-demo-C:hover {
-    transform:
-        perspective(1000px)
-        translateZ(1em)
-        rotateY(var(--rotateY))
-        rotateX(var(--rotateX));
-    
-    transition: translateZ, 50ms
-}*/
-
 
 
 
@@ -105,6 +103,6 @@ body {
     margin-top: 2.5rem;
 }
 
-#hover-demo-A, #hover-demo-B, #hover-demo-C {
+#hover-demo-A, #hover-demo-B {
     margin-top: 2.5rem;
 }
