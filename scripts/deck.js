@@ -7,7 +7,7 @@ const exampleDeck = [
 ];
 
 // Returns a card as a JS object
-function createCard(frontText, backText, time, options) {
+function createCard(frontText, backText, time) {
     // TODO: Validation
     return {
         "front-text": frontText,
@@ -35,10 +35,12 @@ function deleteCard(deck, index) {
 // Updates a card at an in index of a deck with a new card
 function updateCard(deck, index, newCard) {
     // TODO
+    console.log(deck, index, newCard);
 }
 
 function shuffleDeck(deck) {
     // TODO
+    console.log(deck);
 }
 
 function test() {
