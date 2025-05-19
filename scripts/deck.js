@@ -1,4 +1,4 @@
-const example_deck = [
+const exampleDeck = [
     {
         "front-text": "Introduction",
         "back-text": "Good morning. My name is Miranda Booker, and I’m here today to talk to you about how Target Reach Plus software is changing the way businesses manage data for their customers and products.",
@@ -41,3 +41,23 @@ function shuffleDeck(deck) {
     // TODO
 }
 
+function test() {
+    console.log(`Starting deck: ${exampleDeck}`);
+
+    const newCard = createCard("Example Topic", "Example description", 10)
+    exampleDeck.push(newCard);
+    console.log(`Adding a card: ${exampleDeck}`);
+
+    console.log(`Reading a specific card: ${readCard(exampleDeck, 1)}`);
+
+    updateCard(exampleDeck, 0, newCard);
+    console.log(`Update a card: ${exampleDeck}`);
+
+    shuffleDeck(exampleDeck);
+    console.log(`Shuffle a deck: ${exampleDeck}`);
+
+    deleteCard(exampleDeck, 0);
+    console.log(`Delete a card: ${exampleDeck}`);
+}
+
+test();
