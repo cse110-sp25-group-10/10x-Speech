@@ -6,14 +6,29 @@ const exampleDeck = [
     }
 ];
 
-// Returns a card as a JS object
-function createCard(frontText, backText, time) {
-    // TODO: Validation
+/**
+ * Creates a speech card with the appropriate data.
+ * @param {string} frontText The text for the front of the card
+ * @param {string} backText The text for the back of the card
+ * @param {number} time The time length the user expects to spend on a card (in seconds)
+ * @returns A JS object representing the speech card if valid and null otherwise
+ */
+export function createCard(frontText, backText, time) {
+    // Validate that frontText and backText are strings and that time is a number
+    // Validate that the front text is between 1 and 60 characters (inclusive)
+    // Validate that the back text is between 1 and 250 characters (inclusive)
+    // Validate that the time length is between 1 and 60 seconds (inclusive)
+    if (typeof(frontText) !== "string" || typeof(backText) !== "string") { return null; }
+    if (frontText.length === 0 || frontText.length > 60) { return null; }
+    if (backText.length === 0 || backText.length > 250) { return null; }
+    if (typeof(time) !== "number") { return null; }
+    if (time < 1 || time > 60) { return null; }
+    
     return {
         "front-text": frontText,
         "back-text": backText,
         "time": time,
-    }
+    };
 }
 
 // Returns a card at an index of a deck
