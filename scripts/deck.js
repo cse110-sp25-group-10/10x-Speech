@@ -1,8 +1,7 @@
 const exampleDeck = [
   {
-    "front-text": "Introduction", // Fong: We can make it to: frontText: "Introduction", to match the variable names?
-    // Fong: backText: ...
-    "back-text":
+    frontText: "Introduction",
+    backText:
       "Good morning. My name is Miranda Booker, and I’m here today to talk to you about how Target Reach Plus software is changing the way businesses manage data for their customers and products.",
     time: 10,
   },
@@ -12,8 +11,8 @@ const exampleDeck = [
 function createCard(frontText, backText, time) {
   // Returns a card as a JS object
   return {
-    "front-text": frontText,
-    "back-text": backText,
+    frontText: frontText,
+    backText: backText,
     time: time,
   };
 }
@@ -51,11 +50,9 @@ export function updateCard(deck, index, newCard) {
   if (
     typeof newCard !== "object" ||
     newCard === null ||
-    !newCard.hasOwnProperty("frontText") ||
-    !newCard.hasOwnProperty("backText") ||
-    !newCard.hasOwnProperty("time") ||
-    !newCard.hasOwnProperty("id") ||
-    !newCard.hasOwnProperty("isFlipped")
+    !Object.prototype.hasOwnProperty.call(newCard, "frontText") ||
+    !Object.prototype.hasOwnProperty.call(newCard, "backText") ||
+    !Object.prototype.hasOwnProperty.call(newCard, "time")
   ) {
     console.error(
       "Invalid newCard object for updateCard. It must be a complete card object."
