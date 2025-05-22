@@ -2,7 +2,7 @@ const exampleDeck = [
   {
     frontText: "Introduction",
     backText:
-      "Good morning. My name is Miranda Booker, and I’m here today to talk to you about how Target Reach Plus software is changing the way businesses manage data for their customers and products.",
+      "Good morning. My name is Miranda Booker, and I'm here today to talk to you about how Target Reach Plus software is changing the way businesses manage data for their customers and products.",
     time: 10,
   },
 ];
@@ -48,9 +48,9 @@ function updateCard(deck, index, newCard) {
     typeof newCard !== "object" ||
     newCard === null ||
     // Make sure the newCard object has the correct properties
-    !Object.prototype.hasOwnProperty.call(newCard, "frontText") ||
-    !Object.prototype.hasOwnProperty.call(newCard, "backText") ||
-    !Object.prototype.hasOwnProperty.call(newCard, "time")
+    !Object.hasOwn(newCard, "frontText") ||
+    !Object.hasOwn(newCard, "backText") ||
+    !Object.hasOwn(newCard, "time")
   ) {
     console.error(
       "Invalid newCard object for updateCard. It must be a complete card object."
@@ -100,7 +100,7 @@ function updateCard(deck, index, newCard) {
 function shuffleCards(deck) {
   if (!Array.isArray(deck)) {
     console.error("Invalid deck for shuffleDeck.");
-    return;
+    return false;
   }
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -109,6 +109,7 @@ function shuffleCards(deck) {
     deck[i] = deck[j];
     deck[j] = temp;
   }
+  return true;
 }
 
 /**
@@ -143,7 +144,7 @@ class Deck {
 
   // Calls the shuffleCards function
   shuffleCards() {
-    shuffleCards(this.cards);
+    return shuffleCards(this.cards);
   }
 }
 
