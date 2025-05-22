@@ -112,17 +112,6 @@ function shuffleCards(deck) {
 }
 
 /**
- * Object for a card
- */
-class Card {
-  constructor(frontText, backText, time) {
-    this.frontText = frontText;
-    this.backText = backText;
-    this.time = time;
-  }
-}
-
-/**
  * Object for a deck of cards
  */
 class Deck {
