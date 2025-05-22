@@ -43,9 +43,20 @@ export function readCard(deck, index) {
 // Removes a card at an index of a deck
 function deleteCard(deck, index) {
     // TOOD: Validation
+    
+    // Check if deck already empty
+    if(deck.length === 0)
+    {
+        return null;
+    }
+
+    // Delete first element at location index
     if (index < deck.length && index >= 0) {
         deck.splice(index, 1);
     }
+
+    // If statement isn't ran, return null
+    return null;
 }
 
 // Updates a card at an in index of a deck with a new card
