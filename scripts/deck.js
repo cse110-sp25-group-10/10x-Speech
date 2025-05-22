@@ -9,7 +9,6 @@ const exampleDeck = [
 
 // Returns a card as a JS object
 function createCard(frontText, backText, time) {
-  // Returns a card as a JS object
   return {
     frontText: frontText,
     backText: backText,
@@ -19,7 +18,6 @@ function createCard(frontText, backText, time) {
 
 // Returns a card at an index of a deck
 function readCard(deck, index) {
-  // TOOD: Validation
   if (index < deck.length && index >= 0) {
     return deck[index];
   }
@@ -27,20 +25,19 @@ function readCard(deck, index) {
 
 // Removes a card at an index of a deck
 function deleteCard(deck, index) {
-  // TOOD: Validation
   if (index < deck.length && index >= 0) {
     deck.splice(index, 1);
   }
 }
 
 /**
- * Updates a card at an in index of a deck with a new card
+ * Updates a card at an index of a deck with a new card
  * @param {Array} deck - The deck of cards
  * @param {number} index - The index of the card to update
  * @param {Object} newCard - The new card to update with
  * @returns {boolean} - Returns true if the card was updated successfully, false otherwise
  */
-export function updateCard(deck, index, newCard) {
+function updateCard(deck, index, newCard) {
   // Validate the deck and index
   if (!Array.isArray(deck) || index < 0 || index >= deck.length) {
     console.error("Invalid deck or index for updateCard.");
@@ -50,6 +47,7 @@ export function updateCard(deck, index, newCard) {
   if (
     typeof newCard !== "object" ||
     newCard === null ||
+    // Make sure the newCard object has the correct properties
     !Object.prototype.hasOwnProperty.call(newCard, "frontText") ||
     !Object.prototype.hasOwnProperty.call(newCard, "backText") ||
     !Object.prototype.hasOwnProperty.call(newCard, "time")
@@ -95,9 +93,69 @@ export function updateCard(deck, index, newCard) {
   return true;
 }
 
-function shuffleDeck(deck) {
-  // TODO
-  console.log(deck);
+/**
+ * Shuffles the cards in the deck
+ * @param {Array} deck - The deck of cards
+ */
+function shuffleCards(deck) {
+  if (!Array.isArray(deck)) {
+    console.error("Invalid deck for shuffleDeck.");
+    return;
+  }
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    // Swap elements using a temporary variable
+    const temp = deck[i];
+    deck[i] = deck[j];
+    deck[j] = temp;
+  }
+}
+
+/**
+ * Object for a card
+ */
+class Card {
+  constructor(frontText, backText, time) {
+    this.frontText = frontText;
+    this.backText = backText;
+    this.time = time;
+  }
+}
+
+/**
+ * Object for a deck of cards
+ */
+class Deck {
+  constructor() {
+    this.cards = [];
+  }
+
+  // Calls the createCard function and adds the card to this deck
+  createCard(frontText, backText, time) {
+    const card = createCard(frontText, backText, time);
+    this.cards.push(card);
+    return card;
+  }
+
+  // Calls the readCard function
+  readCard(index) {
+    return readCard(this.cards, index);
+  }
+
+  // Calls the deleteCard function
+  deleteCard(index) {
+    deleteCard(this.cards, index);
+  }
+
+  // Calls the updateCard function
+  updateCard(index, newCard) {
+    return updateCard(this.cards, index, newCard);
+  }
+
+  // Calls the shuffleCards function
+  shuffleCards() {
+    shuffleCards(this.cards);
+  }
 }
 
 function test() {
@@ -112,11 +170,26 @@ function test() {
   updateCard(exampleDeck, 0, newCard);
   console.log(`Update a card: ${exampleDeck}`);
 
-  shuffleDeck(exampleDeck);
+  shuffleCards(exampleDeck);
   console.log(`Shuffle a deck: ${exampleDeck}`);
 
   deleteCard(exampleDeck, 0);
   console.log(`Delete a card: ${exampleDeck}`);
+
+  console.log("\n");
+
+  // Test the Deck class
+  const deck = new Deck();
+  deck.createCard("Example Topic1", "Example description1", 10);
+  deck.createCard("Example Topic2", "Example description2", 10);
+  deck.createCard("Example Topic3", "Example description3", 10);
+  deck.createCard("Example Topic4", "Example description4", 10);
+  deck.createCard("Example Topic5", "Example description5", 10);
+
+  console.log(`Deck: ${JSON.stringify(deck.cards)}\n`);
+
+  deck.shuffleCards();
+  console.log(`Shuffled deck: ${JSON.stringify(deck.cards)}\n`);
 }
 
 test();
