@@ -50,9 +50,10 @@ export function updateCard(deck, index, newCard) {
   if (
     typeof newCard !== "object" ||
     newCard === null ||
-    !Object.prototype.hasOwnProperty.call(newCard, "frontText") ||
-    !Object.prototype.hasOwnProperty.call(newCard, "backText") ||
-    !Object.prototype.hasOwnProperty.call(newCard, "time")
+    // Make sure the newCard object has the correct properties
+    !Object.hasOwn(newCard, "frontText") ||
+    !Object.hasOwn(newCard, "backText") ||
+    !Object.hasOwn(newCard, "time")
   ) {
     console.error(
       "Invalid newCard object for updateCard. It must be a complete card object."
