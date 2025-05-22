@@ -10,46 +10,11 @@ const exampleDeck = [
 
 // Returns a card as a JS object
 function createCard(frontText, backText, time) {
-  let finalFrontText;
-  let finalBackText;
-  let finalTime;
-
-  // Validate and set frontText
-  if (typeof frontText === "string" && frontText.trim() !== "") {
-    finalFrontText = frontText;
-  } else {
-    finalFrontText = "Default Question/Term";
-    console.warn(
-      'Invalid frontText for createCard. Using default: "' +
-        finalFrontText +
-        '"'
-    );
-  }
-
-  // Validate and set backText
-  if (typeof backText === "string" && backText.trim() !== "") {
-    finalBackText = backText;
-  } else {
-    finalBackText = "Default Answer/Definition";
-    console.warn(
-      'Invalid backText for createCard. Using default: "' + finalBackText + '"'
-    );
-  }
-
-  // Validate and set time
-  if (typeof time === "number" && time > 0) {
-    finalTime = time;
-  } else {
-    finalTime = 10; // Default time
-    console.warn("Invalid time for createCard. Using default: " + finalTime);
-  }
-
+  // Returns a card as a JS object
   return {
-    id: Date.now(), // Give ID to each card for flipping
-    frontText: finalFrontText,
-    backText: finalBackText,
-    time: finalTime,
-    isFlipped: false,
+    "front-text": frontText,
+    "back-text": backText,
+    time: time,
   };
 }
 
@@ -69,10 +34,68 @@ function deleteCard(deck, index) {
   }
 }
 
-// Updates a card at an in index of a deck with a new card
-function updateCard(deck, index, newCard) {
-  // TODO
-  console.log(deck, index, newCard);
+/**
+ * Updates a card at an in index of a deck with a new card
+ * @param {Array} deck - The deck of cards
+ * @param {number} index - The index of the card to update
+ * @param {Object} newCard - The new card to update with
+ * @returns {boolean} - Returns true if the card was updated successfully, false otherwise
+ */
+export function updateCard(deck, index, newCard) {
+  // Validate the deck and index
+  if (!Array.isArray(deck) || index < 0 || index >= deck.length) {
+    console.error("Invalid deck or index for updateCard.");
+    return false;
+  }
+  // Validate the new card
+  if (
+    typeof newCard !== "object" ||
+    newCard === null ||
+    !newCard.hasOwnProperty("frontText") ||
+    !newCard.hasOwnProperty("backText") ||
+    !newCard.hasOwnProperty("time") ||
+    !newCard.hasOwnProperty("id") ||
+    !newCard.hasOwnProperty("isFlipped")
+  ) {
+    console.error(
+      "Invalid newCard object for updateCard. It must be a complete card object."
+    );
+    return false;
+  }
+
+  // Same Validation as createCard
+  if (
+    typeof newCard.frontText !== "string" ||
+    newCard.frontText.length === 0 ||
+    newCard.frontText.length > 60
+  ) {
+    console.error("Invalid frontText for updateCard.");
+    return false;
+  }
+  if (
+    typeof newCard.backText !== "string" ||
+    newCard.backText.length === 0 ||
+    newCard.backText.length > 250
+  ) {
+    console.error("Invalid backText for updateCard.");
+    return false;
+  }
+  if (
+    typeof newCard.time !== "number" ||
+    newCard.time < 1 ||
+    newCard.time > 60
+  ) {
+    console.error("Invalid time for updateCard.");
+    return false;
+  }
+
+  // Update the card
+  deck[index] = {
+    frontText: newCard.frontText,
+    backText: newCard.backText,
+    time: newCard.time,
+  };
+  return true;
 }
 
 function shuffleDeck(deck) {
