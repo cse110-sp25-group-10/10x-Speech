@@ -42,20 +42,52 @@ export function createCard(frontText, backText, time) {
     };
 }
 
-// Returns a card at an index of a deck
-function readCard(deck, index) {
-    // TOOD: Validation
+/**
+ * Returns a card at an index of a deck
+ * @param {JS Object} deck The parameter carrying the multiple JS objects (cards)
+ * @param {number} index Where in the deck order the specified card is located
+ * @returns A JS object representing the speech card at the specified index if valid and null otherwise
+ */
+export function readCard(deck, index) {
+    // TODO: Validation
+
+    // Check whether deck is empty/null before running if statement
+    if(deck.length === 0)
+    {
+        return null;
+    }
+
+
     if (index < deck.length && index >= 0) {
         return deck[index];
     }
+
+    // If statement isn't ran, and we return null
+    return null;
 }
 
-// Removes a card at an index of a deck
+/**
+ * Removes a card at an index of a deck
+ * @param {JS Object} deck The parameter carrying the multiple JS objects (cards)
+ * @param {number} index Where in the deck order the specified card is located
+ * @returns Null 
+ */
 function deleteCard(deck, index) {
     // TOOD: Validation
+    
+    // Check if deck already empty
+    if(deck.length === 0)
+    {
+        return null;
+    }
+
+    // Delete first element at location index
     if (index < deck.length && index >= 0) {
         deck.splice(index, 1);
     }
+
+    // If statement isn't ran, return null
+    return null;
 }
 
 /**
