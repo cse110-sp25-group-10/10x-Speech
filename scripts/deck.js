@@ -40,7 +40,12 @@ export function readCard(deck, index) {
     return null;
 }
 
-// Removes a card at an index of a deck
+/**
+ * Removes a card at an index of a deck
+ * @param {JS Object} deck The parameter carrying the multiple JS objects (cards)
+ * @param {number} index Where in the deck order the specified card is located
+ * @returns Null 
+ */
 function deleteCard(deck, index) {
     // TOOD: Validation
     
