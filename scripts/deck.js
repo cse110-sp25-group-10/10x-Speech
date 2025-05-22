@@ -19,12 +19,22 @@ export function createCard(frontText, backText, time) {
     // Validate that the front text is between 1 and 60 characters (inclusive)
     // Validate that the back text is between 1 and 250 characters (inclusive)
     // Validate that the time length is between 1 and 60 seconds (inclusive)
-    if (typeof(frontText) !== "string" || typeof(backText) !== "string") { return null; }
-    if (frontText.length === 0 || frontText.length > 60) { return null; }
-    if (backText.length === 0 || backText.length > 250) { return null; }
-    if (typeof(time) !== "number") { return null; }
-    if (time < 1 || time > 60) { return null; }
-    
+    if (typeof frontText !== "string" || typeof backText !== "string") {
+        return null;
+    }
+    if (frontText.length === 0 || frontText.length > 60) {
+        return null;
+    }
+    if (backText.length === 0 || backText.length > 250) {
+        return null;
+    }
+    if (typeof time !== "number") {
+        return null;
+    }
+    if (time < 1 || time > 60) {
+        return null;
+    }
+
     return {
         "frontText": frontText,
         "backText": backText,
@@ -49,7 +59,7 @@ function deleteCard(deck, index) {
 }
 
 /**
- * Updates a card at an in index of a deck with a new card
+ * Updates a card at an index of a deck with a new card
  * @param {Array} deck - The deck of cards
  * @param {number} index - The index of the card to update
  * @param {Object} newCard - The new card to update with
@@ -105,9 +115,59 @@ export function updateCard(deck, index, newCard) {
     return true;
 }
 
-function shuffleDeck(deck) {
-    // TODO
-    console.log(deck);
+/**
+ * Shuffles the cards in the deck
+ * @param {Array} deck - The deck of cards
+ */
+function shuffleCards(deck) {
+    if (!Array.isArray(deck)) {
+        console.error("Invalid deck for shuffleDeck.");
+        return false;
+    }
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        // Swap elements using a temporary variable
+        const temp = deck[i];
+        deck[i] = deck[j];
+        deck[j] = temp;
+    }
+    return true;
+}
+
+/**
+ * Object for a deck of cards
+ */
+class Deck {
+    constructor() {
+        this.cards = [];
+    }
+
+    // Calls the createCard function and adds the card to this deck
+    createCard(frontText, backText, time) {
+        const card = createCard(frontText, backText, time);
+        this.cards.push(card);
+        return card;
+    }
+
+    // Calls the readCard function
+    readCard(index) {
+        return readCard(this.cards, index);
+    }
+
+    // Calls the deleteCard function
+    deleteCard(index) {
+        deleteCard(this.cards, index);
+    }
+
+    // Calls the updateCard function
+    updateCard(index, newCard) {
+        return updateCard(this.cards, index, newCard);
+    }
+
+    // Calls the shuffleCards function
+    shuffleCards() {
+        return shuffleCards(this.cards);
+    }
 }
 
 function test() {
@@ -122,11 +182,26 @@ function test() {
     updateCard(exampleDeck, 0, newCard);
     console.log(`Update a card: ${exampleDeck}`);
 
-    shuffleDeck(exampleDeck);
+    shuffleCards(exampleDeck);
     console.log(`Shuffle a deck: ${exampleDeck}`);
 
     deleteCard(exampleDeck, 0);
     console.log(`Delete a card: ${exampleDeck}`);
+
+    console.log("\n");
+
+    // Test the Deck class
+    const deck = new Deck();
+    deck.createCard("Example Topic1", "Example description1", 10);
+    deck.createCard("Example Topic2", "Example description2", 10);
+    deck.createCard("Example Topic3", "Example description3", 10);
+    deck.createCard("Example Topic4", "Example description4", 10);
+    deck.createCard("Example Topic5", "Example description5", 10);
+
+    console.log(`Deck: ${JSON.stringify(deck.cards)}\n`);
+
+    deck.shuffleCards();
+    console.log(`Shuffled deck: ${JSON.stringify(deck.cards)}\n`);
 }
 
 test();
