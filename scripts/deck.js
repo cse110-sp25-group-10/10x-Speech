@@ -202,3 +202,11 @@ console.log("Updating a card from a deck:", exampleDeck);
 // Deleting a card from a deck
 exampleDeck.deleteCard(0)
 console.log("Deleting a card from a deck:", exampleDeck);
+
+// Shuffle deck
+exampleDeck.addCard(card1);
+exampleDeck.addCard(card2);
+exampleDeck.addCard(card2);
+const shuffled = exampleDeck.cards;
+shuffleCards(shuffled);
+console.log("Shuffled deck", shuffled);
