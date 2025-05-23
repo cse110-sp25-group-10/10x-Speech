@@ -6,7 +6,7 @@ function addNumbers() {
     const n1 = parseFloat(document.getElementById("num1").value);
     const n2 = parseFloat(document.getElementById("num2").value);
     const sum = add(n1, n2);
-    document.getElementById("result").textContent = "Result: " + sum;
+    document.getElementById("result").textContent = `Result: ${sum}`;
 }
 
 function init() {
