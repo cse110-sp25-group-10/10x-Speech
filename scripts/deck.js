@@ -178,35 +178,3 @@ function shuffleCards(deck) {
     }
     return true;
 }
-
-// Creating cards
-const card1 = Card("Title", "Description", 5);
-const card2 = Card("Lorem ipsum", "Example", 10);
-console.log(card1, card2);
-
-// Creating a blank deck
-const exampleDeck = Deck("Example Deck");
-console.log("Blank Deck:", exampleDeck);
-
-// Add cards to a deck
-exampleDeck.addCard(card1);
-console.log("Adding a card to a deck:", exampleDeck);
-
-// Reading a card from a deck
-console.log("Reading a card from a deck:", exampleDeck.readCard(0));
-
-// Updating a card from a deck
-exampleDeck.updateCard(0, card2)
-console.log("Updating a card from a deck:", exampleDeck);
-
-// Deleting a card from a deck
-exampleDeck.deleteCard(0)
-console.log("Deleting a card from a deck:", exampleDeck);
-
-// Shuffle deck
-exampleDeck.addCard(card1);
-exampleDeck.addCard(card2);
-exampleDeck.addCard(card2);
-const shuffled = exampleDeck.cards;
-shuffleCards(shuffled);
-console.log("Shuffled deck", shuffled);

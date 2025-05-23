@@ -5,11 +5,10 @@ import { getCardCreationCSS } from "./CardCreationCSS.js";
 class CardCreation extends HTMLElement {
     constructor() {
         super();
-        this.attachShadow({ mode: "open"});
     }
 
     connectedCallback() {
-        const shadow = this.shadowRoot;
+        const shadow = this.attachShadow({ mode: "open"});
 
         // Since the elements of this component will be in the Shadow DOM, get a reference to this element's shadow root before query selecting
         // Example:
