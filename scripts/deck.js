@@ -155,21 +155,28 @@ export const Deck = function createDeck(deckName) {
             // Update the card
             this.cards[index] = newCard;
             return true;
-        },
-
-        /**
-        * Shuffles the cards in the deck
-        */
-        shuffleCards() {
-            for (let i = this.cards.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                // Swap elements using a temporary variable
-                const temp = this.cards[i];
-                this.cards[i] = this.cards[j];
-                this.cards[j] = temp;
-            }
         }
     }
+}
+
+/**
+ * Shuffles the cards in a deck
+ * @param {Array} deck - The deck of cards
+ * @returns True if the deck was shuffled and false otherwise
+ */
+function shuffleCards(deck) {
+    if (!Array.isArray(deck)) {
+        console.error("Invalid deck for shuffleDeck.");
+        return false;
+    }
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        // Swap elements using a temporary variable
+        const temp = deck[i];
+        deck[i] = deck[j];
+        deck[j] = temp;
+    }
+    return true;
 }
 
 // Creating cards
