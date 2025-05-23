@@ -17,35 +17,9 @@ class HomeScreen extends HTMLElement {
                 <button class="existing-decks">Study or Edit an Exisiting Deck</button>
             </main>
         `;
-        const createDeckBtn = this.querySelector(".create-deck");
-        const existingDecksBtn = this.querySelector(".existing-decks");
-        createDeckBtn.addEventListener("click", this.swapToCreate);
-        existingDecksBtn.addEventListener("click", this.swapToDeck);      
-    }
-
-    swapToCreate() {
-        this.dispatchEvent(
-            new CustomEvent("swap-screen", {
-                detail: "create",
-                bubbles: true
-            }),
-        );
-    }
-
-    swapToDeck() {
-        this.dispatchEvent(
-            new CustomEvent("swap-screen", {
-                detail: "existing",
-                bubbles: true
-            }),
-        );
     }
 
     disconnectedCallback() {
-        const createDeckBtn = this.querySelector(".create-deck");
-        const existingDecksBtn = this.querySelector(".existing-decks");
-        createDeckBtn.removeEventListener("click", this.swapToCreate);
-        existingDecksBtn.removeEventListener("click", this.swapToDeck);
         this.replaceChildren();
     }
 }
