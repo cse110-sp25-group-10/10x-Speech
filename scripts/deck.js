@@ -164,7 +164,7 @@ export const Deck = function createDeck(deckName) {
  * @param {Array} deck - The deck of cards
  * @returns True if the deck was shuffled and false otherwise
  */
-function shuffleCards(deck) {
+export function shuffleCards(deck) {
     if (!Array.isArray(deck)) {
         console.error("Invalid deck for shuffleDeck.");
         return false;
