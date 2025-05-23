@@ -1,4 +1,6 @@
 # Flashcard-Project
+## Checkpoint 1
+[YouTube Link](https://youtu.be/rDQnm-aopik)
 
 Name of the repo to be changed
 
