@@ -94,6 +94,10 @@ class CreateScreen extends HTMLElement {
             </section>
         `;
     }
+
+    disconnectedCallback() {
+        this.replaceChildren();
+    }
 }
 
 customElements.define("create-screen", CreateScreen);
