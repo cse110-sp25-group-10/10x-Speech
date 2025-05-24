@@ -1,0 +1,108 @@
+:root {
+    /** Sizing Variables */
+    --card-width: 45rem;                /* Note: Width = 2*height */
+    --card-height: 22.5rem;
+    --card-border-width: 0.5rem;
+    --card-border-radius: 0.5rem;
+    --card-content-horizontal-padding: 1rem;
+
+    /** Color Variables */
+    --card-background-color:  rgb(241, 236, 254);
+    --card-border-color: rgb(176, 202, 227);
+
+    /** Other Variables */
+    --card-border-style: solid;
+
+    /** Text variables */
+    --card-font: 'Rubik';
+    --card-font-serif: sans-serif;
+    --card-text-size: 3rem;
+
+    /** Timing Variables */
+    --card-transition-timing: 150ms;
+
+    /** Transition A Variables */
+    --card-box-shadow-no-offset: 0rem;
+    --card-box-shadow-blur-radius: 1rem;
+    --card-box-shadow-scaling: 0.5rem;
+
+}
+
+.card {
+    /* card background color */
+    background-color: var(--card-background-color);
+    
+    /* card border styling */
+    border-style: var(--card-border-style);
+    border-radius: var(--card-border-radius);
+    border-color: var(--card-border-color);
+    border-width: var(--card-border-width);
+
+    /* card font */
+    font-family: var(--card-font), var(--card-font-serif);
+    font-size: var(--card-text-size);
+
+    /* card size/shape */
+    width: var(--card-width);
+    height: var(--card-height);
+
+    /* text alignment */
+    display: flex;
+    text-align: left; 
+
+    /* This tells desktop users that the cards are clickable */
+    cursor: pointer;
+}
+
+.card-content {
+    margin: auto;
+    padding-left: var(--card-content-horizontal-padding);
+    padding-right: var(--card-content-horizontal-padding);
+}
+
+#hover-demo-A {
+    transition: box-shadow var(--card-transition-timing);
+}
+
+#hover-demo-A:hover {
+    box-shadow: var(--card-box-shadow-no-offset) 
+                var(--card-box-shadow-no-offset)
+                var(--card-box-shadow-blur-radius) 
+                var(--card-box-shadow-scaling) 
+                var(--card-border-color);
+    transition: box-shadow var(--card-transition-timing);
+}
+
+#hover-demo-B {
+    transition: transform, var(--card-transition-timing);
+}
+
+#hover-demo-B:hover {
+    box-shadow: 0rem 0.5rem 1rem -0.5rem black;
+    transform: translateY(-0.75rem);
+    transition: transform, var(--card-transition-timing);
+}
+
+
+
+/** Non-functional CSS - Demo Layout */
+
+body {
+    margin: auto;
+    place-items: center;
+    padding: 5rem;
+    background-color: rgb(19,16,45);
+}
+
+#back-card {
+    /* temporary margin to space from front card on top */
+    margin-top: 2.5rem;
+}
+
+#full-card {
+    margin-top: 2.5rem;
+}
+
+#hover-demo-A, #hover-demo-B {
+    margin-top: 2.5rem;
+}

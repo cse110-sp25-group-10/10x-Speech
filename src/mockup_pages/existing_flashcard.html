@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- TODO: Investigate nav semantics -->
+<html lang="en">
+    <head>
+        <title>Existing Flashcard</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <!-- name textbox and time limit -->
+        <header class="top">
+            <h1>Name of This Speech</h1>
+
+            <!-- need to change XX:XX to take user timer input (JS thing?)-->
+            <!-- Alan: investigate using <output> tag for time-limit -->
+            <p id="time-limit">Time Limit: XX:XX</p>
+        </header>
+        
+        <!-- previous button, card, next button -->
+        <main class="flash-card-container">
+            <button id="previous-card-button">Previous</button>
+
+            <!-- card component here would be useful -->
+            <article class="card" id="front-card">
+                <p class="card-content" id="placeholder-text">(Front)<br>(Tap to Flip to Back)</p>
+            </article>
+
+            <button id="next-card-button">Next</button>
+        </main>
+
+        <!-- shuffle button, press to record button, return home button -->
+        <!-- maybe change from section to nav -->
+        <section class="bottom">
+            <button id="shuffle-button">Shuffle</button>
+
+            <!-- remember that this changes states -->
+            <button id="record-button">Press to Record Voice</button>
+            
+            <!-- go back to home.html screen -->
+            <button id="home-button">Return Home</button>
+        </section>
+    </body>
+</html>
