@@ -1,4 +1,5 @@
 import { createCard } from "../scripts/deck.js";
+import { Deck } from "../scripts/deck.js";
 
 // createCard tests
 test("creates a JS object representing a card", () => {
@@ -59,7 +60,7 @@ test("returns card at index 2", () => {
     deck.createCard("Example Topic1", "Example description1", 10);
     deck.createCard("Example Topic2", "Example description2", 15);
     deck.createCard("Example Topic3", "Example description3", 20);
-    expect(readCard(deck, 2)).toStrictEqual({
+    expect(deck.readCard(2)).toStrictEqual({
         "frontText": "Example Topic3",
         "backText": "Example description3",
         "time": 20,
@@ -68,17 +69,13 @@ test("returns card at index 2", () => {
 
 test("returns null for empty deck", () => {
     const deck = new Deck();
-    expect(readCard(deck, 0)).toBe(null);
-});
-
-test("returns null for null deck", () => {
-    expect(readCard(null, 0)).toBe(null);
+    expect(deck.readCard(0)).toBe(null);
 });
 
 test("returns null for card outside of index", () => {
     const deck = new Deck();
     deck.createCard("Example Topic1", "Example description1", 10);
-    expect(readCard(deck, 2)).toStrictEqual(null);
+    expect(deck.readCard(2)).toStrictEqual(null);
 });
 
 // deleteCard tests
@@ -88,21 +85,21 @@ test("updates the deck by deleting the card at index 1", () => {
     deck.createCard("Example Topic2", "Example description2", 15);
     deck.createCard("Example Topic3", "Example description3", 20);
     const expected = new Deck();
-    deck.createCard("Example Topic1", "Example description1", 10);
-    deck.createCard("Example Topic3", "Example description3", 20);
-    deleteCard(deck, 1);
+    expected.createCard("Example Topic1", "Example description1", 10);
+    expected.createCard("Example Topic3", "Example description3", 20);
+    deck.deleteCard(1);
     expect(deck).toStrictEqual(expected);
 });
 
 test("returns null for empty deck", () => {
     const deck = new Deck();
-    expect(deleteCard(deck, 0)).toBe(null);
+    expect(deck.deleteCard(0)).toBe(null);
 });
 
 test("returns null for card outside of index", () => {
     const deck = new Deck();
     deck.createCard("Example Topic1", "Example description1", 10);
-    expect(deleteCard(deck, 2)).toStrictEqual(null);
+    expect(deck.deleteCard(2)).toStrictEqual(null);
 });
 
 // updateCard tests
