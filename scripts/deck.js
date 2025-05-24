@@ -52,7 +52,7 @@ export function readCard(deck, index) {
     // TODO: Validation
 
     // Check whether deck is empty/null before running if statement
-    if(deck.length === 0 || typeof(index) !== number || typeof(deck) !== object)
+    if(!Array.isArray(deck) || !Number.isInteger(index))
     {
         return null;
     }
@@ -76,7 +76,7 @@ function deleteCard(deck, index) {
     // TOOD: Validation
     
     // Check if deck already empty
-    if(deck.length === 0 || typeof(index) !== number || typeof(deck) !== object)
+    if(!Array.isArray(deck) || !Number.isInteger(index))
     {
         return null;
     }
