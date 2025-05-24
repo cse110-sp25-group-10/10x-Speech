@@ -91,7 +91,11 @@ body {
     place-items: center;
     padding: 5rem;
     background-color: rgb(19,16,45);
+    background-image: url("10xCardsBG.png");
+    background-attachment: fixed;
+
 }
+
 
 #back-card {
     /* temporary margin to space from front card on top */
