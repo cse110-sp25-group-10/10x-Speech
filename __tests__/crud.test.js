@@ -84,10 +84,32 @@ test("updates the deck by deleting the card at index 1", () => {
     deck.createCard("Example Topic1", "Example description1", 10);
     deck.createCard("Example Topic2", "Example description2", 15);
     deck.createCard("Example Topic3", "Example description3", 20);
-    const expected = new Deck();
-    expected.createCard("Example Topic1", "Example description1", 10);
-    expected.createCard("Example Topic3", "Example description3", 20);
+    const expected = [
+        {
+            "frontText": "Example Topic1",
+            "backText": "Example description1",
+            "time": 10,
+        },
+       {
+            "frontText": "Example Topic3",
+            "backText": "Example description3",
+            "time": 20,
+        },
+    ];
+
     deck.deleteCard(1);
+    expect(deck.cards).toStrictEqual(expected);
+});
+
+test("updates the deck by deleting every card until the deck is empty", () => {
+    const deck = new Deck();
+    deck.createCard("Example Topic1", "Example description1", 10);
+    deck.createCard("Example Topic2", "Example description2", 15);
+    deck.createCard("Example Topic3", "Example description3", 20);
+    deck.deleteCard(0);
+    deck.deleteCard(0);
+    deck.deleteCard(0);
+    const expected = new Deck();
     expect(deck).toStrictEqual(expected);
 });
 
