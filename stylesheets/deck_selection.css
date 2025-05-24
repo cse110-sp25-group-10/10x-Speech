@@ -1,11 +1,11 @@
 :root {
     /** Color Variables */
-    --white:  rgb(241, 236, 254);
-    --light-blue: rgb(176, 202, 227);
-    --lilac: rgb(229, 201, 228);
-    --navy: rgb(19,16,45);
-    --black: rgb(0,0,0);
-    --white-transparent: rgb(241, 236, 254, 80%);
+    --white:  rgb(241 236 254);
+    --light-blue: rgb(176 202 227);
+    --lilac: rgb(229 201 228);
+    --navy: rgb(19 16 45);
+    --black: rgb(0 0 0);
+    --white-transparent: rgb(241 236 254 / 80%);
 }
 
 body {
@@ -15,7 +15,7 @@ body {
     place-items: center;
     padding: 5rem;
     background-color: var(--navy); /** In case background img doesn't load */
-    background-image: url("10xCardsBG.png");
+    /**background-image: url("10xCardsBG.png");*/
     background-attachment: fixed;
 }
 
