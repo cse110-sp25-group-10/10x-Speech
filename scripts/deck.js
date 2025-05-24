@@ -169,7 +169,7 @@ function shuffleCards(deck) {
 /**
  * Object for a deck of cards
  */
-class Deck {
+export class Deck {
     constructor() {
         this.cards = [];
     }
