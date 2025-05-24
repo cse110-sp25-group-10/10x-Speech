@@ -104,7 +104,7 @@ function init() {
             // Attempt to create a new card using given values
             const newCard = Card(frontText, backText, timeNum); 
             // If a card is successfully created (i.e. not null), add it to the deck
-            if (newCard != null) {
+            if (newCard !== null) {
                 const added = newDeck.addCard(newCard);
                 // If a card is successfully added to the deck, render it in the preview
                 if (added) {
