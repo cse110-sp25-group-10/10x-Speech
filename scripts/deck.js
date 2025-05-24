@@ -1,65 +1,212 @@
-const exampleDeck = [
-    {
-        "front-text": "Introduction",
-        "back-text": "Good morning. My name is Miranda Booker, and I’m here today to talk to you about how Target Reach Plus software is changing the way businesses manage data for their customers and products.",
-        "time": 10
+/**
+ * Creates a speech card with the appropriate data.
+ * @param {string} frontText The text for the front of the card
+ * @param {string} backText The text for the back of the card
+ * @param {number} time The time length the user expects to spend on a card (in seconds)
+ * @returns A JS object representing the speech card if valid and null otherwise
+ */
+export const Card = function createCard(frontText, backText, time) {
+    // Validate that frontText and backText are strings and that time is a number
+    // Validate that the front text is between 1 and 60 characters (inclusive)
+    // Validate that the back text is between 1 and 250 characters (inclusive)
+    // Validate that the time length is between 1 and 60 seconds (inclusive)
+    if (typeof frontText !== "string" || typeof backText !== "string") {
+        return null;
     }
-];
+    if (frontText.length === 0 || frontText.length > 60) {
+        return null;
+    }
+    if (backText.length === 0 || backText.length > 250) {
+        return null;
+    }
+    if (typeof time !== "number") {
+        return null;
+    }
+    if (time < 1 || time > 60) {
+        return null;
+    }
 
-// Returns a card as a JS object
-function createCard(frontText, backText, time) {
-    // TODO: Validation
     return {
-        "front-text": frontText,
-        "back-text": backText,
+        "frontText": frontText,
+        "backText": backText,
         "time": time,
+    };
+}
+
+/**
+ * Create a deck object with Deck()
+ * @param {string} deckName The name of the deck
+ * @returns A deck object if successfully created and null otherwise
+ */
+export const Deck = function createDeck(deckName) {
+    if (typeof deckName !== 'string') { return null; }
+    if (deckName.length === 0 || deckName.length > 60) { return null; }
+
+    return {
+        "deckName": deckName,
+        "cards": [],
+        
+        /**
+         * Adds a card to the array cards
+         * @param {object} card An object representing a card from createCard()
+         * @returns Returns true if the card was added and false otherwise
+         */
+        addCard(card) {
+            // Validate the card
+            if (
+                typeof card !== "object"
+                // Make sure the newCard object has the correct properties
+                || !Object.hasOwn(card, "frontText")
+                || !Object.hasOwn(card, "backText")
+                || !Object.hasOwn(card, "time")
+            ) {
+                console.error("Invalid card.");
+                return false;
+            }
+
+            this.cards.push(card);
+            return true;
+        },
+
+        /**
+         * Returns a card at an index
+         * @param {number} index Where in the deck order the specified card is located
+         * @returns A JS object representing the speech card at the specified index if valid and null otherwise
+         */
+        readCard(index) {
+            // TODO: Validation
+            // Check whether deck is empty/null before running if statement
+            if(this.cards.length === 0) {
+                return null;
+            }
+            // Check that index is inbounds
+            if (index >= this.cards.length && index < 0) {
+                return null;
+            }
+
+            return this.cards[index];
+        },
+
+        /**
+         * Removes a card at an index of the deck
+         * @param {number} index Where in the deck order the specified card is located
+         * @returns The card that was deleted if valid and null otherwise 
+         */
+        deleteCard(index) {
+            // TOOD: Validation
+            // Check if deck already empty
+            if(this.cards.length === 0) {
+                return null;
+            }
+            // Check that index is inbounds
+            if (index >= this.cards.length && index < 0) {
+                return null;
+            }
+
+            return this.cards.splice(index, 1);
+        },
+
+        /**
+        * Updates a card at an index of a deck with a new card
+        * @param {number} index - The index of the card to update
+        * @param {Object} newCard - The new card to update with
+        * @returns {boolean} - Returns true if the card was updated successfully, false otherwise
+        */
+        updateCard(index, newCard) {
+            // Validate the index
+            if (index < 0 || index >= this.cards.length) {
+                console.error("Invalid index for updateCard.");
+                return false;
+            }
+            // Validate the new card
+            if (
+                typeof newCard !== "object" ||
+                // Make sure the newCard object has the correct properties
+                !Object.hasOwn(newCard, "frontText") ||
+                !Object.hasOwn(newCard, "backText") ||
+                !Object.hasOwn(newCard, "time")
+            ) {
+                console.error("Invalid newCard object for updateCard. It must be a complete card object.");
+                return false;
+            }
+
+            // Same Validation as createCard
+            if (
+                typeof newCard.frontText !== "string" ||
+                newCard.frontText.length === 0 ||
+                newCard.frontText.length > 60
+            ) {
+                console.error("Invalid frontText for updateCard.");
+                return false;
+            }
+            if (
+                typeof newCard.backText !== "string" ||
+                newCard.backText.length === 0 ||
+                newCard.backText.length > 250
+            ) {
+                console.error("Invalid backText for updateCard.");
+                return false;
+            }
+            if (typeof newCard.time !== "number" || newCard.time < 1 || newCard.time > 60) {
+                console.error("Invalid time for updateCard.");
+                return false;
+            }
+
+            // Update the card
+            this.cards[index] = newCard;
+            return true;
+        }
     }
 }
 
-// Returns a card at an index of a deck
-function readCard(deck, index) {
-    // TOOD: Validation
-    if (index < deck.length && index >= 0) {
-        return deck[index];
+/**
+ * Shuffles the cards in a deck
+ * @param {Array} deck - The deck of cards
+ * @returns True if the deck was shuffled and false otherwise
+ */
+function shuffleCards(deck) {
+    if (!Array.isArray(deck)) {
+        console.error("Invalid deck for shuffleDeck.");
+        return false;
     }
-}
-
-// Removes a card at an index of a deck
-function deleteCard(deck, index) {
-    // TOOD: Validation
-    if (index < deck.length && index >= 0) {
-        deck.splice(index, 1);
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        // Swap elements using a temporary variable
+        const temp = deck[i];
+        deck[i] = deck[j];
+        deck[j] = temp;
     }
+    return true;
 }
 
-// Updates a card at an in index of a deck with a new card
-function updateCard(deck, index, newCard) {
-    // TODO
-    console.log(deck, index, newCard);
-}
+// Creating cards
+const card1 = Card("Title", "Description", 5);
+const card2 = Card("Lorem ipsum", "Example", 10);
+console.log(card1, card2);
 
-function shuffleDeck(deck) {
-    // TODO
-    console.log(deck);
-}
+// Creating a blank deck
+const exampleDeck = Deck("Example Deck");
+console.log("Blank Deck:", exampleDeck);
 
-function test() {
-    console.log(`Starting deck: ${exampleDeck}`);
+// Add cards to a deck
+exampleDeck.addCard(card1);
+console.log("Adding a card to a deck:", exampleDeck);
 
-    const newCard = createCard("Example Topic", "Example description", 10)
-    exampleDeck.push(newCard);
-    console.log(`Adding a card: ${exampleDeck}`);
+// Reading a card from a deck
+console.log("Reading a card from a deck:", exampleDeck.readCard(0));
 
-    console.log(`Reading a specific card: ${readCard(exampleDeck, 1)}`);
+// Updating a card from a deck
+exampleDeck.updateCard(0, card2)
+console.log("Updating a card from a deck:", exampleDeck);
 
-    updateCard(exampleDeck, 0, newCard);
-    console.log(`Update a card: ${exampleDeck}`);
+// Deleting a card from a deck
+exampleDeck.deleteCard(0)
+console.log("Deleting a card from a deck:", exampleDeck);
 
-    shuffleDeck(exampleDeck);
-    console.log(`Shuffle a deck: ${exampleDeck}`);
-
-    deleteCard(exampleDeck, 0);
-    console.log(`Delete a card: ${exampleDeck}`);
-}
-
-test();
+// Shuffle deck
+exampleDeck.addCard(card1);
+exampleDeck.addCard(card2);
+exampleDeck.addCard(card2);
+const shuffled = exampleDeck.cards;
+shuffleCards(shuffled);
+console.log("Shuffled deck", shuffled);
