@@ -13,6 +13,10 @@ class CardPreview extends HTMLElement {
             <p>${backText}</p>
         `;
     }
+
+    disconnectedCallback() {
+        this.replaceChildren();
+    }
 }
 
 customElements.define("card-preview", CardPreview);
