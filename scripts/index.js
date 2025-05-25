@@ -136,7 +136,8 @@ function init() {
          * Remove event listeners from the deck creation screen to prevent memory leaks
          */
         function clearEvents() {
-            cardForm.removeEventListener("onsubmit", validateCard);
+            cardList.replaceChildren();
+            cardForm.removeEventListener("submit", validateCard);
             speechForm.removeEventListener("submit", validateName);
             saveBtn.removeEventListener("click", swapToHome);
         }
