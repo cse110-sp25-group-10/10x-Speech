@@ -67,6 +67,16 @@ test("returns card at index 2", () => {
     });
 });
 
+test("returns card at index 0 when deck size is 1", () => {
+    const deck = new Deck();
+    deck.createCard("Example Topic", "Example description", 20);
+    expect(deck.readCard(0)).toStrictEqual({
+        "frontText": "Example Topic",
+        "backText": "Example description",
+        "time": 20,
+    });
+});
+
 test("returns null for empty deck", () => {
     const deck = new Deck();
     expect(deck.readCard(0)).toBe(null);
@@ -153,6 +163,25 @@ test("updates card in the deck at index 1", () => {
     expect(deck.cards).toStrictEqual(expected);
 });
 
+test("updates card in the deck at index 0 three times", () => {
+    const deck = new Deck();
+    deck.createCard("Example Topic", "Example description", 30);
+    const expected = [
+        {
+            "frontText": "New Card Topic3",
+            "backText": "New card description3",
+            "time": 52,
+        },
+    ];
+    const newCard1 = createCard("New Card Topic1", "New card description1", 50);
+    const newCard2 = createCard("New Card Topic2", "New card description2", 51);
+    const newCard3 = createCard("New Card Topic3", "New card description3", 52);
+    expect(deck.updateCard(0, newCard1)).toBe(true);
+    expect(deck.updateCard(0, newCard2)).toBe(true);
+    expect(deck.updateCard(0, newCard3)).toBe(true);
+    expect(deck.cards).toStrictEqual(expected);
+});
+
 test("updates every card in the deck", () => {
     const deck = new Deck();
     deck.createCard("Example Topic1", "Example description1", 10);
@@ -201,7 +230,7 @@ test("returns false for updating card outside of index", () => {
     expect(deck.updateCard(3, newCard)).toStrictEqual(false);
 });
 
-test("returns false for updating with invalid cards", () => {
+test("returns false for updating deck with not cards", () => {
     const deck = new Deck();
     deck.createCard("Example Topic1", "Example description1", 10);
     deck.createCard("Example Topic2", "Example description2", 15);
@@ -218,4 +247,71 @@ test("returns false for updating with invalid cards", () => {
     expect(deck.updateCard(1, newCard3)).toStrictEqual(false);
 });
 
+test("returns false for updating deck with card with invalid front text", () => {
+    const deck = new Deck();
+    deck.createCard("Example Topic1", "Example description1", 10);
+    deck.createCard("Example Topic2", "Example description2", 15);
+    deck.createCard("Example Topic3", "Example description3", 20);
+    const newCard1 = {
+        "fronttext": 900,
+        "backtext": "Example description",
+        "time": 20,
+    };
+   const newCard2 = {
+        "fronttext": "",
+        "backtext": "Example description",
+        "time": 20,
+    };
+   const newCard3 = {
+        "fronttext": "a".repeat(61),
+        "backtext": "Example description",
+        "time": 20,
+    };
+    expect(deck.updateCard(1, newCard1)).toStrictEqual(false);
+    expect(deck.updateCard(1, newCard2)).toStrictEqual(false);
+    expect(deck.updateCard(1, newCard3)).toStrictEqual(false);
+});
 
+test("returns false for updating deck with card with invalid back text", () => {
+    const deck = new Deck();
+    deck.createCard("Example Topic1", "Example description1", 10);
+    deck.createCard("Example Topic2", "Example description2", 15);
+    deck.createCard("Example Topic3", "Example description3", 20);
+    const newCard1 = {
+        "fronttext": "Example Topic",
+        "backtext": 900,
+        "time": 20,
+    };
+    const newCard2 = {
+        "fronttext": "Example Topic",
+        "backtext": "",
+        "time": 20,
+    };
+   const newCard3 = {
+        "fronttext": "Example Topic",
+        "backtext": "a".repeat(61),
+        "time": 20,
+    };
+    expect(deck.updateCard(1, newCard1)).toStrictEqual(false);
+    expect(deck.updateCard(1, newCard2)).toStrictEqual(false);
+    expect(deck.updateCard(1, newCard3)).toStrictEqual(false);
+});
+
+test("returns false for updating deck with card with invalid time", () => {
+    const deck = new Deck();
+    deck.createCard("Example Topic1", "Example description1", 10);
+    deck.createCard("Example Topic2", "Example description2", 15);
+    deck.createCard("Example Topic3", "Example description3", 20);
+    const newCard1 = {
+        "fronttext": "Example Topic",
+        "backtext": "Example description",
+        "time": "20",
+    };
+    const newCard2 = {
+        "fronttext": "Example Topic",
+        "backtext": "Example description",
+        "time": 61,
+    };
+    expect(deck.updateCard(1, newCard1)).toStrictEqual(false);
+    expect(deck.updateCard(1, newCard2)).toStrictEqual(false);
+});
