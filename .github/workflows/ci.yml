@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI
 
 on:
   workflow_dispatch:
@@ -19,6 +19,11 @@ jobs: # the things being executed
         run: npm install
       - name: Unit Test
         run: npm test
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: cse110-sp25-group-10/Flashcard-Project
 
   lint: 
     runs-on: ubuntu-latest
@@ -36,3 +41,4 @@ jobs: # the things being executed
         run: npm run csslint
       - name: HTML Lint
         run: npm run htmllint
+      
