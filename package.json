@@ -20,7 +20,11 @@
     "type": "module",
     "jest": {
         "transform": {},
-        "verbose": true
+        "verbose": true,
+        "collectCoverage": true,
+        "collectCoverageFrom": ["scripts/**/*.js"],
+        "coverageDirectory": "coverage",
+        "testMatch": ["**/__tests__/**/*.js"]
     },
     "prettier": {
         "tabWidth": 4,
