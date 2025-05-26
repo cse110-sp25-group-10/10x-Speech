@@ -149,7 +149,7 @@ test("updates card in the deck at index 1", () => {
         },
     ];
     const newCard = createCard("New Card Topic", "New card description", 50)
-    deck.updateCard(1, newCard);
+    expect(deck.updateCard(1, newCard)).toBe(true);
     expect(deck.cards).toStrictEqual(expected);
 });
 
@@ -185,10 +185,10 @@ test("updates every card in the deck", () => {
     const newCard2 = createCard("New Topic2", "New description2", 35)
     const newCard3 = createCard("New Topic3", "New description3", 30)
     const newCard4 = createCard("New Topic4", "New description4", 25)
-    deck.updateCard(0, newCard1);
-    deck.updateCard(1, newCard2);
-    deck.updateCard(2, newCard3);
-    deck.updateCard(3, newCard4);
+    expect(deck.updateCard(0, newCard1)).toBe(true);
+    expect(deck.updateCard(1, newCard2)).toBe(true);
+    expect(deck.updateCard(2, newCard3)).toBe(true);
+    expect(deck.updateCard(3, newCard4)).toBe(true);
     expect(deck.cards).toStrictEqual(expected);
 });
 
@@ -208,6 +208,14 @@ test("returns false for updating with invalid cards", () => {
     deck.createCard("Example Topic3", "Example description3", 20);
     const newCard1 = "New Topic, New description, 99";
     const newCard2 = null;
+    const newCard3 = {
+        "fronttext": "Example Topic3",
+        "backtext": "Example description3",
+        "time": 20,
+    };
     expect(deck.updateCard(1, newCard1)).toStrictEqual(false);
     expect(deck.updateCard(1, newCard2)).toStrictEqual(false);
+    expect(deck.updateCard(1, newCard3)).toStrictEqual(false);
 });
+
+
