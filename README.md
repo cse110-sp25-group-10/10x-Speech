@@ -13,7 +13,7 @@ To start, clone the repo and install all of the node packages:
 $ git clone https://github.com/cse110-sp25-group-10/Flashcard-Project.git
 $ npm i
 ```
-
+fasdfasfas
 I'm not exactly sure how npm package versioning works, but 
 as long as your node is fairly up-to-date everything should be fine (I will look into this more later).
 
