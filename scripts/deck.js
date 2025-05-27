@@ -1,5 +1,3 @@
-import { saveDeck, getDeck, getAllDecks, deleteDeckDB } from "./database.js";
-
 /**
  * Creates a speech card with the appropriate data.
  * @param {string} frontText The text for the front of the card

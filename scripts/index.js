@@ -2,7 +2,7 @@ import "./screens/HomeScreen.js";
 import "./screens/CreateScreen.js";
 import "./components/CardPreview.js";
 import { Deck, Card } from "./deck.js";
-import { saveDeck, getDeck, getAllDecks, deleteDeckDB } from "./database.js";
+import { saveDeck, getAllDecks, deleteDeckDB } from "./database.js";
 import "./components/ConfirmationModal.js";
 
 window.addEventListener("DOMContentLoaded", init);
@@ -89,9 +89,6 @@ function init() {
 
         // Reset any previously half created deck
         appState.currentDeckInCreation = null;
-
-        // Create an empty deck
-        const newDeck = Deck("Example Deck");
 
         // Get references to buttons
         const saveBtn = flashcardApp.querySelector("#save-button");
@@ -545,12 +542,5 @@ function init() {
             console.error("Error saving deck after deleting card:", error);
             alert("Failed to save changes after deleting card.");
         }
-    }
-
-    // Helper function to prevent XSS if displaying user content directly as HTML
-    function escapeHTML(str) {
-        const div = document.createElement("div");
-        div.appendChild(document.createTextNode(str));
-        return div.innerHTML;
     }
 }
