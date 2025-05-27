@@ -19,7 +19,7 @@ export const Card = function createCard(frontText, backText, time) {
     if (backText.length === 0 || backText.length > 250) {
         return null;
     }
-    if (typeof time !== "number") {
+    if (typeof time !== "number" || isNaN(time)) {
         return null;
     }
     if (time < 1 || time > 60) {
@@ -80,7 +80,7 @@ export const Deck = function createDeck(deckName) {
                 return null;
             }
             // Check that index is inbounds
-            if (index >= this.cards.length && index < 0) {
+            if (index >= this.cards.length || index < 0) {
                 return null;
             }
 
