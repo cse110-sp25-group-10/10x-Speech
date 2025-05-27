@@ -1,4 +1,3 @@
-body {
-    font-family: Arial, sans-serif;
-    color: rgb(184 83 83)
+:root {
+    --max-width: 70rem;
 }
