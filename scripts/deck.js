@@ -31,7 +31,7 @@ export const Card = function createCard(frontText, backText, time) {
         "backText": backText,
         "time": time,
     };
-}
+};
 
 /**
  * Create a deck object with Deck()
@@ -39,13 +39,17 @@ export const Card = function createCard(frontText, backText, time) {
  * @returns A deck object if successfully created and null otherwise
  */
 export const Deck = function createDeck(deckName) {
-    if (typeof deckName !== 'string') { return null; }
-    if (deckName.length === 0 || deckName.length > 60) { return null; }
+    if (typeof deckName !== "string") {
+        return null;
+    }
+    if (deckName.length === 0 || deckName.length > 60) {
+        return null;
+    }
 
-    return {
+    const deckInstance = {
         "deckName": deckName,
         "cards": [],
-        
+
         /**
          * Adds a card to the array cards
          * @param {object} card An object representing a card from createCard()
@@ -54,11 +58,11 @@ export const Deck = function createDeck(deckName) {
         addCard(card) {
             // Validate the card
             if (
-                typeof card !== "object"
+                typeof card !== "object" ||
                 // Make sure the newCard object has the correct properties
-                || !Object.hasOwn(card, "frontText")
-                || !Object.hasOwn(card, "backText")
-                || !Object.hasOwn(card, "time")
+                !Object.hasOwn(card, "frontText") ||
+                !Object.hasOwn(card, "backText") ||
+                !Object.hasOwn(card, "time")
             ) {
                 console.error("Invalid card.");
                 return false;
@@ -76,7 +80,7 @@ export const Deck = function createDeck(deckName) {
         readCard(index) {
             // TODO: Validation
             // Check whether deck is empty/null before running if statement
-            if(this.cards.length === 0) {
+            if (this.cards.length === 0) {
                 return null;
             }
             // Check that index is inbounds
@@ -90,28 +94,30 @@ export const Deck = function createDeck(deckName) {
         /**
          * Removes a card at an index of the deck
          * @param {number} index Where in the deck order the specified card is located
-         * @returns The card that was deleted if valid and null otherwise 
+         * @returns The card that was deleted if valid and null otherwise
          */
         deleteCard(index) {
             // TOOD: Validation
             // Check if deck already empty
-            if(this.cards.length === 0) {
+            if (this.cards.length === 0) {
                 return null;
             }
             // Check that index is inbounds
-            if (index >= this.cards.length && index < 0) {
+            if (index >= this.cards.length || index < 0) {
                 return null;
             }
 
-            return this.cards.splice(index, 1);
+            const deletedCard = this.cards.splice(index, 1);
+
+            return deletedCard.length > 0 ? deletedCard[0] : null;
         },
 
         /**
-        * Updates a card at an index of a deck with a new card
-        * @param {number} index - The index of the card to update
-        * @param {Object} newCard - The new card to update with
-        * @returns {boolean} - Returns true if the card was updated successfully, false otherwise
-        */
+         * Updates a card at an index of a deck with a new card
+         * @param {number} index - The index of the card to update
+         * @param {Object} newCard - The new card to update with
+         * @returns {boolean} - Returns true if the card was updated successfully, false otherwise
+         */
         updateCard(index, newCard) {
             // Validate the index
             if (index < 0 || index >= this.cards.length) {
@@ -126,7 +132,9 @@ export const Deck = function createDeck(deckName) {
                 !Object.hasOwn(newCard, "backText") ||
                 !Object.hasOwn(newCard, "time")
             ) {
-                console.error("Invalid newCard object for updateCard. It must be a complete card object.");
+                console.error(
+                    "Invalid newCard object for updateCard. It must be a complete card object."
+                );
                 return false;
             }
 
@@ -155,9 +163,11 @@ export const Deck = function createDeck(deckName) {
             // Update the card
             this.cards[index] = newCard;
             return true;
-        }
-    }
-}
+        },
+    };
+
+    return deckInstance;
+};
 
 /**
  * Shuffles the cards in a deck
