@@ -85,7 +85,7 @@ body {
     display: flex;
     gap: 50px;  
     justify-content: center;
-    padding-top: 15px
+    padding-top: 15px;
 }
 
 #edit-speech-button {
