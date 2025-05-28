@@ -7,15 +7,47 @@ class CardPreview extends HTMLElement {
         const shadow = this.attachShadow({ mode: "open" });
         const frontText = this.getAttribute("data-front-text");
         const backText = this.getAttribute("data-back-text");
+        const time = this.getAttribute("data-time");
+        const index = this.getAttribute("data-card-index");
         shadow.innerHTML = `
-            <p>${frontText}</p>
+            <p class="front-text">${frontText}</p>
+            <p class="back-text">${backText}</p>
+            <p class="time-text">${time}s</p>
+            <button class="edit-card-btn button-small" data-card-index="${index}">Edit</button>
+            <button class="delete-card-btn button-small danger" data-card-index="${index}">Delete</button>
             <hr>
-            <p>${backText}</p>
         `;
+        const editBtn = shadow.querySelector(".edit-card-btn");
+        const deleteBtn = shadow.querySelector(".delete-card-btn");
+        editBtn.addEventListener("click", this.editCard);
+        deleteBtn.addEventListener("click", this.deleteCard);
+    }
+
+    editCard(event) {
+        const editEvent = new CustomEvent("edit-card", {
+            detail: Number(event.target.getAttribute("data-card-index")),
+            bubbles: true,
+            composed: true
+        });
+
+        this.dispatchEvent(editEvent);
+    }
+
+    deleteCard(event) {
+        const deleteEvent = new CustomEvent("delete-card", {
+            detail: Number(event.target.getAttribute("data-card-index")),
+            bubbles: true,
+            composed: true
+        });
+        this.dispatchEvent(deleteEvent);
     }
 
     disconnectedCallback() {
-        this.replaceChildren();
+        const editBtn = this.shadowRoot.querySelector(".edit-card-btn");
+        const deleteBtn = this.shadowRoot.querySelector(".delete-card-btn");
+        editBtn.removeEventListener("click", this.editCard);
+        deleteBtn.removeEventListener("click", this.deleteCard);
+        this.shadowRoot.replaceChildren();
     }
 }
 
