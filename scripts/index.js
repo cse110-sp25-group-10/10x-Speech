@@ -342,6 +342,9 @@ function init() {
             // Remove save button event listener
             if (saveBtn) { saveBtn.removeEventListener("click", handleSaveDeckAndGoHome) };
 
+            cardList.removeEventListener("edit-card", editCard);
+            cardList.removeEventListener("delete-card", deleteCard);
+
             // Reset the current deck in creation
             appState.currentDeckInCreation = null;
         }
@@ -421,7 +424,6 @@ function init() {
         const cardDisplayArea = deckViewContainer.querySelector(".card-list");
         const studyDeckBtn = deckViewContainer.querySelector(".study-btn");
         const editDeckBtn = deckViewContainer.querySelector(".edit-btn");
-        const addCardToDeckBtn = deckViewContainer.querySelector(".add-btn");
         const backToDecksBtn = deckViewContainer.querySelector(".back-btn");
 
         // Populate Cards
@@ -441,7 +443,7 @@ function init() {
         }
 
         // Add event listeners
-        backToDecksBtn.addEventListener("click", initExisting);
+        backToDecksBtn.addEventListener("click", swapToExisting);
         studyDeckBtn.addEventListener("click", initStudy);
         editDeckBtn.addEventListener("click", editDeck);
 
@@ -458,11 +460,26 @@ function init() {
         });
 
         /**
-         * Sets the current deck to let initCreate() know to use the existing deck instead of creating a new one and swap to the create deck screen.
+         * Sets the current deck to let initCreate() know to use the existing deck instead of creating a new one, clear event listeners, and swap to the create deck screen.
          */
         function editDeck() {
             appState.currentDeckInCreation = deckToView;
+            clearEvents();
             initCreate();
+        }
+
+        /**
+         * Clear event listeners before swapping to the existing deck screen
+         */
+        function swapToExisting() {
+            clearEvents();
+            initExisting();
+        }
+
+        function clearEvents() {
+            backToDecksBtn.removeEventListener("click", initExisting);
+            studyDeckBtn.removeEventListener("click", initStudy);
+            editDeckBtn.removeEventListener("click", editDeck);
         }
     }
 
