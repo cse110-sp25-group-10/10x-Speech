@@ -1,6 +1,8 @@
 import "./screens/HomeScreen.js";
 import "./screens/CreateScreen.js";
+import "./screens/ExistingScreen.js"
 import "./components/CardPreview.js";
+import "./components/DeckPreview.js";
 import { Deck, Card } from "./deck.js";
 import { saveDeck, getAllDecks, deleteDeckDB } from "./database.js";
 import "./components/ConfirmationModal.js";
@@ -46,8 +48,9 @@ function init() {
         }
 
         // Get references to the buttons within the home screen
-        const createDeck = document.querySelector(".create-deck");
-        const existingDecks = document.querySelector(".existing-decks");
+        const shadowRoot = homeScreen.shadowRoot;
+        const createDeck = shadowRoot.querySelector(".create-deck");
+        const existingDecks = shadowRoot.querySelector(".existing-decks");
 
         // Add event listeners
         createDeck.addEventListener("click", swapToCreate);
@@ -87,9 +90,6 @@ function init() {
         const createScreen = document.createElement("create-screen");
         flashcardApp.appendChild(createScreen);
 
-        // Reset any previously half created deck
-        appState.currentDeckInCreation = null;
-
         // Get references to buttons
         const saveBtn = flashcardApp.querySelector("#save-button");
 
@@ -110,6 +110,8 @@ function init() {
         speechForm.addEventListener("submit", handleDeckNameSubmit);
         saveBtn.addEventListener("click", handleSaveDeckAndGoHome);
         backBtn.addEventListener("click", swapToHome);
+
+        initExistingCards();
 
         /**
          * Swap to the home screen
@@ -251,18 +253,29 @@ function init() {
             initHome(); // This will reload decks from DB, including the new one
         }
 
+        function initExistingCards() {
+            if (appState.currentDeckInCreation !== null) {
+                for (const card of appState.currentDeckInCreation.cards) {
+                    const newPreview = document.createElement("card-preview");
+                    newPreview.setAttribute("data-front-text", card.frontText);
+                    newPreview.setAttribute("data-back-text", card.backText);
+                    cardList.appendChild(newPreview);
+                }
+            }
+        }
+
         /**
          * Remove event listeners from the deck creation screen to prevent memory leaks
          */
         function clearEvents() {
             // Remove event listeners
-            if (speechForm) speechForm.removeEventListener("submit", handleDeckNameSubmit);
+            if (speechForm) { speechForm.removeEventListener("submit", handleDeckNameSubmit) };
 
             // Remove card form event listener
-            if (cardForm) cardForm.removeEventListener("submit", handleCardSubmit);
+            if (cardForm) { cardForm.removeEventListener("submit", handleCardSubmit) };
 
             // Remove save button event listener
-            if (saveBtn) saveBtn.removeEventListener("click", handleSaveDeckAndGoHome);
+            if (saveBtn) { saveBtn.removeEventListener("click", handleSaveDeckAndGoHome) };
 
             // Reset the current deck in creation
             appState.currentDeckInCreation = null;
@@ -275,51 +288,41 @@ function init() {
     function initExisting() {
         // Add functionality to swap to existing decks screen
         flashcardApp.replaceChildren();
-        const existingDecksScreen = document.createElement("div"); // TODO: Use custom element
-        existingDecksScreen.id = "existing-decks-screen";
-        existingDecksScreen.innerHTML = `
-            <h2>Your Decks</h2>
-            <div id="deckListContainer"></div>
-            <button id="backToHomeBtn">Back to Home</button>
-        `;
+        const existingDecksScreen = document.createElement("existing-screen");
+        
         flashcardApp.appendChild(existingDecksScreen);
 
-        const deckListContainer = existingDecksScreen.querySelector("#deckListContainer");
-        const backToHomeBtn = existingDecksScreen.querySelector("#backToHomeBtn");
+        // Get references to elements in existing decks screen
+        const deckListContainer = existingDecksScreen.querySelector("#deck-list-container");
+        const backToHomeBtn = existingDecksScreen.querySelector("#back-button");
 
-        backToHomeBtn.addEventListener("click", () => {
-            initHome();
-        });
+        // Add event listeners
+        backToHomeBtn.addEventListener("click", initHome);
 
+        // Add existing decks to the deck list
         if (Object.keys(appState.decks).length === 0) {
-            deckListContainer.innerHTML =
-                "<p>No decks found. Go to the home screen to create one!</p>";
+            deckListContainer.innerHTML = `
+                "<p>There are no decks yet. Please create one.</p>";
+            `;
         } else {
-            const ul = document.createElement("ul");
             for (const deckName in appState.decks) {
-                const deck = appState.decks[deckName];
-                const li = document.createElement("li");
-                li.textContent = `${deck.deckName} (${deck.cards.length} cards)`;
-                li.style.cursor = "pointer";
-                li.dataset.deckName = deckName;
-
-                li.addEventListener("click", (e) => {
-                    const selectedDeckName = e.currentTarget.dataset.deckName;
-                    initDeckViewScreen(selectedDeckName);
-                });
-                ul.appendChild(li);
+                const deck = appState.decks[deckName]
+                const deckPreview = document.createElement("deck-preview");
+                deckPreview.setAttribute("data-deck-name", deck.deckName);
+                deckPreview.setAttribute("data-deck-length", deck.cards.length);
+                deckListContainer.appendChild(deckPreview);
             }
-            deckListContainer.appendChild(ul);
         }
+
+        deckListContainer.addEventListener("deck-select", initDeckViewScreen);
     }
 
     /**
      * Initialize and swap to the screen for viewing/managing a single deck.
      * @param {string} deckName The name of the deck to view.
      */
-    async function initDeckViewScreen(deckName) {
-        const deckToView = appState.decks[deckName];
-
+    async function initDeckViewScreen(event) {
+        const deckToView = appState.decks[event.detail];
         if (!deckToView) {
             console.error(`Deck "${deckName}" not found in appState.`);
             alert("Error: Could not load the selected deck.");
@@ -332,19 +335,19 @@ function init() {
         const deckViewContainer = document.createElement("div");
         deckViewContainer.id = "deck-view-screen";
         deckViewContainer.innerHTML = `
-                <header class="deck-view-header">
-                    <h2 id="deckViewName"></h2>
-                    <div class="deck-actions">
-                        <button id="studyDeckBtn" class="button">Study Deck</button>
-                        <button id="editDeckBtn" class="button">Edit Deck Info</button> 
-                        <button id="addCardToDeckBtn" class="button">Add New Card</button>
-                        <button id="backToDecksBtn" class="button">Back to Decks List</button>
-                    </div>
-                </header>
-                <div id="cardDisplayArea" class="cards-grid">
-                    <!-- Cards will be populated here -->
+            <header class="deck-view-header">
+                <h2 id="deckViewName"></h2>
+                <div class="deck-actions">
+                    <button id="studyDeckBtn" class="button">Study Deck</button>
+                    <button id="editDeckBtn" class="button">Edit Deck Info</button> 
+                    <button id="addCardToDeckBtn" class="button">Add New Card</button>
+                    <button id="backToDecksBtn" class="button">Back to Decks List</button>
                 </div>
-            `;
+            </header>
+            <div id="cardDisplayArea" class="cards-grid">
+                <!-- Cards will be populated here -->
+            </div>
+        `;
         flashcardApp.appendChild(deckViewContainer);
 
         const deckViewNameEl = deckViewContainer.querySelector("#deckViewName");
@@ -376,9 +379,9 @@ function init() {
                 const actionsDiv = document.createElement("div");
                 actionsDiv.className = "card-item-actions";
                 actionsDiv.innerHTML = `
-            <button class="edit-card-btn button-small" data-card-index="${index}">Edit</button>
-            <button class="delete-card-btn button-small danger" data-card-index="${index}">Delete</button>
-        `;
+                    <button class="edit-card-btn button-small" data-card-index="${index}">Edit</button>
+                    <button class="delete-card-btn button-small danger" data-card-index="${index}">Delete</button>
+                `;
                 cardItemWrapper.appendChild(actionsDiv);
 
                 cardDisplayArea.appendChild(cardItemWrapper);
@@ -446,7 +449,8 @@ function init() {
 
         addCardToDeckBtn.addEventListener("click", () => {
             // TODO: Implement the logic to add a new card to the deck
-            alert("Add card to deck button clicked");
+            appState.currentDeckInCreation = deckToView;
+            initCreate();
         });
 
         // Event delegation for card edit/delete buttons
