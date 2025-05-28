@@ -5,7 +5,7 @@ import "./components/CardPreview.js";
 import "./components/DeckPreview.js";
 import "./screens/DeckScreen.js"
 import { Deck, Card } from "./deck.js";
-import { saveDeck, getAllDecks, deleteDeckDB } from "./database.js";
+import { saveDeck, getAllDecks } from "./database.js";
 import "./components/ConfirmationModal.js";
 
 window.addEventListener("DOMContentLoaded", init);
@@ -171,7 +171,6 @@ function init() {
                         newPreview.setAttribute("data-front-text", frontText);
                         newPreview.setAttribute("data-back-text", backText);
                         newPreview.setAttribute("data-time", timeNum);
-                        newPreview.setAttribute("data-card-index", editingState);
                         // Clear the data in the form
                         front.value = "";
                         back.value = "";
@@ -192,7 +191,6 @@ function init() {
                         newPreview.setAttribute("data-front-text", frontText);
                         newPreview.setAttribute("data-back-text", backText);
                         newPreview.setAttribute("data-time", timeNum);
-                        newPreview.setAttribute("data-card-index", appState.currentDeckInCreation.cards.length-1);
                         // Render it in the DOM
                         cardList.appendChild(newPreview);
                         // Reset form values
@@ -315,10 +313,16 @@ function init() {
         function editCard(event) {
             const index = getIndexInDOM(event.detail);
             const card = appState.currentDeckInCreation.readCard(index);
-            front.value = card.frontText;
-            back.value = card.backText;
-            time.value = card.time;
-            editingState = index;
+            if (card) {
+                if (editingState !== -1 && editingState !== index) {
+                    cardList.children[editingState].classList.remove("selected");
+                }
+                cardList.children[index].classList.add("selected");
+                front.value = card.frontText;
+                back.value = card.backText;
+                time.value = card.time;
+                editingState = index;
+            }
         }
 
         /**
@@ -479,11 +483,8 @@ function init() {
          */
         function editDeck() {
             appState.currentDeckInCreation = deckToView;
-            const index = getIndexInDOM(event.detail);
-            if (index !== -1) {
-                clearEvents();
-                initCreate(index);
-            }
+            clearEvents();
+            initCreate();
         }
 
         /**
@@ -502,9 +503,11 @@ function init() {
 
         function editCard(event) {
             appState.currentDeckInCreation = deckToView;
-            clearEvents();
             const index = getIndexInDOM(event.detail);
-            initCreate(index);
+            if (index !== -1) {
+                clearEvents();
+                initCreate(index);
+            }
         }
 
         /**
@@ -527,12 +530,11 @@ function init() {
         }
     }
 
-
     /**
+     * TO BE REMOVED (POSSIBLY)
      * Handles deleting a specific card from a deck.
      * @param {object} deck The deck object.
      * @param {number} cardIndex The index of the card to delete.
-     */
     async function handleDeleteCard(deck, cardIndex) {
         const card = deck.cards[cardIndex];
         if (!card) return;
@@ -565,6 +567,7 @@ function init() {
             alert("Failed to save changes after deleting card.");
         }
     }
+    */
 
     function initStudy() {
         // TODO: Implement study screen

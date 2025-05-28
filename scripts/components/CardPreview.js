@@ -8,13 +8,12 @@ class CardPreview extends HTMLElement {
         const frontText = this.getAttribute("data-front-text");
         const backText = this.getAttribute("data-back-text");
         const time = this.getAttribute("data-time");
-        const index = this.getAttribute("data-card-index");
         shadow.innerHTML = `
             <p class="front-text">${frontText}</p>
             <p class="back-text">${backText}</p>
             <p class="time-text">${time}s</p>
-            <button class="edit-card-btn button-small" data-card-index="${index}">Edit</button>
-            <button class="delete-card-btn button-small danger" data-card-index="${index}">Delete</button>
+            <button class="edit-card-btn button-small">Edit</button>
+            <button class="delete-card-btn button-small danger">Delete</button>
             <hr>
         `;
         const editBtn = shadow.querySelector(".edit-card-btn");
