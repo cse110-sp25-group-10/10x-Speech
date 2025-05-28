@@ -1,14 +1,19 @@
 import js from "@eslint/js";
 import globals from "globals";
-import { defineConfig } from "eslint/config";
+import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
+    globalIgnores([
+        "config/",
+        "node_modules/",
+        "coverage/",
+        "docs/"
+    ]),
     {
-        // files: ["scripts/**/*.js", "__tests__/**/*.js"],
         files: ["scripts/**/*.js"],
         plugins: { js, },
         extends: ["js/recommended"],
-
+        languageOptions: { globals: globals.browser },
         rules: {
             // Enforce camelcase for variable naming
             "camelcase": ["error", { properties: "always" }],
@@ -36,10 +41,5 @@ export default defineConfig([
             "eqeqeq": ["error", "always"],
             "prefer-const": "error"
         },
-    },
-
-    {
-        files: ["**/*.{js,mjs,cjs}"],
-        languageOptions: { globals: globals.browser },
     },
 ]);
