@@ -292,11 +292,12 @@ function init() {
          * @param {Event} event The event that triggered this function (should be "delete-card")
          */
         async function deleteCard(event) {
-            console.log(event.detail);
-            appState.currentDeckInCreation.deleteCard(event.detail);
-            // Removes the corresponding component from the DOM
-            cardList.removeChild(cardList.children[event.detail]);
-            await saveDeck(appState.currentDeckInCreation);
+            const index = getIndexInDOM(event.detail);
+            const deleted = appState.currentDeckInCreation.deleteCard(index);
+            if (deleted) {
+                cardList.removeChild(cardList.children[index]);
+                await saveDeck(appState.currentDeckInCreation);
+            }
         }
 
         /**
@@ -304,11 +305,29 @@ function init() {
          * @param {Event} event The event that triggered this function (should be "edit-card");
          */
         function editCard(event) {
-            const card = appState.currentDeckInCreation.readCard(event.detail);
+            const index = getIndexInDOM(event.detail);
+            const card = appState.currentDeckInCreation.readCard(index);
             front.value = card.frontText;
             back.value = card.backText;
             time.value = card.time;
-            editingState = event.detail;
+            editingState = index;
+        }
+        
+        /**
+         * Gets the index of an HTML element within its parent (i.e. the 5th child of its parent)
+         * @param {HTMLElement} el An HTML element 
+         * @returns The index of el or -1 if not found
+         */
+        function getIndexInDOM(el) {
+            const parent = el.parentElement;
+            let count = 0;
+            for (const child of parent.children) {
+                if (child === el) {
+                    return count;
+                }
+                count++;
+            }
+            return -1;
         }
 
         /**

@@ -25,7 +25,7 @@ class CardPreview extends HTMLElement {
 
     editCard(event) {
         const editEvent = new CustomEvent("edit-card", {
-            detail: Number(event.target.getAttribute("data-card-index")),
+            detail: this.getRootNode().host,
             bubbles: true,
             composed: true
         });
@@ -35,7 +35,7 @@ class CardPreview extends HTMLElement {
 
     deleteCard(event) {
         const deleteEvent = new CustomEvent("delete-card", {
-            detail: Number(event.target.getAttribute("data-card-index")),
+            detail: this.getRootNode().host,
             bubbles: true,
             composed: true
         });
