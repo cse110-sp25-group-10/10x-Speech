@@ -23,7 +23,7 @@ class CardPreview extends HTMLElement {
         deleteBtn.addEventListener("click", this.deleteCard);
     }
 
-    editCard(event) {
+    editCard() {
         const editEvent = new CustomEvent("edit-card", {
             detail: this.getRootNode().host,
             bubbles: true,
@@ -33,7 +33,7 @@ class CardPreview extends HTMLElement {
         this.dispatchEvent(editEvent);
     }
 
-    deleteCard(event) {
+    deleteCard() {
         const deleteEvent = new CustomEvent("delete-card", {
             detail: this.getRootNode().host,
             bubbles: true,

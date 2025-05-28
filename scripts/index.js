@@ -84,8 +84,9 @@ function init() {
 
     /**
      * Swap to the deck creation screen
+     * @param {Number} editIndex The index if a specific card is edited, -1 otherwise
      */
-    function initCreate() {
+    function initCreate(editIndex = -1) {
         // TODO: Set up creation screen implementation
         flashcardApp.replaceChildren();
         const createScreen = document.createElement("create-screen");
@@ -114,10 +115,17 @@ function init() {
         cardList.addEventListener("delete-card", deleteCard);
         cardList.addEventListener("edit-card", editCard);
 
-        let editingState = -1;
+        let editingState = editIndex;
 
         initExistingCards();
-
+        if (editingState !== -1) {
+            console.log(cardList.children[editingState]);
+            editCard(
+                new CustomEvent("edit-card", {
+                    detail: cardList.children[editingState],
+                })
+            );
+        }
         /**
          * Swap to the home screen
          */
@@ -312,23 +320,6 @@ function init() {
             time.value = card.time;
             editingState = index;
         }
-        
-        /**
-         * Gets the index of an HTML element within its parent (i.e. the 5th child of its parent)
-         * @param {HTMLElement} el An HTML element 
-         * @returns The index of el or -1 if not found
-         */
-        function getIndexInDOM(el) {
-            const parent = el.parentElement;
-            let count = 0;
-            for (const child of parent.children) {
-                if (child === el) {
-                    return count;
-                }
-                count++;
-            }
-            return -1;
-        }
 
         /**
          * Loads existing cards when editing an existing deck
@@ -440,6 +431,7 @@ function init() {
         deckViewContainer.setAttribute("data-deck-name", deckName);
         flashcardApp.appendChild(deckViewContainer);
 
+        // Get references to the buttons
         const cardDisplayArea = deckViewContainer.querySelector(".card-list");
         const studyDeckBtn = deckViewContainer.querySelector(".study-btn");
         const editDeckBtn = deckViewContainer.querySelector(".edit-btn");
@@ -465,6 +457,8 @@ function init() {
         backToDecksBtn.addEventListener("click", swapToExisting);
         studyDeckBtn.addEventListener("click", initStudy);
         editDeckBtn.addEventListener("click", editDeck);
+        cardDisplayArea.addEventListener("delete-card", deleteCard);
+        cardDisplayArea.addEventListener("edit-card", editCard);
 
         // Event delegation for card edit/delete buttons
         /** TO CHANGE
@@ -485,8 +479,32 @@ function init() {
          */
         function editDeck() {
             appState.currentDeckInCreation = deckToView;
+            const index = getIndexInDOM(event.detail);
+            if (index !== -1) {
+                clearEvents();
+                initCreate(index);
+            }
+        }
+
+        /**
+         * Deletes a card from a deck and removes the corresponding element from the DOM
+         * @param {Event} event The event that triggered this function (should be "delete-card" event)
+         */
+        async function deleteCard(event) {
+            const index = getIndexInDOM(event.detail);
+            // TODO: Dialog confirmation
+            const deleted = deckToView.deleteCard(index);
+            if (deleted) {
+                cardDisplayArea.removeChild(cardDisplayArea.children[index]);
+                await saveDeck(deckToView);
+            }
+        }
+
+        function editCard(event) {
+            appState.currentDeckInCreation = deckToView;
             clearEvents();
-            initCreate();
+            const index = getIndexInDOM(event.detail);
+            initCreate(index);
         }
 
         /**
@@ -497,10 +515,15 @@ function init() {
             initExisting();
         }
 
+        /**
+         * Clears events for elements in the deck view screen
+         */
         function clearEvents() {
             backToDecksBtn.removeEventListener("click", initExisting);
             studyDeckBtn.removeEventListener("click", initStudy);
             editDeckBtn.removeEventListener("click", editDeck);
+            cardDisplayArea.removeEventListener("delete-card", deleteCard);
+            cardDisplayArea.removeEventListener("edit-card", editCard);
         }
     }
 
@@ -546,4 +569,21 @@ function init() {
     function initStudy() {
         // TODO: Implement study screen
     }
+}
+
+/**
+ * Gets the index of an HTML element within its parent (i.e. the 5th child of its parent)
+ * @param {HTMLElement} el An HTML element 
+ * @returns The index of el or -1 if not found
+ */
+function getIndexInDOM(el) {
+    const parent = el.parentElement;
+    let count = 0;
+    for (const child of parent.children) {
+        if (child === el) {
+            return count;
+        }
+        count++;
+    }
+    return -1;
 }
