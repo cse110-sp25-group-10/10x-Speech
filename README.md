@@ -1,4 +1,7 @@
-# Flashcard-Project
+# 10x Cards
+
+[![codecov](https://codecov.io/gh/cse110-sp25-group-10/Flashcard-Project/graph/badge.svg?token=DAKDEQDBUL)](https://codecov.io/gh/cse110-sp25-group-10/Flashcard-Project)
+
 ## Checkpoint 1
 [YouTube Link](https://youtu.be/rDQnm-aopik)
 
