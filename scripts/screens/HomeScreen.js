@@ -5,7 +5,7 @@ class HomeScreen extends HTMLElement {
 
     connectedCallback() {
         const shadow = this.attachShadow({ mode: "open" });
-        this.shadowRoot.innerHTML = `
+        shadow.innerHTML = `
             <!-- title, motto text -->
             <header class="top">
                 <h1 class="title">10x Cards</h1>

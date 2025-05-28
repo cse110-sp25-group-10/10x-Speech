@@ -448,6 +448,7 @@ function init() {
         editDeckBtn.addEventListener("click", editDeck);
 
         // Event delegation for card edit/delete buttons
+        /** TO CHANGE
         cardDisplayArea.addEventListener("click", async (event) => {
             const target = event.target;
             const cardIndex = target.dataset.cardIndex;
@@ -458,6 +459,7 @@ function init() {
                 handleDeleteCard(deckToView, parseInt(cardIndex));
             }
         });
+         */
 
         /**
          * Sets the current deck to let initCreate() know to use the existing deck instead of creating a new one, clear event listeners, and swap to the create deck screen.
