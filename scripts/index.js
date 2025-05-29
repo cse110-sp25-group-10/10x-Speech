@@ -14,6 +14,7 @@ window.addEventListener("DOMContentLoaded", init);
 const appState = {
     decks: {}, // Stores Deck instances, keyed by deckName: { "deckName1": deckInstance1, ... }
     currentDeckInCreation: null, // Holds the Deck object while it's being built in CreateScreen
+    previousScreen: "home"
 };
 
 function init() {
@@ -61,6 +62,7 @@ function init() {
          * Swap to the deck creation screen
          */
         function swapToCreate() {
+            appState.previousScreen = "home";
             clearEvents();
             initCreate();
         }
@@ -69,6 +71,7 @@ function init() {
          * Swap to the existing decks screen
          */
         function swapToExisting() {
+            appState.previousScreen = "home";
             clearEvents();
             initExisting();
         }
@@ -111,7 +114,7 @@ function init() {
         cardForm.addEventListener("submit", handleCardSubmit);
         speechForm.addEventListener("submit", handleDeckNameSubmit);
         saveBtn.addEventListener("click", handleSaveDeckAndGoHome);
-        backBtn.addEventListener("click", swapToHome);
+        backBtn.addEventListener("click", swapToPrevScreen);
         cardList.addEventListener("delete-card", deleteCard);
         cardList.addEventListener("edit-card", editCard);
 
@@ -126,14 +129,22 @@ function init() {
                 })
             );
         }
+
         /**
          * Swap to the home screen
          */
-        function swapToHome() {
-            // TODO: Save the deck
-            clearEvents();
-            initHome();
-            console.log("Swapped to home screen");
+        function swapToPrevScreen() {
+            if (appState.previousScreen === "deck") {
+                const deckName = appState.currentDeckInCreation.deckName;
+                clearEvents();
+                initDeckViewScreen(new CustomEvent("deck-select", {
+                    detail: deckName,
+                    bubbles: false
+                }));                
+            } else {
+                clearEvents();
+                initHome();
+            }
         }
 
         /**
@@ -289,8 +300,7 @@ function init() {
                 return; // Don't navigate or clear events
             }
 
-            clearEvents();
-            initHome(); // This will reload decks from DB, including the new one
+            swapToPrevScreen(); // Go back to the previous screen you came from (either home or deck screen)
         }
 
         /**
@@ -402,6 +412,7 @@ function init() {
          * Swap to the home screen from the existing deck screen, clears event listeners for elements in the existing deck screen
          */
         function swapToHome() {
+            appState.previousScreen = "existing";
             clearEvents();
             initHome();
         }
@@ -464,24 +475,11 @@ function init() {
         cardDisplayArea.addEventListener("delete-card", deleteCard);
         cardDisplayArea.addEventListener("edit-card", editCard);
 
-        // Event delegation for card edit/delete buttons
-        /** TO CHANGE
-        cardDisplayArea.addEventListener("click", async (event) => {
-            const target = event.target;
-            const cardIndex = target.dataset.cardIndex;
-
-            if (target.classList.contains("edit-card-btn") && cardIndex !== undefined) {
-                handleEditCard(deckToView, parseInt(cardIndex));
-            } else if (target.classList.contains("delete-card-btn") && cardIndex !== undefined) {
-                handleDeleteCard(deckToView, parseInt(cardIndex));
-            }
-        });
-         */
-
         /**
          * Sets the current deck to let initCreate() know to use the existing deck instead of creating a new one, clear event listeners, and swap to the create deck screen.
          */
         function editDeck() {
+            appState.previousScreen = "deck";
             appState.currentDeckInCreation = deckToView;
             clearEvents();
             initCreate();
@@ -502,6 +500,7 @@ function init() {
         }
 
         function editCard(event) {
+            appState.previousScreen = "deck";
             appState.currentDeckInCreation = deckToView;
             const index = getIndexInDOM(event.detail);
             if (index !== -1) {
@@ -514,6 +513,7 @@ function init() {
          * Clear event listeners before swapping to the existing deck screen
          */
         function swapToExisting() {
+            appState.previousScreen = "deck";
             clearEvents();
             initExisting();
         }
