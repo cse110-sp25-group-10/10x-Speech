@@ -95,10 +95,10 @@ body,html {
 .add-speech:active {
     box-shadow: 0 0 20px 4px var(--white-transparent);
 }
+
 .bottom {
     display: flex;
     justify-content: space-between;
-    padding-top: 15px;
 }
 
 #edit-speech-button {
