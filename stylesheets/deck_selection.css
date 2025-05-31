@@ -137,7 +137,7 @@ body,html {
     font-size: 2em;
 }
 
-/*FOR WHEN WINDOW SIZE IS SMALL*/
+/* FOR WHEN WINDOW SIZE IS SMALL */
 @media (max-width: 600px) {
     .flash-card-container {
         justify-content: center;
