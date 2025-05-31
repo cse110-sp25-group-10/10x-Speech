@@ -1,6 +1,7 @@
 {
     "devDependencies": {
         "@eslint/js": "^9.26.0",
+        "@stylistic/stylelint-plugin": "^3.1.2",
         "eslint": "^9.26.0",
         "globals": "^16.1.0",
         "htmlhint": "^1.1.4",
@@ -12,16 +13,20 @@
     },
     "scripts": {
         "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-        "jslint": "npx eslint",
-        "csslint": "npx stylelint stylesheets/",
-        "htmllint": "npx htmlhint",
+        "jslint": "npx eslint -c config/eslint.config.mjs",
+        "csslint": "npx stylelint stylesheets/ -c config/stylelint.config.js",
+        "htmllint": "npx htmlhint -i **/docs/** -i **/coverage/** -c config/.htmlhintrc",
         "lint": "npm run jslint; npm run csslint; npm run htmllint",
         "docs": "./node_modules/.bin/jsdoc ./scripts -r -d docs"
     },
     "type": "module",
     "jest": {
         "transform": {},
-        "verbose": true
+        "verbose": true,
+        "collectCoverage": true,
+        "collectCoverageFrom": ["scripts/**/*.js"],
+        "coverageDirectory": "coverage",
+        "testMatch": ["**/__tests__/**/*.js"]
     },
     "prettier": {
         "tabWidth": 4,
