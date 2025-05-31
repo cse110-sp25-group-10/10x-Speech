@@ -3,6 +3,18 @@
     <head>
         <title>Prepare a Speech</title>
         <meta charset="UTF-8">
+        <!--Jersey 10 Font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Noto+Sans+Mandaic&family=Playwrite+AU+SA:wght@100..400&display=swap" rel="stylesheet">
+       <!--Lilita One Font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Lilita+One&family=Noto+Sans+Mandaic&family=Playwrite+AU+SA:wght@100..400&display=swap" rel="stylesheet">
+        
+
+        <link rel="stylesheet" href="../../stylesheets/preparing_speech.css">
+
     </head>
     <body>
         <!-- whole top part is going to be a form -->
@@ -10,7 +22,7 @@
             <!-- title this speech text field, save and finish button -->
             <fieldset class="top">
                 <input type="text" id="title-speech" name="title-speech">
-                <button id="save-button">Save &amp; Finish</button>
+                <button id="save-button">Save &amp; Upload</button>
             </fieldset>
             
             <!-- previous button, front of card, back of card, next button -->
@@ -26,22 +38,9 @@
 
             <fieldset class="bottom">
                 <button id="set-timer">Set Timer: XX:XX</button>
-                <button id="upload-card">Upload Card</button>
+                <button id="upload-card">Save &amp; Finish</button>
             </fieldset>
-        </form>
-
-        <!-- shuffle button, press to record button, return home button -->
-        <!-- maybe change from section to nav -->
-        <section class="bottom">
-            <button id="shuffle-button">Shuffle</button>
-
-            <!-- remember that this changes states -->
-            <button id="record-button">Press to Record Voice</button>
-            
-            <!-- go back to home.html screen -->
-            <button id="home-button">Return Home</button>
-        </section>
-        
+        </form>        
         <section class="flash-card-list-container">
             <!-- idea here is make list of card components using menu (should be same as ol) (maybe better handled in JS) -->
             <ol id="flash-card-list">
