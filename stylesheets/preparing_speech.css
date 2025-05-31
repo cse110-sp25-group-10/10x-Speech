@@ -34,6 +34,7 @@ body {
     width: 100%;
     height: 100%;
 }
+
 #title-speech {
     background-color: var(--white);
     border: solid var(--white);
@@ -168,7 +169,7 @@ body {
     box-shadow: 0 0 20px 4px var(--white-transparent);
 }
 
-#upload-card { /*Save & Finish*/
+#upload-card { /* Save & Finish */
     background-color: var(--white-transparent);
     color: var(--black);
     border-radius: 10px;
@@ -182,10 +183,6 @@ body {
 
 #upload-card:active {
     box-shadow: 0 0 20px 4px var(--white-transparent);
-}
-
-.flash-card-list-container {
-    width: 100%;
 }
 
 #sort-up {
@@ -253,7 +250,6 @@ body {
     gap: 1.5rem;
     padding: 1rem;
     border-radius: 20px;
-    
 }
 
 .temp-card {
