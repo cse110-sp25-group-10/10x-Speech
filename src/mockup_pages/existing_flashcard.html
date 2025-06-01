@@ -3,12 +3,22 @@
 <html lang="en">
     <head>
         <title>Existing Flashcard</title>
-        <meta charset="UTF-8">
+            <meta charset="UTF-8">
+        <!--Jersey 10 Font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Noto+Sans+Mandaic&family=Playwrite+AU+SA:wght@100..400&display=swap" rel="stylesheet">
+       <!--Lilita One Font-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Lilita+One&family=Noto+Sans+Mandaic&family=Playwrite+AU+SA:wght@100..400&display=swap" rel="stylesheet">
+    
+        <link rel="stylesheet" href="../../stylesheets/existing_flashcard.css">
     </head>
     <body>
         <!-- name textbox and time limit -->
         <header class="top">
-            <h1>Name of This Speech</h1>
+            <h1 id="title">Name of This Speech</h1>
 
             <!-- need to change XX:XX to take user timer input (JS thing?)-->
             <!-- Alan: investigate using <output> tag for time-limit -->
@@ -17,14 +27,14 @@
         
         <!-- previous button, card, next button -->
         <main class="flash-card-container">
-            <button id="previous-card-button">Previous</button>
+            <button id="previous-card-button">➤</button>
 
             <!-- card component here would be useful -->
             <article class="card" id="front-card">
                 <p class="card-content" id="placeholder-text">(Front)<br>(Tap to Flip to Back)</p>
             </article>
 
-            <button id="next-card-button">Next</button>
+            <button id="next-card-button">➤</button>
         </main>
 
         <!-- shuffle button, press to record button, return home button -->
