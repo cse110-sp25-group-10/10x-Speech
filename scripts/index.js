@@ -249,9 +249,12 @@ function init() {
                 return false;
             }
 
-            if (name === appState.currentDeckInCreation.deckName) {
-                console.log("same name");
-                return true;
+            // Only check for existing name if editing an existing deck
+            if (appState.currentDeckInCreation) {
+                if (name === appState.currentDeckInCreation.deckName) {
+                    console.log("same name");
+                    return true;
+                }
             }
 
             if (!appState.currentDeckInCreation) {
