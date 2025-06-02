@@ -15,7 +15,8 @@ body {
     place-items: center;
     padding: 5rem;
     background-color: var(--navy); /** In case background img doesn't load */
-    background-image: url("../10xCardsBG.png");
+    background-image: url("../background.jpg");
+    background-size: cover;
     background-attachment: fixed;
 }
 
@@ -88,7 +89,8 @@ body {
     font-family: "Jersey 10", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 1em;
+    font-size: 1.5em;
+    transform: scaleX(-1);
 }
 
 .previous-card-button:active {
