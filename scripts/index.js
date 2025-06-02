@@ -144,6 +144,7 @@ function init() {
             } else {
                 clearEvents();
                 initHome();
+            }
         }
 
         /**
@@ -220,6 +221,7 @@ function init() {
                     } else {
                         alert("Failed to add card to deck (internal validation).");
                     }
+                }
             } else {
                 alert(
                     "Invalid card details. Please check inputs:\n- Front: 1-60 chars\n- Back: 1-250 chars\n- Time: 1-60 secs"
@@ -526,45 +528,6 @@ function init() {
             cardDisplayArea.removeEventListener("edit-card", editCard);
         }
     }
-
-    /**
-     * TO BE REMOVED (POSSIBLY)
-     * Handles deleting a specific card from a deck.
-     * @param {object} deck The deck object.
-     * @param {number} cardIndex The index of the card to delete.
-    async function handleDeleteCard(deck, cardIndex) {
-        const card = deck.cards[cardIndex];
-        if (!card) return;
-
-        const modal = document.createElement("confirmation-modal");
-        document.body.appendChild(modal);
-        const userConfirmed = await modal.open(
-            `Are you sure you want to delete this card?\nFront: "${card.frontText}"`,
-            "Delete Card",
-            "Cancel"
-        );
-        document.body.removeChild(modal);
-
-        if (!userConfirmed) {
-            return;
-        }
-
-        deck.deleteCard(cardIndex);
-
-        try {
-            // Save the entire deck after card deletion
-            await saveDeck(deck);
-            console.log(
-                `Card at index ${cardIndex} in deck "${deck.deckName}" deleted and deck saved.`
-            );
-            // Re-render this deck view to show changes
-            initDeckViewScreen(deck.deckName);
-        } catch (error) {
-            console.error("Error saving deck after deleting card:", error);
-            alert("Failed to save changes after deleting card.");
-        }
-    }
-    */
 
     function initStudy() {
         // TODO: Implement study screen
