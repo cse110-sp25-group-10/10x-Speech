@@ -121,6 +121,11 @@ function init() {
         let editingState = editIndex;
 
         initExistingCards();
+        // Puts in the name of the deck if editing an existing deck automatically
+        if (appState.currentDeckInCreation) {
+            speechName.value = appState.currentDeckInCreation.deckName;
+        }
+
         if (editingState !== -1) {
             console.log(cardList.children[editingState]);
             editCard(
@@ -235,29 +240,39 @@ function init() {
          * @returns Returns if the name is invalid
          */
         async function handleDeckNameSubmit(event) {
-            event.preventDefault();
+            if (event) {
+                event.preventDefault();
+            }
             const name = speechName.value.trim();
             if (typeof name !== "string" || name.length === 0 || name.length > 60) {
                 alert("Deck name must be between 1 and 60 characters.");
-                return;
+                return false;
+            }
+
+            if (name === appState.currentDeckInCreation.deckName) {
+                console.log("same name");
+                return true;
             }
 
             if (!appState.currentDeckInCreation) {
                 appState.currentDeckInCreation = Deck(name);
                 if (!appState.currentDeckInCreation) {
                     alert("Error creating deck. Please try again.");
-                    return;
+                    return false;
                 }
                 console.log(`Deck "${name}" initialized for creation.`);
             } else {
+                // Removes the old key from the decks dictionary and replaces it with a new key using the new name
                 const oldName = appState.currentDeckInCreation.deckName;
                 appState.currentDeckInCreation.deckName = name;
                 delete appState.decks[oldName];
                 appState.decks[name] = appState.currentDeckInCreation;
+                // Removes the old deck from the database and inserts a new one in its place
+                // Possible TODO: In-place editing
                 await deleteDeckDB(oldName);
                 await saveDeck(appState.currentDeckInCreation);
                 console.log(`Deck name updated to "${name}".`);
-                console.log(appState.decks);
+                return true;
             }
         }
 
@@ -289,6 +304,12 @@ function init() {
                         initHome();
                     }
                 }
+                
+                // Prevent navigation if invaid deck name
+                if (!handleDeckNameSubmit()) {
+                    return;
+                }
+
                 try {
                     await saveDeck(appState.currentDeckInCreation);
                     appState.decks[appState.currentDeckInCreation.deckName] = appState.currentDeckInCreation; // Update in-memory list
