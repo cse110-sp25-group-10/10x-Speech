@@ -5,7 +5,7 @@ import "./components/CardPreview.js";
 import "./components/DeckPreview.js";
 import "./screens/DeckScreen.js"
 import { Deck, Card } from "./deck.js";
-import { saveDeck, getAllDecks } from "./database.js";
+import { saveDeck, getAllDecks, deleteDeckDB } from "./database.js";
 import "./components/ConfirmationModal.js";
 
 window.addEventListener("DOMContentLoaded", init);
@@ -131,7 +131,7 @@ function init() {
         }
 
         /**
-         * Swap to the home screen
+         * Swap to the screen the user last came from
          */
         function swapToPrevScreen() {
             if (appState.previousScreen === "deck") {
@@ -234,7 +234,7 @@ function init() {
          * @param {Event} event The event that causes this function to trigger (should be submit)
          * @returns Returns if the name is invalid
          */
-        function handleDeckNameSubmit(event) {
+        async function handleDeckNameSubmit(event) {
             event.preventDefault();
             const name = speechName.value.trim();
             if (typeof name !== "string" || name.length === 0 || name.length > 60) {
@@ -250,8 +250,14 @@ function init() {
                 }
                 console.log(`Deck "${name}" initialized for creation.`);
             } else {
+                const oldName = appState.currentDeckInCreation.deckName;
                 appState.currentDeckInCreation.deckName = name;
+                delete appState.decks[oldName];
+                appState.decks[name] = appState.currentDeckInCreation;
+                await deleteDeckDB(oldName);
+                await saveDeck(appState.currentDeckInCreation);
                 console.log(`Deck name updated to "${name}".`);
+                console.log(appState.decks);
             }
         }
 
@@ -285,8 +291,7 @@ function init() {
                 }
                 try {
                     await saveDeck(appState.currentDeckInCreation);
-                    appState.decks[appState.currentDeckInCreation.deckName] =
-                        appState.currentDeckInCreation; // Update in-memory list
+                    appState.decks[appState.currentDeckInCreation.deckName] = appState.currentDeckInCreation; // Update in-memory list
                     console.log(
                         `Deck "${appState.currentDeckInCreation.deckName}" finalized and saved.`
                     );
