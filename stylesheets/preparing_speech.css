@@ -1,0 +1,268 @@
+:root {
+    /** Color Variables */
+    --white:  rgb(241 236 254);
+    --light-blue: rgb(176 202 227);
+    --lilac: rgb(229 201 228);
+    --navy: rgb(19 16 45);
+    --black: rgb(0 0 0);
+    --white-transparent: rgb(241 236 254 / 80%);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--white);
+    margin: auto;
+    place-items: center;
+    padding: 5rem;
+    background-color: var(--navy); /** In case background img doesn't load */
+    background-image: url("../10xCardsBG.png");
+    background-attachment: fixed;
+}
+
+#customize-card {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    height: 100%;
+}
+
+#title-speech {
+    background-color: var(--white);
+    border: solid var(--white);
+    border-radius: 10px;
+    height: 2em;
+    width: 10em;
+    font-family: "Jersey 10", sans-serif;
+    font-style: normal;
+    font-size: 2rem;
+    text-align: center;
+}
+
+#save-button {
+    font-family: "Jersey 10", sans-serif;
+    background-color: var(--white-transparent);
+    color: var(--black);
+    border-radius: 10px;
+    width: 6em;
+    height: 2em;
+    font-style: normal;
+    font-size: 1.5em;
+    align-items: center;
+}
+
+#save-button:active {
+    box-shadow: 0 0 20px 4px var(--white-transparent);
+}
+
+.flash-card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+
+
+.previous-card-button {
+    display: flex;
+    background-color: var(--white);
+    color: var(--black);
+    border: solid var(--white);
+    border-radius: 100px;
+    width: 45px; 
+    height: 45px;
+    justify-content: center;
+    align-items: center;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em;
+}
+
+.previous-card-button:active {
+    box-shadow: 0 0 20px 4px var(--white-transparent);
+}
+
+.next-card-button {
+    display: flex;
+    background-color: var(--white);
+    color: var(--black);
+    border: solid var(--white);
+    border-radius: 100%;
+    width: 45px; 
+    height: 45px;
+    justify-content: center;
+    align-items: center;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em;
+}
+
+.next-card-button:active {
+    box-shadow: 0 0 20px 4px var(--white-transparent);
+}
+
+#input-front-card {
+    background-color: var(--white);
+    color: var(--black);
+    border: solid var(--white);
+    border-radius: 10px;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 15em;
+    width: 30%;
+}
+
+#input-back-card {
+    background-color: var(--white);
+    color: var(--black);
+    border: solid var(--white);
+    border-radius: 10px;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 15em;
+    width: 30%;
+}
+
+.bottom {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#set-timer {
+    background-color: var(--white-transparent);
+    color: var(--black);
+    border-radius: 10px;
+    width: 7em;
+    height: 2em;
+    font-family: "Jersey 10", sans-serif;
+    font-style: normal;
+    font-size: 1.5em;
+    align-items: center;
+}
+
+#set-timer:active {
+    box-shadow: 0 0 20px 4px var(--white-transparent);
+}
+
+#upload-card { /* Save & Finish */
+    background-color: var(--white-transparent);
+    color: var(--black);
+    border-radius: 10px;
+    width: 6em;
+    height: 2em;
+    font-family: "Jersey 10", sans-serif;
+    font-style: normal;
+    font-size: 1.5em;
+    align-items: center;
+}
+
+#upload-card:active {
+    box-shadow: 0 0 20px 4px var(--white-transparent);
+}
+
+#sort-up {
+    display: flex;
+    background-color: var(--white);
+    color: var(--black);
+    border: solid var(--white);
+    border-radius: 100%;
+    width: 45px; 
+    height: 45px;
+    justify-content: center;
+    align-items: center;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em;
+}
+
+#edit-list-entry {
+    background-color: var(--white-transparent);
+    outline: none;
+    color: var(--black);
+    border-radius: 10px;
+    width: 6em;
+    height: 2em;
+    font-family: "Jersey 10", sans-serif;
+    font-style: normal;
+    font-size: 1.5em;
+    align-items: center;
+}
+
+#delete-list-entry {
+    background-color: var(--white-transparent);
+    outline: none;
+    color: var(--black);
+    border-radius: 10px;
+    width: 6em;
+    height: 2em;
+    font-family: "Jersey 10", sans-serif;
+    font-style: normal;
+    font-size: 1.5em;
+    align-items: center;
+}
+
+#sort-down {
+    display: flex;
+    background-color: var(--white);
+    color: var(--black);
+    border: solid var(--white);
+    border-radius: 100%;
+    width: 45px; 
+    height: 45px;
+    justify-content: center;
+    align-items: center;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1em;
+}
+
+.flash-card-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+    border-radius: 20px;
+}
+
+.temp-card {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--white);
+    color: var(--black);
+    border-radius: 10px;
+    height: 12em;
+    width: 65vw;
+    margin-bottom: 1rem;
+}
+
+.temp-card:active {
+    box-shadow: 0 0 20px 4px var(--white-transparent);
+}

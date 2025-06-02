@@ -144,7 +144,6 @@ function init() {
             } else {
                 clearEvents();
                 initHome();
-            }
         }
 
         /**
@@ -221,7 +220,6 @@ function init() {
                     } else {
                         alert("Failed to add card to deck (internal validation).");
                     }
-            }
             } else {
                 alert(
                     "Invalid card details. Please check inputs:\n- Front: 1-60 chars\n- Back: 1-250 chars\n- Time: 1-60 secs"
@@ -368,7 +366,6 @@ function init() {
 
             cardList.removeEventListener("edit-card", editCard);
             cardList.removeEventListener("delete-card", deleteCard);
-
             // Reset the current deck in creation
             appState.currentDeckInCreation = null;
         }
