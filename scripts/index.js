@@ -1,12 +1,11 @@
 import "./screens/HomeScreen.js";
 import "./screens/CreateScreen.js";
-import "./screens/ExistingScreen.js"
+import "./screens/ExistingScreen.js";
 import "./components/CardPreview.js";
 import "./components/DeckPreview.js";
-import "./screens/DeckScreen.js"
+import "./screens/DeckScreen.js";
 import { Deck, Card } from "./deck.js";
 import { saveDeck, getAllDecks, deleteDeckDB } from "./database.js";
-import "./components/ConfirmationModal.js";
 
 window.addEventListener("DOMContentLoaded", init);
 
@@ -14,7 +13,7 @@ window.addEventListener("DOMContentLoaded", init);
 const appState = {
     decks: {}, // Stores Deck instances, keyed by deckName: { "deckName1": deckInstance1, ... }
     currentDeckInCreation: null, // Holds the Deck object while it's being built in CreateScreen
-    previousScreen: "home"
+    previousScreen: "home",
 };
 
 function init() {
@@ -110,6 +109,132 @@ function init() {
         const speechForm = flashcardApp.querySelector("#speech-form");
         const speechName = flashcardApp.querySelector("#title-speech");
 
+        // Helper to attach error span after input if not present
+        function ensureErrorSpan(input) {
+            let errorSpan = input.nextElementSibling;
+            if (!errorSpan || !errorSpan.classList.contains("error")) {
+                errorSpan = document.createElement("span");
+                errorSpan.className = "error";
+                input.parentNode.insertBefore(errorSpan, input.nextSibling);
+            }
+            return errorSpan;
+        }
+
+        // Attach error spans for all inputs
+        const frontError = ensureErrorSpan(front);
+        const backError = ensureErrorSpan(back);
+        const timeError = ensureErrorSpan(time);
+        const speechNameError = ensureErrorSpan(speechName);
+
+        // Validation and error display for each input
+        front.addEventListener("input", function () {
+            if (front.validity.valid) {
+                frontError.textContent = "";
+                frontError.className = "error";
+            } else {
+                showFrontError();
+            }
+        });
+        function showFrontError() {
+            if (front.validity.valueMissing) {
+                frontError.textContent = "You need to enter front text.";
+            } else if (front.value.length < 1 || front.value.length > 60) {
+                frontError.textContent = "Front text must be 1-60 characters.";
+            }
+            frontError.className = "error active";
+        }
+
+        back.addEventListener("input", function () {
+            if (back.validity.valid) {
+                backError.textContent = "";
+                backError.className = "error";
+            } else {
+                showBackError();
+            }
+        });
+        function showBackError() {
+            if (back.validity.valueMissing) {
+                backError.textContent = "You need to enter back text.";
+            } else if (back.value.length < 1 || back.value.length > 250) {
+                backError.textContent = "Back text must be 1-250 characters.";
+            }
+            backError.className = "error active";
+        }
+
+        time.addEventListener("input", function () {
+            if (time.validity.valid) {
+                timeError.textContent = "";
+                timeError.className = "error";
+            } else {
+                showTimeError();
+            }
+        });
+        function showTimeError() {
+            if (time.validity.valueMissing) {
+                timeError.textContent = "You need to enter a time.";
+            } else if (
+                isNaN(Number(time.value)) ||
+                Number(time.value) < 1 ||
+                Number(time.value) > 60
+            ) {
+                timeError.textContent = "Time must be a number between 1 and 60.";
+            }
+            timeError.className = "error active";
+        }
+
+        speechName.addEventListener("input", function () {
+            if (speechName.validity.valid) {
+                speechNameError.textContent = "";
+                speechNameError.className = "error";
+            } else {
+                showSpeechNameError();
+            }
+        });
+        function showSpeechNameError() {
+            if (speechName.validity.valueMissing) {
+                speechNameError.textContent = "You need to enter a deck name.";
+            } else if (speechName.value.length < 1 || speechName.value.length > 60) {
+                speechNameError.textContent = "Deck name must be 1-60 characters.";
+            }
+            speechNameError.className = "error active";
+        }
+
+        // Prevent form submission if any field is invalid and show errors
+        cardForm.addEventListener("submit", function (event) {
+            let valid = true;
+            if (!front.validity.valid || front.value.length < 1 || front.value.length > 60) {
+                showFrontError();
+                valid = false;
+            }
+            if (!back.validity.valid || back.value.length < 1 || back.value.length > 250) {
+                showBackError();
+                valid = false;
+            }
+            if (
+                !time.validity.valid ||
+                isNaN(Number(time.value)) ||
+                Number(time.value) < 1 ||
+                Number(time.value) > 60
+            ) {
+                showTimeError();
+                valid = false;
+            }
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+
+        speechForm.addEventListener("submit", function (event) {
+            if (
+                !speechName.validity.valid ||
+                speechName.value.length < 1 ||
+                speechName.value.length > 60
+            ) {
+                showSpeechNameError();
+                event.preventDefault();
+            }
+        });
+
         // Add event listeners
         cardForm.addEventListener("submit", handleCardSubmit);
         speechForm.addEventListener("submit", handleDeckNameSubmit);
@@ -142,10 +267,12 @@ function init() {
             if (appState.previousScreen === "deck") {
                 const deckName = appState.currentDeckInCreation.deckName;
                 clearEvents();
-                initDeckViewScreen(new CustomEvent("deck-select", {
-                    detail: deckName,
-                    bubbles: false
-                }));                
+                initDeckViewScreen(
+                    new CustomEvent("deck-select", {
+                        detail: deckName,
+                        bubbles: false,
+                    })
+                );
             } else {
                 clearEvents();
                 initHome();
@@ -158,14 +285,13 @@ function init() {
          */
         async function handleCardSubmit(event) {
             event.preventDefault();
-            // TODO: Use validation techniques instead of alert
             if (!appState.currentDeckInCreation) {
-                alert("Please set a deck name first using the 'Name your Speech' form.");
                 return;
             }
             if (!appState.currentDeckInCreation.deckName) {
-                alert(
-                    "The deck needs a name before adding cards. Please use the 'Name your Speech' form."
+                await showDialog(
+                    "The deck needs a name before adding cards. Please use the 'Name your Speech' form.",
+                    "OK"
                 );
                 return;
             }
@@ -176,11 +302,13 @@ function init() {
 
             // Attempt to create a new card using given values
             const newCard = Card(frontText, backText, timeNum);
-            // TODO: Use validation techniques instead of alert
             // If a card is successfully created (i.e. not null), add it to the deck if we're creating a card or override the card at the specified index
             if (newCard !== null) {
                 if (editingState >= 0) {
-                    const updated = appState.currentDeckInCreation.updateCard(editingState, newCard);
+                    const updated = appState.currentDeckInCreation.updateCard(
+                        editingState,
+                        newCard
+                    );
                     if (updated) {
                         // Create a new card component with the new values
                         const newPreview = document.createElement("card-preview");
@@ -221,16 +349,15 @@ function init() {
                             );
                         } catch (error) {
                             console.error("Error saving deck after adding card:", error);
-                            alert("Error saving deck. Changes may not be persisted.");
+                            await showDialog(
+                                "Error saving deck. Changes may not be persisted.",
+                                "OK"
+                            );
                         }
                     } else {
-                        alert("Failed to add card to deck (internal validation).");
+                        await showDialog("Failed to add card to deck (internal validation).", "OK");
                     }
                 }
-            } else {
-                alert(
-                    "Invalid card details. Please check inputs:\n- Front: 1-60 chars\n- Back: 1-250 chars\n- Time: 1-60 secs"
-                );
             }
         }
 
@@ -245,7 +372,6 @@ function init() {
             }
             const name = speechName.value.trim();
             if (typeof name !== "string" || name.length === 0 || name.length > 60) {
-                alert("Deck name must be between 1 and 60 characters.");
                 return false;
             }
 
@@ -260,8 +386,8 @@ function init() {
             if (!appState.currentDeckInCreation) {
                 appState.currentDeckInCreation = Deck(name);
                 if (!appState.currentDeckInCreation) {
-                    alert("Error creating deck. Please try again.");
-                    return false;
+                    showDialog("Error creating deck. Please try again.", "OK");
+                    return;
                 }
                 console.log(`Deck "${name}" initialized for creation.`);
             } else {
@@ -285,29 +411,19 @@ function init() {
         async function handleSaveDeckAndGoHome() {
             if (appState.currentDeckInCreation && appState.currentDeckInCreation.deckName) {
                 if (appState.currentDeckInCreation.cards.length === 0) {
-                    // TODO: Use dialog tag instead
-                    const modal = document.createElement("confirmation-modal");
-
-                    // Add modal to DOM so it can be displayed
-                    document.body.appendChild(modal);
-
-                    const userConfirmed = await modal.open(
+                    const userConfirmed = await showDialog(
                         "This deck has no cards. Do you still want to save it?",
                         "Save Anyway",
                         "Cancel"
                     );
-
-                    // Remove modal from DOM after use
-                    document.body.removeChild(modal);
-
                     if (!userConfirmed) {
                         console.log("User chose not to save empty deck.");
-                        return; // User clicked "Cancel" or closed the modal
+                        return;
                     } else {
                         initHome();
                     }
                 }
-                
+
                 // Prevent navigation if invaid deck name
                 if (!handleDeckNameSubmit()) {
                     return;
@@ -315,17 +431,18 @@ function init() {
 
                 try {
                     await saveDeck(appState.currentDeckInCreation);
-                    appState.decks[appState.currentDeckInCreation.deckName] = appState.currentDeckInCreation; // Update in-memory list
+                    appState.decks[appState.currentDeckInCreation.deckName] =
+                        appState.currentDeckInCreation; // Update in-memory list
                     console.log(
                         `Deck "${appState.currentDeckInCreation.deckName}" finalized and saved.`
                     );
                 } catch (error) {
                     console.error("Error saving deck:", error);
-                    alert("Error saving deck. Please try again.");
+                    showDialog("Error saving deck. Please try again.", "OK");
                     return; // Don't navigate away if save failed
                 }
             } else {
-                alert("No deck to save or deck has no name. Please name your deck.");
+                showDialog("No deck to save or deck has no name. Please name your deck.", "OK");
                 return; // Don't navigate or clear events
             }
 
@@ -387,13 +504,19 @@ function init() {
          */
         function clearEvents() {
             // Remove event listeners
-            if (speechForm) { speechForm.removeEventListener("submit", handleDeckNameSubmit) };
+            if (speechForm) {
+                speechForm.removeEventListener("submit", handleDeckNameSubmit);
+            }
 
             // Remove card form event listener
-            if (cardForm) { cardForm.removeEventListener("submit", handleCardSubmit) };
+            if (cardForm) {
+                cardForm.removeEventListener("submit", handleCardSubmit);
+            }
 
             // Remove save button event listener
-            if (saveBtn) { saveBtn.removeEventListener("click", handleSaveDeckAndGoHome) };
+            if (saveBtn) {
+                saveBtn.removeEventListener("click", handleSaveDeckAndGoHome);
+            }
 
             cardList.removeEventListener("edit-card", editCard);
             cardList.removeEventListener("delete-card", deleteCard);
@@ -409,7 +532,7 @@ function init() {
         // Add functionality to swap to existing decks screen
         flashcardApp.replaceChildren();
         const existingDecksScreen = document.createElement("existing-screen");
-        
+
         flashcardApp.appendChild(existingDecksScreen);
 
         // Get references to elements in existing decks screen
@@ -426,7 +549,7 @@ function init() {
             `;
         } else {
             for (const deckName in appState.decks) {
-                const deck = appState.decks[deckName]
+                const deck = appState.decks[deckName];
                 const deckPreview = document.createElement("deck-preview");
                 deckPreview.setAttribute("data-deck-name", deck.deckName);
                 deckPreview.setAttribute("data-deck-length", deck.cards.length);
@@ -444,7 +567,7 @@ function init() {
             clearEvents();
             initHome();
         }
-        
+
         /**
          * Remove event listeners from the deck creation screen to prevent memory leaks
          */
@@ -461,10 +584,9 @@ function init() {
     async function initDeckViewScreen(event) {
         const deckName = event.detail;
         const deckToView = appState.decks[deckName];
-        // TODO: Replace alert
         if (!deckToView) {
             console.error(`Deck "${deckName}" not found in appState.`);
-            alert("Error: Could not load the selected deck.");
+            showDialog("Error: Could not load the selected deck.", "OK");
             initExisting(); // Go back to the list if deck not found
             return;
         }
@@ -484,15 +606,29 @@ function init() {
         if (deckToView.cards.length === 0) {
             cardDisplayArea.innerHTML = "<p>This deck has no cards yet. You can add some!</p>";
         } else {
-            deckToView.cards.forEach((card, index) => {
-                const deckCard = document.createElement("card-preview");
-                deckCard.setAttribute("data-front-text", card.frontText);
-                deckCard.setAttribute("data-back-text", card.backText);
-                deckCard.setAttribute("data-card-index", index);
+            deckToView.cards.forEach(function (card, index) {
+                const cardItemWrapper = document.createElement("div");
+                cardItemWrapper.className = "card-item-wrapper";
+
+                const cardPreviewInstance = document.createElement("card-preview");
+                cardPreviewInstance.setAttribute("data-front-text", card.frontText);
+                cardPreviewInstance.setAttribute("data-back-text", card.backText);
+                cardPreviewInstance.setAttribute("data-card-index", index);
                 if (card.time !== undefined) {
-                    deckCard.setAttribute("data-time", String(card.time));
+                    cardPreviewInstance.setAttribute("data-time", String(card.time));
                 }
-                cardDisplayArea.appendChild(deckCard);
+
+                cardItemWrapper.appendChild(cardPreviewInstance);
+
+                const actionsDiv = document.createElement("div");
+                actionsDiv.className = "card-item-actions";
+                actionsDiv.innerHTML = `
+                    <button class="edit-card-btn button-small" data-card-index="${index}">Edit</button>
+                    <button class="delete-card-btn button-small danger" data-card-index="${index}">Delete</button>
+                `;
+                cardItemWrapper.appendChild(actionsDiv);
+
+                cardDisplayArea.appendChild(cardItemWrapper);
             });
         }
 
@@ -565,7 +701,7 @@ function init() {
 
 /**
  * Gets the index of an HTML element within its parent (i.e. the 5th child of its parent)
- * @param {HTMLElement} el An HTML element 
+ * @param {HTMLElement} el An HTML element
  * @returns The index of el or -1 if not found
  */
 function getIndexInDOM(el) {
@@ -578,4 +714,34 @@ function getIndexInDOM(el) {
         count++;
     }
     return -1;
+}
+
+/**
+ * Shows a native dialog and returns a Promise that resolves to true (confirm) or false (cancel)
+ * @param {string} message The message to display
+ * @param {string} confirmText The confirm button text
+ * @param {string} cancelText The cancel button text
+ * @returns {Promise<boolean>}
+ */
+function showDialog(message, confirmText = "OK", cancelText = "Cancel") {
+    return new Promise((resolve) => {
+        const dialog = document.createElement("dialog");
+        dialog.innerHTML = `
+            <form method="dialog" style="display:flex;flex-direction:column;gap:1em;">
+                <p>${message}</p>
+                <menu style="display:flex;gap:1em;justify-content:flex-end;">
+                    <button value="cancel">${cancelText}</button>
+                    <button value="confirm" autofocus>${confirmText}</button>
+                </menu>
+            </form>
+        `;
+        document.body.appendChild(dialog);
+
+        dialog.addEventListener("close", () => {
+            resolve(dialog.returnValue === "confirm");
+            dialog.remove();
+        });
+
+        dialog.showModal();
+    });
 }
