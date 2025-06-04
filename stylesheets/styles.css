@@ -1,5 +1,5 @@
-
 @import url("preparing_speech.css");
+@import url("deck_selection.css");
 
 :root {
     /* Structural Variables  */
@@ -29,4 +29,8 @@ body {
     margin: auto;
     max-width: var(--max-width);
     place-items: center;
+}
+
+.selected {
+    box-shadow: 0 0 20px 4px var(--white-transparent);
 }

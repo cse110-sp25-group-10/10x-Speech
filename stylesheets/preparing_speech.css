@@ -80,7 +80,7 @@ fieldset {
     width: 100%;
 }
 
-.flash-card-container {
+.flash-card-creation {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -293,11 +293,6 @@ card-preview > menu {
     bottom: 1rem;
     right: 1rem;
 }
-
-card-preview.selected {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
-}
-
 
 card-preview:active {
     box-shadow: 0 0 20px 4px var(--white-transparent);

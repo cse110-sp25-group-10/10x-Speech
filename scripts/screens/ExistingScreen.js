@@ -5,9 +5,20 @@ class ExistingScreen extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = `
-            <h2>Your Decks</h2>
-            <output id="deck-list-container"></output>
-            <button id="back-button">Back to Home</button>
+            <header>
+                <h1 class="title">10x Cards</h1>
+                <h3 class="motto">Study Less, Learn 10x More</h3>
+            </header>
+            <main>
+                <h2>Your Decks</h2>
+                <button id="add-new-button">Create</button>
+                <output class="flash-card-container"></output>
+                <menu class="bottom">
+                    <button id="edit-speech-button">Edit</button>
+                    <button id="study-button">Study</button>
+                    <button id="delete-speech-button">Delete</button>
+                </menu>
+            </main>
         `;
     }
 
