@@ -89,7 +89,6 @@ function init() {
      * @param {Number} editIndex The index if a specific card is edited, -1 otherwise
      */
     function initCreate(editIndex = -1) {
-        // TODO: Set up creation screen implementation
         flashcardApp.replaceChildren();
         const createScreen = document.createElement("create-screen");
         flashcardApp.appendChild(createScreen);
@@ -127,14 +126,19 @@ function init() {
         const speechNameError = ensureErrorSpan(speechName);
 
         // Validation and error display for each input
-        front.addEventListener("input", function () {
-            if (front.validity.valid) {
+        front.addEventListener("input", handleFrontInput);
+        back.addEventListener("input", handleBackInput);
+        time.addEventListener("input", handleTimeInput);
+        speechName.addEventListener("input", handleSpeechNameInput);
+
+        function handleFrontInput() {
+            if (front.validity.valid && front.value.length >= 1 && front.value.length <= 60) {
                 frontError.textContent = "";
                 frontError.className = "error";
             } else {
                 showFrontError();
             }
-        });
+        }
         function showFrontError() {
             if (front.validity.valueMissing) {
                 frontError.textContent = "You need to enter front text.";
@@ -144,14 +148,14 @@ function init() {
             frontError.className = "error active";
         }
 
-        back.addEventListener("input", function () {
-            if (back.validity.valid) {
+        function handleBackInput() {
+            if (back.validity.valid && back.value.length >= 1 && back.value.length <= 250) {
                 backError.textContent = "";
                 backError.className = "error";
             } else {
                 showBackError();
             }
-        });
+        }
         function showBackError() {
             if (back.validity.valueMissing) {
                 backError.textContent = "You need to enter back text.";
@@ -161,14 +165,19 @@ function init() {
             backError.className = "error active";
         }
 
-        time.addEventListener("input", function () {
-            if (time.validity.valid) {
+        function handleTimeInput() {
+            if (
+                time.validity.valid &&
+                !isNaN(Number(time.value)) &&
+                Number(time.value) >= 1 &&
+                Number(time.value) <= 60
+            ) {
                 timeError.textContent = "";
                 timeError.className = "error";
             } else {
                 showTimeError();
             }
-        });
+        }
         function showTimeError() {
             if (time.validity.valueMissing) {
                 timeError.textContent = "You need to enter a time.";
@@ -182,14 +191,18 @@ function init() {
             timeError.className = "error active";
         }
 
-        speechName.addEventListener("input", function () {
-            if (speechName.validity.valid) {
+        function handleSpeechNameInput() {
+            if (
+                speechName.validity.valid &&
+                speechName.value.length >= 1 &&
+                speechName.value.length <= 60
+            ) {
                 speechNameError.textContent = "";
                 speechNameError.className = "error";
             } else {
                 showSpeechNameError();
             }
-        });
+        }
         function showSpeechNameError() {
             if (speechName.validity.valueMissing) {
                 speechNameError.textContent = "You need to enter a deck name.";
@@ -199,43 +212,7 @@ function init() {
             speechNameError.className = "error active";
         }
 
-        // Prevent form submission if any field is invalid and show errors
-        cardForm.addEventListener("submit", function (event) {
-            let valid = true;
-            if (!front.validity.valid || front.value.length < 1 || front.value.length > 60) {
-                showFrontError();
-                valid = false;
-            }
-            if (!back.validity.valid || back.value.length < 1 || back.value.length > 250) {
-                showBackError();
-                valid = false;
-            }
-            if (
-                !time.validity.valid ||
-                isNaN(Number(time.value)) ||
-                Number(time.value) < 1 ||
-                Number(time.value) > 60
-            ) {
-                showTimeError();
-                valid = false;
-            }
-            if (!valid) {
-                event.preventDefault();
-            }
-        });
-
-        speechForm.addEventListener("submit", function (event) {
-            if (
-                !speechName.validity.valid ||
-                speechName.value.length < 1 ||
-                speechName.value.length > 60
-            ) {
-                showSpeechNameError();
-                event.preventDefault();
-            }
-        });
-
-        // Add event listeners
+        // Only use named submit handlers for validation and submission
         cardForm.addEventListener("submit", handleCardSubmit);
         speechForm.addEventListener("submit", handleDeckNameSubmit);
         saveBtn.addEventListener("click", handleSaveDeckAndGoHome);
@@ -246,13 +223,11 @@ function init() {
         let editingState = editIndex;
 
         initExistingCards();
-        // Puts in the name of the deck if editing an existing deck automatically
         if (appState.currentDeckInCreation) {
             speechName.value = appState.currentDeckInCreation.deckName;
         }
 
         if (editingState !== -1) {
-            console.log(cardList.children[editingState]);
             editCard(
                 new CustomEvent("edit-card", {
                     detail: cardList.children[editingState],
@@ -284,6 +259,30 @@ function init() {
          * @param {Event} event The event that causes this function to trigger (should be submit)
          */
         async function handleCardSubmit(event) {
+            // Validate all fields before proceeding
+            let valid = true;
+            if (!front.validity.valid || front.value.length < 1 || front.value.length > 60) {
+                showFrontError();
+                valid = false;
+            }
+            if (!back.validity.valid || back.value.length < 1 || back.value.length > 250) {
+                showBackError();
+                valid = false;
+            }
+            if (
+                !time.validity.valid ||
+                isNaN(Number(time.value)) ||
+                Number(time.value) < 1 ||
+                Number(time.value) > 60
+            ) {
+                showTimeError();
+                valid = false;
+            }
+            if (!valid) {
+                event.preventDefault();
+                return;
+            }
+
             event.preventDefault();
             if (!appState.currentDeckInCreation) {
                 return;
@@ -367,9 +366,19 @@ function init() {
          * @returns Returns if the name is invalid
          */
         async function handleDeckNameSubmit(event) {
+            // Validate deck name before proceeding
             if (event) {
                 event.preventDefault();
             }
+            if (
+                !speechName.validity.valid ||
+                speechName.value.length < 1 ||
+                speechName.value.length > 60
+            ) {
+                showSpeechNameError();
+                return false;
+            }
+
             const name = speechName.value.trim();
             if (typeof name !== "string" || name.length === 0 || name.length > 60) {
                 return false;
@@ -387,7 +396,7 @@ function init() {
                 appState.currentDeckInCreation = Deck(name);
                 if (!appState.currentDeckInCreation) {
                     showDialog("Error creating deck. Please try again.", "OK");
-                    return;
+                    return false;
                 }
                 console.log(`Deck "${name}" initialized for creation.`);
             } else {
@@ -403,6 +412,7 @@ function init() {
                 console.log(`Deck name updated to "${name}".`);
                 return true;
             }
+            return true;
         }
 
         /**
@@ -424,8 +434,9 @@ function init() {
                     }
                 }
 
-                // Prevent navigation if invaid deck name
-                if (!handleDeckNameSubmit()) {
+                // Prevent navigation if invalid deck name
+                const nameValid = await handleDeckNameSubmit();
+                if (!nameValid) {
                     return;
                 }
 
@@ -726,10 +737,11 @@ function getIndexInDOM(el) {
 function showDialog(message, confirmText = "OK", cancelText = "Cancel") {
     return new Promise((resolve) => {
         const dialog = document.createElement("dialog");
+        dialog.className = "custom-dialog";
         dialog.innerHTML = `
-            <form method="dialog" style="display:flex;flex-direction:column;gap:1em;">
+            <form method="dialog">
                 <p>${message}</p>
-                <menu style="display:flex;gap:1em;justify-content:flex-end;">
+                <menu>
                     <button value="cancel">${cancelText}</button>
                     <button value="confirm" autofocus>${confirmText}</button>
                 </menu>
@@ -737,11 +749,13 @@ function showDialog(message, confirmText = "OK", cancelText = "Cancel") {
         `;
         document.body.appendChild(dialog);
 
-        dialog.addEventListener("close", () => {
+        function handleClose() {
             resolve(dialog.returnValue === "confirm");
+            dialog.removeEventListener("close", handleClose);
             dialog.remove();
-        });
+        }
 
+        dialog.addEventListener("close", handleClose);
         dialog.showModal();
     });
 }
