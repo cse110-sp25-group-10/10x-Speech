@@ -56,3 +56,15 @@ body {
 *:disabled {
     opacity: 0.25;
 }
+
+.custom-dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.custom-dialog menu {
+    display: flex;
+    gap: 1em;
+    justify-content: flex-end;
+}

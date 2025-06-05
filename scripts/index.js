@@ -1,8 +1,8 @@
 import "./screens/CreateScreen.js";
-import "./screens/ExistingScreen.js"
+import "./screens/ExistingScreen.js";
 import "./components/CardPreview.js";
 import "./components/DeckPreview.js";
-import "./screens/DeckScreen.js"
+import "./screens/DeckScreen.js";
 import { Deck, Card } from "./deck.js";
 import { saveDeck, getAllDecks, deleteDeckDB } from "./database.js";
 
@@ -12,7 +12,7 @@ window.addEventListener("DOMContentLoaded", init);
 const appState = {
     decks: {}, // Stores Deck instances, keyed by deckName: { "deckName1": deckInstance1, ... }
     currentDeckInCreation: null, // Holds the Deck object while it's being built in CreateScreen
-    previousScreen: "home"
+    previousScreen: "home",
 };
 
 function init() {
@@ -160,7 +160,111 @@ function init() {
         const speechForm = flashcardApp.querySelector("#speech-form");
         const speechName = flashcardApp.querySelector("#title-speech");
 
-        // Add event listeners
+        // Helper to attach error span after input if not present
+        function ensureErrorSpan(input) {
+            let errorSpan = input.nextElementSibling;
+            if (!errorSpan || !errorSpan.classList.contains("error")) {
+                errorSpan = document.createElement("span");
+                errorSpan.className = "error";
+                input.parentNode.insertBefore(errorSpan, input.nextSibling);
+            }
+            return errorSpan;
+        }
+
+        // Attach error spans for all inputs
+        const frontError = ensureErrorSpan(front);
+        const backError = ensureErrorSpan(back);
+        const timeError = ensureErrorSpan(time);
+        const speechNameError = ensureErrorSpan(speechName);
+
+        // Validation and error display for each input
+        front.addEventListener("input", handleFrontInput);
+        back.addEventListener("input", handleBackInput);
+        time.addEventListener("input", handleTimeInput);
+        speechName.addEventListener("input", handleSpeechNameInput);
+
+        function handleFrontInput() {
+            if (front.validity.valid && front.value.length >= 1 && front.value.length <= 60) {
+                frontError.textContent = "";
+                frontError.className = "error";
+            } else {
+                showFrontError();
+            }
+        }
+        function showFrontError() {
+            if (front.validity.valueMissing) {
+                frontError.textContent = "You need to enter front text.";
+            } else if (front.value.length < 1 || front.value.length > 60) {
+                frontError.textContent = "Front text must be 1-60 characters.";
+            }
+            frontError.className = "error active";
+        }
+
+        function handleBackInput() {
+            if (back.validity.valid && back.value.length >= 1 && back.value.length <= 250) {
+                backError.textContent = "";
+                backError.className = "error";
+            } else {
+                showBackError();
+            }
+        }
+        function showBackError() {
+            if (back.validity.valueMissing) {
+                backError.textContent = "You need to enter back text.";
+            } else if (back.value.length < 1 || back.value.length > 250) {
+                backError.textContent = "Back text must be 1-250 characters.";
+            }
+            backError.className = "error active";
+        }
+
+        function handleTimeInput() {
+            if (
+                time.validity.valid &&
+                !isNaN(Number(time.value)) &&
+                Number(time.value) >= 1 &&
+                Number(time.value) <= 60
+            ) {
+                timeError.textContent = "";
+                timeError.className = "error";
+            } else {
+                showTimeError();
+            }
+        }
+        function showTimeError() {
+            if (time.validity.valueMissing) {
+                timeError.textContent = "You need to enter a time.";
+            } else if (
+                isNaN(Number(time.value)) ||
+                Number(time.value) < 1 ||
+                Number(time.value) > 60
+            ) {
+                timeError.textContent = "Time must be a number between 1 and 60.";
+            }
+            timeError.className = "error active";
+        }
+
+        function handleSpeechNameInput() {
+            if (
+                speechName.validity.valid &&
+                speechName.value.length >= 1 &&
+                speechName.value.length <= 60
+            ) {
+                speechNameError.textContent = "";
+                speechNameError.className = "error";
+            } else {
+                showSpeechNameError();
+            }
+        }
+        function showSpeechNameError() {
+            if (speechName.validity.valueMissing) {
+                speechNameError.textContent = "You need to enter a deck name.";
+            } else if (speechName.value.length < 1 || speechName.value.length > 60) {
+                speechNameError.textContent = "Deck name must be 1-60 characters.";
+            }
+            speechNameError.className = "error active";
+        }
+
+        // Only use named submit handlers for validation and submission
         cardForm.addEventListener("submit", handleCardSubmit);
         speechForm.addEventListener("submit", handleDeckNameSubmit);
         saveBtn.addEventListener("click", handleSaveDeckAndGoHome);
@@ -171,7 +275,6 @@ function init() {
         let editingState = -1;
 
         initExistingCards();
-        // Puts in the name of the deck if editing an existing deck automatically
         if (appState.currentDeckInCreation) {
             speechName.value = appState.currentDeckInCreation.deckName;
         }
@@ -181,15 +284,38 @@ function init() {
          * @param {Event} event The event that causes this function to trigger (should be submit)
          */
         async function handleCardSubmit(event) {
+            // Validate all fields before proceeding
+            let valid = true;
+            if (!front.validity.valid || front.value.length < 1 || front.value.length > 60) {
+                showFrontError();
+                valid = false;
+            }
+            if (!back.validity.valid || back.value.length < 1 || back.value.length > 250) {
+                showBackError();
+                valid = false;
+            }
+            if (
+                !time.validity.valid ||
+                isNaN(Number(time.value)) ||
+                Number(time.value) < 1 ||
+                Number(time.value) > 60
+            ) {
+                showTimeError();
+                valid = false;
+            }
+            if (!valid) {
+                event.preventDefault();
+                return;
+            }
+
             event.preventDefault();
-            // TODO: Use validation techniques instead of alert
             if (!appState.currentDeckInCreation) {
-                alert("Please set a deck name first using the 'Name your Speech' form.");
                 return;
             }
             if (!appState.currentDeckInCreation.deckName) {
-                alert(
-                    "The deck needs a name before adding cards. Please use the 'Name your Speech' form."
+                await showDialog(
+                    "The deck needs a name before adding cards. Please use the 'Name your Speech' form.",
+                    "OK"
                 );
                 return;
             }
@@ -200,11 +326,13 @@ function init() {
 
             // Attempt to create a new card using given values
             const newCard = Card(frontText, backText, timeNum);
-            // TODO: Use validation techniques instead of alert
             // If a card is successfully created (i.e. not null), add it to the deck if we're creating a card or override the card at the specified index
             if (newCard !== null) {
                 if (editingState >= 0) {
-                    const updated = appState.currentDeckInCreation.updateCard(editingState, newCard);
+                    const updated = appState.currentDeckInCreation.updateCard(
+                        editingState,
+                        newCard
+                    );
                     if (updated) {
                         // Create a new card component with the new values
                         const newPreview = document.createElement("card-preview");
@@ -245,16 +373,15 @@ function init() {
                             );
                         } catch (error) {
                             console.error("Error saving deck after adding card:", error);
-                            alert("Error saving deck. Changes may not be persisted.");
+                            await showDialog(
+                                "Error saving deck. Changes may not be persisted.",
+                                "OK"
+                            );
                         }
                     } else {
-                        alert("Failed to add card to deck (internal validation).");
+                        await showDialog("Failed to add card to deck (internal validation).", "OK");
                     }
                 }
-            } else {
-                alert(
-                    "Invalid card details. Please check inputs:\n- Front: 1-60 chars\n- Back: 1-250 chars\n- Time: 1-60 secs"
-                );
             }
         }
 
@@ -264,12 +391,21 @@ function init() {
          * @returns Returns if the name is invalid
          */
         async function handleDeckNameSubmit(event) {
+            // Validate deck name before proceeding
             if (event) {
                 event.preventDefault();
             }
+            if (
+                !speechName.validity.valid ||
+                speechName.value.length < 1 ||
+                speechName.value.length > 60
+            ) {
+                showSpeechNameError();
+                return false;
+            }
+
             const name = speechName.value.trim();
             if (typeof name !== "string" || name.length === 0 || name.length > 60) {
-                alert("Deck name must be between 1 and 60 characters.");
                 return false;
             }
 
@@ -284,7 +420,7 @@ function init() {
             if (!appState.currentDeckInCreation) {
                 appState.currentDeckInCreation = Deck(name);
                 if (!appState.currentDeckInCreation) {
-                    alert("Error creating deck. Please try again.");
+                    showDialog("Error creating deck. Please try again.", "OK");
                     return false;
                 }
                 console.log(`Deck "${name}" initialized for creation.`);
@@ -301,6 +437,7 @@ function init() {
                 console.log(`Deck name updated to "${name}".`);
                 return true;
             }
+            return true;
         }
 
         /**
@@ -310,26 +447,33 @@ function init() {
             if (appState.currentDeckInCreation && appState.currentDeckInCreation.deckName) {
                 if (appState.currentDeckInCreation.cards.length === 0) {
                     // TODO: Use dialog implementation
+                  const userConfirmed = await showDialog(
+                        "This deck has no cards. Do you still want to save it?",
+                        "Save Anyway",
+                        "Cancel"
+                    );
                 }
-                
-                // Prevent navigation if invaid deck name
-                if (!handleDeckNameSubmit()) {
+
+                // Prevent navigation if invalid deck name
+                const nameValid = await handleDeckNameSubmit();
+                if (!nameValid) {
                     return;
                 }
 
                 try {
                     await saveDeck(appState.currentDeckInCreation);
-                    appState.decks[appState.currentDeckInCreation.deckName] = appState.currentDeckInCreation; // Update in-memory list
+                    appState.decks[appState.currentDeckInCreation.deckName] =
+                        appState.currentDeckInCreation; // Update in-memory list
                     console.log(
                         `Deck "${appState.currentDeckInCreation.deckName}" finalized and saved.`
                     );
                 } catch (error) {
                     console.error("Error saving deck:", error);
-                    alert("Error saving deck. Please try again.");
+                    showDialog("Error saving deck. Please try again.", "OK");
                     return; // Don't navigate away if save failed
                 }
             } else {
-                alert("No deck to save or deck has no name. Please name your deck.");
+                showDialog("No deck to save or deck has no name. Please name your deck.", "OK");
                 return; // Don't navigate or clear events
             }
 
@@ -392,13 +536,19 @@ function init() {
          */
         function clearEvents() {
             // Remove event listeners
-            if (speechForm) { speechForm.removeEventListener("submit", handleDeckNameSubmit) };
+            if (speechForm) {
+                speechForm.removeEventListener("submit", handleDeckNameSubmit);
+            }
 
             // Remove card form event listener
-            if (cardForm) { cardForm.removeEventListener("submit", handleCardSubmit) };
+            if (cardForm) {
+                cardForm.removeEventListener("submit", handleCardSubmit);
+            }
 
             // Remove save button event listener
-            if (saveBtn) { saveBtn.removeEventListener("click", handleSaveDeckAndGoHome) };
+            if (saveBtn) {
+                saveBtn.removeEventListener("click", handleSaveDeckAndGoHome);
+            }
 
             cardList.removeEventListener("edit-card", editCard);
             cardList.removeEventListener("delete-card", deleteCard);
@@ -406,11 +556,10 @@ function init() {
             appState.currentDeckInCreation = null;
         }
     }
-}
 
 /**
  * Gets the index of an HTML element within its parent (i.e. the 5th child of its parent)
- * @param {HTMLElement} el An HTML element 
+ * @param {HTMLElement} el An HTML element
  * @returns The index of el or -1 if not found
  */
 function getIndexInDOM(el) {
@@ -423,4 +572,37 @@ function getIndexInDOM(el) {
         count++;
     }
     return -1;
+}
+
+/**
+ * Shows a native dialog and returns a Promise that resolves to true (confirm) or false (cancel)
+ * @param {string} message The message to display
+ * @param {string} confirmText The confirm button text
+ * @param {string} cancelText The cancel button text
+ * @returns {Promise<boolean>}
+ */
+function showDialog(message, confirmText = "OK", cancelText = "Cancel") {
+    return new Promise((resolve) => {
+        const dialog = document.createElement("dialog");
+        dialog.className = "custom-dialog";
+        dialog.innerHTML = `
+            <form method="dialog">
+                <p>${message}</p>
+                <menu>
+                    <button value="cancel">${cancelText}</button>
+                    <button value="confirm" autofocus>${confirmText}</button>
+                </menu>
+            </form>
+        `;
+        document.body.appendChild(dialog);
+
+        function handleClose() {
+            resolve(dialog.returnValue === "confirm");
+            dialog.removeEventListener("close", handleClose);
+            dialog.remove();
+        }
+
+        dialog.addEventListener("close", handleClose);
+        dialog.showModal();
+    });
 }
