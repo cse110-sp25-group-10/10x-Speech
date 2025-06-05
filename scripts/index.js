@@ -25,6 +25,118 @@ function init() {
     initExisting();
 
     /**
+     * Initialize and swap to the existing decks screen (list view).
+     */
+    async function initExisting() {
+        // Add functionality to swap to existing decks screen
+        flashcardApp.replaceChildren();
+        const existingDecksScreen = document.createElement("existing-screen");
+        
+        flashcardApp.appendChild(existingDecksScreen);
+
+        // Load all decks from the database
+        try {
+            const allDeckData = await getAllDecks();
+            appState.decks = {};
+            for (const deckData of allDeckData) {
+                const deckInstance = Deck(deckData.deckName); // Re-create Deck instance
+                if (deckInstance) {
+                    deckInstance.cards = deckData.cards; // Populate cards
+                    appState.decks[deckInstance.deckName] = deckInstance;
+                }
+            }
+            console.log("Decks loaded from DB:", appState.decks);
+        } catch (error) {
+            console.error("Failed to load decks from DB:", error);
+        }
+
+        // Get references to elements in existing decks screen
+        const deckListContainer = existingDecksScreen.querySelector(".flash-card-container");
+        const editBtn = existingDecksScreen.querySelector("#edit-speech-button");
+        const createBtn = existingDecksScreen.querySelector("#create-speech-button");
+        const studyBtn = existingDecksScreen.querySelector("#study-button");
+        const deleteBtn = existingDecksScreen.querySelector("#delete-speech-button");
+        const deckCount = existingDecksScreen.querySelector(".deck-count");
+
+        // Add existing decks to the deck list
+        if (Object.keys(appState.decks).length === 0) {
+            deckListContainer.innerHTML = `
+                <p>There are no decks yet. Please create one.</p>
+            `;
+        } else {
+            for (const deckName in appState.decks) {
+                const deck = appState.decks[deckName]
+                const deckPreview = document.createElement("deck-preview");
+                deckPreview.setAttribute("data-deck-name", deck.deckName);
+                deckPreview.setAttribute("data-deck-length", deck.cards.length);
+                deckPreview.classList.add("speech");
+                deckListContainer.appendChild(deckPreview);
+                deckCount.textContent = `${Object.keys(appState.decks).length}`;
+            }
+        }
+
+        // Add event listeners
+        deckListContainer.addEventListener("deck-select", selectDeck);
+        editBtn.addEventListener("click", editDeck);
+        createBtn.addEventListener("click", createDeck);
+        deleteBtn.addEventListener("click", deleteDeck);
+
+        let selectedIndex = -1;
+
+        function selectDeck(event) {
+            try {
+                if (selectedIndex !== -1) {
+                    deckListContainer.children[selectedIndex].classList.remove("selected");
+                }   
+                // Remove disabled attribute when decks are selected
+                studyBtn.removeAttribute("disabled");
+                editBtn.removeAttribute("disabled");
+                deleteBtn.removeAttribute("disabled");
+
+                const elementNode = event.detail.node;
+                const deckName = event.detail.name;
+                elementNode.classList.add("selected");
+                selectedIndex = getIndexInDOM(elementNode);
+                appState.currentDeckInCreation = appState.decks[deckName];
+            } catch {
+                throw new Error("Function selectDeck was triggered without the appropriate event.")
+            }        
+        }
+
+        function editDeck() {
+            clearEvents();
+            initCreate();
+        }
+
+        function createDeck() {
+            appState.currentDeckInCreation = null;
+            clearEvents();
+            initCreate();
+        }
+
+        async function deleteDeck() {
+            if (selectedIndex !== -1) {
+                try {
+                    await deleteDeckDB(appState.currentDeckInCreation.deckName);
+                } catch {
+                    return;
+                }
+                deckListContainer.removeChild(deckListContainer.children[selectedIndex]);
+                selectedIndex = -1;
+                delete appState.decks[appState.currentDeckInCreation.deckName];
+                appState.currentDeckInCreation = null;
+                deckCount.textContent = `${Object.keys(appState.decks).length}`;
+            }
+        }
+
+        function clearEvents() {
+            deckListContainer.removeEventListener("deck-select", selectDeck);
+            editBtn.removeEventListener("click", editDeck);
+            createBtn.removeEventListener("click", createDeck);
+        }
+    }
+
+    /**
      * Swap to the deck creation screen
      */
     function initCreate() {
@@ -292,79 +404,6 @@ function init() {
             cardList.removeEventListener("delete-card", deleteCard);
             // Reset the current deck in creation
             appState.currentDeckInCreation = null;
-        }
-    }
-
-    /**
-     * Initialize and swap to the existing decks screen (list view).
-     */
-    async function initExisting() {
-        // Add functionality to swap to existing decks screen
-        flashcardApp.replaceChildren();
-        const existingDecksScreen = document.createElement("existing-screen");
-        
-        flashcardApp.appendChild(existingDecksScreen);
-
-        // Load all decks from the database
-        try {
-            const allDeckData = await getAllDecks();
-            appState.decks = {};
-            for (const deckData of allDeckData) {
-                const deckInstance = Deck(deckData.deckName); // Re-create Deck instance
-                if (deckInstance) {
-                    deckInstance.cards = deckData.cards; // Populate cards
-                    appState.decks[deckInstance.deckName] = deckInstance;
-                }
-            }
-            console.log("Decks loaded from DB:", appState.decks);
-        } catch (error) {
-            console.error("Failed to load decks from DB:", error);
-        }
-
-        // Get references to elements in existing decks screen
-        const deckListContainer = existingDecksScreen.querySelector(".flash-card-container");
-        const editBtn = existingDecksScreen.querySelector("#edit-speech-button");
-
-        // Add existing decks to the deck list
-        if (Object.keys(appState.decks).length === 0) {
-            deckListContainer.innerHTML = `
-                <p>There are no decks yet. Please create one.</p>
-            `;
-        } else {
-            for (const deckName in appState.decks) {
-                const deck = appState.decks[deckName]
-                const deckPreview = document.createElement("deck-preview");
-                deckPreview.setAttribute("data-deck-name", deck.deckName);
-                deckPreview.setAttribute("data-deck-length", deck.cards.length);
-                deckPreview.classList.add("speech");
-                deckListContainer.appendChild(deckPreview);
-            }
-        }
-
-        // Add event listeners
-        deckListContainer.addEventListener("deck-select", selectDeck);
-        editBtn.addEventListener("click", editDeck);
-
-        let selectedIndex = -1;
-
-        function selectDeck(event) {
-            try {
-                if (selectedIndex !== -1) {
-                    deckListContainer.children[selectedIndex].classList.remove("selected");
-                }
-
-                const elementNode = event.detail.node;
-                const deckName = event.detail.name;
-                elementNode.classList.add("selected");
-                selectedIndex = getIndexInDOM(elementNode);
-                appState.currentDeckInCreation = appState.decks[deckName];
-            } catch {
-                throw new Error("Function selectDeck was triggered without the appropriate event.")
-            }        
-        }
-
-        function editDeck() {
-            initCreate()
         }
     }
 }

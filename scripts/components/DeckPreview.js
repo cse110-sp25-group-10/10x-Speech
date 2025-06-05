@@ -6,9 +6,10 @@ class DeckPreview extends HTMLElement {
     connectedCallback() {
         this.deckName = this.getAttribute("data-deck-name");
         const deckLength = this.getAttribute("data-deck-length");
-        const p = document.createElement("p");
-        p.textContent = `${this.deckName} (${deckLength} cards)`;
-        this.appendChild(p);
+        this.innerHTML = `
+            <p class="deck-name">${this.deckName}</p>
+            <p class="deck-length">(${deckLength} cards)</p>
+        `;
         this.addEventListener("click", this.dispatch);
     }
 

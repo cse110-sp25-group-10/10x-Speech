@@ -13,7 +13,7 @@
 
 :root {
     /* Structural Variables  */
-    --max-width: 75rem;
+    --max-width: 80vw;
     /* Color Variables */
     --black: rgb(0 0 0);
     --light-blue: rgb(176 202 227);
@@ -42,6 +42,6 @@ body {
     place-items: center;
 }
 
-.selected {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
+*:disabled {
+    opacity: 0.25;
 }

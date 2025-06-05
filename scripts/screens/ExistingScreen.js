@@ -11,14 +11,14 @@ class ExistingScreen extends HTMLElement {
             </header>
             <main>
                 <menu class="top">
-                    <h2>Your Decks</h2>
+                    <h2>Your Decks (<span class="deck-count">0</span>)</h2>
                     <button id="create-speech-button">Create</button>
                 </menu>
                 <output class="flash-card-container"></output>
                 <menu class="bottom">
-                    <button id="edit-speech-button">Edit</button>
-                    <button id="study-button">Study</button>
-                    <button id="delete-speech-button">Delete</button>
+                    <button id="edit-speech-button" disabled>Edit</button>
+                    <button id="study-button" disabled>Study</button>
+                    <button id="delete-speech-button" disabled>Delete</button>
                 </menu>
             </main>
         `;

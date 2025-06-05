@@ -4,8 +4,8 @@ existing-screen {
     display: grid;
     grid-template-rows: auto 1fr;
     height: 100vh;
+    margin-inline: auto;
     padding: 2rem;
-    width: 80vw;
 }
 
 /* || Within <existing-screen> Component Styling */
@@ -80,24 +80,42 @@ existing-screen h2 {
     width: 100%;
 }
 
-.speech {
-    background-color: var(--white);
+.flash-card-container > p {
+    align-self: center;
     color: var(--black);
-    cursor: pointer;
+    border-radius: 10px;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2em;
+    justify-self: center;
+    text-align: center;
+    width: 100%;
+}
+
+deck-preview {
+    align-items: center;
+    background-color: var(--white);
     border: solid var(--white);
     border-radius: 20px;
+    color: var(--black);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     font-family: "Jersey 10", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 2em;
     height: 80%;
+    justify-content: center;
     padding: 24px;
     scroll-snap-align: start;
     min-width: calc((100% - 48px) / 4);
 }
 
-.speech:active {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
+deck-preview.selected {
+    box-shadow: 0 0 5px 3px #191970;
 }
 
 .add-speech {
@@ -172,6 +190,11 @@ existing-screen .bottom button {
         width: 100%;
     }
 
+    .flash-card-container > p{
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
     .speech {
         width: 100%;
         min-height: calc((100% - 48px) / 2);
