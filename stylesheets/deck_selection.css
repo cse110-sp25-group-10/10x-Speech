@@ -1,6 +1,6 @@
 existing-screen {
     align-items: center;
-    /*background-color: var(--underlay, rgba(1,1,1,0.75));*/
+    /* background-color: var(--underlay, rgba(1,1,1,0.75)); */
     background-color: red;
     display: grid;
     grid-template-rows: auto 1fr;
@@ -78,7 +78,7 @@ existing-screen h2 {
     scrollbar-color: var(--white) rgba(0,0,0,0);
     scroll-padding-inline: 1rem;
     scroll-snap-type: x mandatory;
-    width: 100%;
+    width: 0%;
 }
 
 .flash-card-container > p {
