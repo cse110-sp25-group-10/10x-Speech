@@ -6,7 +6,6 @@ create-screen {
     gap: 1rem;
     max-width: var(--max-width, 70rem);
     padding: 1rem;
-    width: 80vw;
 }
 
 #speech-form {
