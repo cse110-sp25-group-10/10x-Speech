@@ -1,9 +1,30 @@
-
 @import url("preparing_speech.css");
+@import url("deck_selection.css");
+
+@font-face {
+    font-family: "Jersey 10";
+    src: url("../assets/fonts/Jersey10-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Lilita One";
+    src: url("../assets/fonts/LilitaOne-Regular.ttf");
+}
 
 :root {
+    /* Fluid type calculator */
+    --size--2: clamp(0.5208rem, 0.3681rem + 0.7638vw, 0.96rem);
+    --size--1: clamp(0.625rem, 0.425rem + 1vw, 1.2rem);
+    --size-0: clamp(0.75rem, 0.4891rem + 1.3043vw, 1.5rem);
+    --size-1: clamp(0.9rem, 0.5609rem + 1.6957vw, 1.875rem);
+    --size-2: clamp(1.08rem, 0.6404rem + 2.1978vw, 2.3438rem);
+    --size-3: clamp(1.296rem, 0.7278rem + 2.8412vw, 2.9297rem);
+    --size-4: clamp(1.5552rem, 0.8224rem + 3.6642vw, 3.6621rem);
+    --size-5: clamp(1.8662rem, 0.9231rem + 4.7155vw, 4.5776rem);
+
     /* Structural Variables  */
-    --max-width: 75rem;
+    --max-width: 80vw;
+
     /* Color Variables */
     --black: rgb(0 0 0);
     --light-blue: rgb(176 202 227);
@@ -11,6 +32,7 @@
     --navy: rgb(19 16 45);
     --white:  rgb(241 236 254);
     --white-transparent: rgb(241 236 254 / 80%);
+    --underlay: rgba(1,1,1,0.75);
 }
 
 * {
@@ -29,6 +51,10 @@ body {
     margin: auto;
     max-width: var(--max-width);
     place-items: center;
+}
+
+*:disabled {
+    opacity: 0.25;
 }
 
 .custom-dialog form {

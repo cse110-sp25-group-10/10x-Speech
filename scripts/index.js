@@ -1,4 +1,3 @@
-import "./screens/HomeScreen.js";
 import "./screens/CreateScreen.js";
 import "./screens/ExistingScreen.js";
 import "./components/CardPreview.js";
@@ -22,15 +21,18 @@ function init() {
         console.error("Flashcard app container not found!");
         return;
     }
-    initHome();
+    
+    initExisting();
 
     /**
-     * Swap to the home screen
+     * Initialize and swap to the existing decks screen (list view).
      */
-    async function initHome() {
+    async function initExisting() {
+        // Add functionality to swap to existing decks screen
         flashcardApp.replaceChildren();
-        const homeScreen = document.createElement("home-screen");
-        flashcardApp.appendChild(homeScreen);
+        const existingDecksScreen = document.createElement("existing-screen");
+        
+        flashcardApp.appendChild(existingDecksScreen);
 
         // Load all decks from the database
         try {
@@ -48,47 +50,97 @@ function init() {
             console.error("Failed to load decks from DB:", error);
         }
 
-        // Get references to the buttons within the home screen
-        const shadowRoot = homeScreen.shadowRoot;
-        const createDeck = shadowRoot.querySelector(".create-deck");
-        const existingDecks = shadowRoot.querySelector(".existing-decks");
+        // Get references to elements in existing decks screen
+        const deckListContainer = existingDecksScreen.querySelector(".flash-card-container");
+        const editBtn = existingDecksScreen.querySelector("#edit-speech-button");
+        const createBtn = existingDecksScreen.querySelector("#create-speech-button");
+        const studyBtn = existingDecksScreen.querySelector("#study-button");
+        const deleteBtn = existingDecksScreen.querySelector("#delete-speech-button");
+        const deckCount = existingDecksScreen.querySelector(".deck-count");
+
+        // Add existing decks to the deck list
+        if (Object.keys(appState.decks).length === 0) {
+            deckListContainer.innerHTML = `
+                <p>There are no decks yet. Please create one.</p>
+            `;
+        } else {
+            for (const deckName in appState.decks) {
+                const deck = appState.decks[deckName]
+                const deckPreview = document.createElement("deck-preview");
+                deckPreview.setAttribute("data-deck-name", deck.deckName);
+                deckPreview.setAttribute("data-deck-length", deck.cards.length);
+                deckPreview.classList.add("speech");
+                deckListContainer.appendChild(deckPreview);
+                deckCount.textContent = `${Object.keys(appState.decks).length}`;
+            }
+        }
 
         // Add event listeners
-        createDeck.addEventListener("click", swapToCreate);
-        existingDecks.addEventListener("click", swapToExisting);
+        deckListContainer.addEventListener("deck-select", selectDeck);
+        editBtn.addEventListener("click", editDeck);
+        createBtn.addEventListener("click", createDeck);
+        deleteBtn.addEventListener("click", deleteDeck);
 
-        /**
-         * Swap to the deck creation screen
-         */
-        function swapToCreate() {
-            appState.previousScreen = "home";
+        let selectedIndex = -1;
+
+        function selectDeck(event) {
+            try {
+                if (selectedIndex !== -1) {
+                    deckListContainer.children[selectedIndex].classList.remove("selected");
+                }   
+                // Remove disabled attribute when decks are selected
+                studyBtn.removeAttribute("disabled");
+                editBtn.removeAttribute("disabled");
+                deleteBtn.removeAttribute("disabled");
+
+                const elementNode = event.detail.node;
+                const deckName = event.detail.name;
+                elementNode.classList.add("selected");
+                selectedIndex = getIndexInDOM(elementNode);
+                appState.currentDeckInCreation = appState.decks[deckName];
+            } catch {
+                throw new Error("Function selectDeck was triggered without the appropriate event.")
+            }        
+        }
+
+        function editDeck() {
             clearEvents();
             initCreate();
         }
 
-        /**
-         * Swap to the existing decks screen
-         */
-        function swapToExisting() {
-            appState.previousScreen = "home";
+        function createDeck() {
+            appState.currentDeckInCreation = null;
             clearEvents();
-            initExisting();
+            initCreate();
         }
 
-        /**
-         * Remove event listeners from the home screen elements to prevent memory leaks
-         */
+        async function deleteDeck() {
+            if (selectedIndex !== -1) {
+                try {
+                    await deleteDeckDB(appState.currentDeckInCreation.deckName);
+                } catch {
+                    return;
+                }
+                deckListContainer.removeChild(deckListContainer.children[selectedIndex]);
+                selectedIndex = -1;
+                delete appState.decks[appState.currentDeckInCreation.deckName];
+                appState.currentDeckInCreation = null;
+                deckCount.textContent = `${Object.keys(appState.decks).length}`;
+            }
+        }
+
         function clearEvents() {
-            createDeck.removeEventListener("click", swapToCreate);
-            existingDecks.removeEventListener("click", swapToExisting);
+            deckListContainer.removeEventListener("deck-select", selectDeck);
+            editBtn.removeEventListener("click", editDeck);
+            createBtn.removeEventListener("click", createDeck);
         }
     }
 
     /**
      * Swap to the deck creation screen
-     * @param {Number} editIndex The index if a specific card is edited, -1 otherwise
      */
-    function initCreate(editIndex = -1) {
+    function initCreate() {
+        // TODO: Set up creation screen implementation
         flashcardApp.replaceChildren();
         const createScreen = document.createElement("create-screen");
         flashcardApp.appendChild(createScreen);
@@ -216,42 +268,15 @@ function init() {
         cardForm.addEventListener("submit", handleCardSubmit);
         speechForm.addEventListener("submit", handleDeckNameSubmit);
         saveBtn.addEventListener("click", handleSaveDeckAndGoHome);
-        backBtn.addEventListener("click", swapToPrevScreen);
+        backBtn.addEventListener("click", initExisting);
         cardList.addEventListener("delete-card", deleteCard);
         cardList.addEventListener("edit-card", editCard);
 
-        let editingState = editIndex;
+        let editingState = -1;
 
         initExistingCards();
         if (appState.currentDeckInCreation) {
             speechName.value = appState.currentDeckInCreation.deckName;
-        }
-
-        if (editingState !== -1) {
-            editCard(
-                new CustomEvent("edit-card", {
-                    detail: cardList.children[editingState],
-                })
-            );
-        }
-
-        /**
-         * Swap to the screen the user last came from
-         */
-        function swapToPrevScreen() {
-            if (appState.previousScreen === "deck") {
-                const deckName = appState.currentDeckInCreation.deckName;
-                clearEvents();
-                initDeckViewScreen(
-                    new CustomEvent("deck-select", {
-                        detail: deckName,
-                        bubbles: false,
-                    })
-                );
-            } else {
-                clearEvents();
-                initHome();
-            }
         }
 
         /**
@@ -421,17 +446,7 @@ function init() {
         async function handleSaveDeckAndGoHome() {
             if (appState.currentDeckInCreation && appState.currentDeckInCreation.deckName) {
                 if (appState.currentDeckInCreation.cards.length === 0) {
-                    const userConfirmed = await showDialog(
-                        "This deck has no cards. Do you still want to save it?",
-                        "Save Anyway",
-                        "Cancel"
-                    );
-                    if (!userConfirmed) {
-                        console.log("User chose not to save empty deck.");
-                        return;
-                    } else {
-                        initHome();
-                    }
+                    // TODO: Use dialog implementation
                 }
 
                 // Prevent navigation if invalid deck name
@@ -457,7 +472,8 @@ function init() {
                 return; // Don't navigate or clear events
             }
 
-            swapToPrevScreen(); // Go back to the previous screen you came from (either home or deck screen)
+            clearEvents();
+            initExisting(); // Go back to the existing deck screen
         }
 
         /**
@@ -535,180 +551,8 @@ function init() {
             appState.currentDeckInCreation = null;
         }
     }
-
-    /**
-     * Initialize and swap to the existing decks screen (list view).
-     */
-    function initExisting() {
-        // Add functionality to swap to existing decks screen
-        flashcardApp.replaceChildren();
-        const existingDecksScreen = document.createElement("existing-screen");
-
-        flashcardApp.appendChild(existingDecksScreen);
-
-        // Get references to elements in existing decks screen
-        const deckListContainer = existingDecksScreen.querySelector("#deck-list-container");
-        const backToHomeBtn = existingDecksScreen.querySelector("#back-button");
-
-        // Add event listeners
-        backToHomeBtn.addEventListener("click", swapToHome);
-
-        // Add existing decks to the deck list
-        if (Object.keys(appState.decks).length === 0) {
-            deckListContainer.innerHTML = `
-                <p>There are no decks yet. Please create one.</p>
-            `;
-        } else {
-            for (const deckName in appState.decks) {
-                const deck = appState.decks[deckName];
-                const deckPreview = document.createElement("deck-preview");
-                deckPreview.setAttribute("data-deck-name", deck.deckName);
-                deckPreview.setAttribute("data-deck-length", deck.cards.length);
-                deckListContainer.appendChild(deckPreview);
-            }
-        }
-
-        deckListContainer.addEventListener("deck-select", initDeckViewScreen);
-
-        /**
-         * Swap to the home screen from the existing deck screen, clears event listeners for elements in the existing deck screen
-         */
-        function swapToHome() {
-            appState.previousScreen = "existing";
-            clearEvents();
-            initHome();
-        }
-
-        /**
-         * Remove event listeners from the deck creation screen to prevent memory leaks
-         */
-        function clearEvents() {
-            // Remove event listeners
-            backToHomeBtn.removeEventListener("click", swapToHome);
-        }
-    }
-
-    /**
-     * Initialize and swap to the screen for viewing/managing a single deck.
-     * @param {Event} event Should be a custom event "deck-select" with a detail key containing the values of the deck name
-     */
-    async function initDeckViewScreen(event) {
-        const deckName = event.detail;
-        const deckToView = appState.decks[deckName];
-        if (!deckToView) {
-            console.error(`Deck "${deckName}" not found in appState.`);
-            showDialog("Error: Could not load the selected deck.", "OK");
-            initExisting(); // Go back to the list if deck not found
-            return;
-        }
-
-        flashcardApp.replaceChildren();
-        const deckViewContainer = document.createElement("deck-screen");
-        deckViewContainer.setAttribute("data-deck-name", deckName);
-        flashcardApp.appendChild(deckViewContainer);
-
-        // Get references to the buttons
-        const cardDisplayArea = deckViewContainer.querySelector(".card-list");
-        const studyDeckBtn = deckViewContainer.querySelector(".study-btn");
-        const editDeckBtn = deckViewContainer.querySelector(".edit-btn");
-        const backToDecksBtn = deckViewContainer.querySelector(".back-btn");
-
-        // Populate Cards
-        if (deckToView.cards.length === 0) {
-            cardDisplayArea.innerHTML = "<p>This deck has no cards yet. You can add some!</p>";
-        } else {
-            deckToView.cards.forEach(function (card, index) {
-                const cardItemWrapper = document.createElement("div");
-                cardItemWrapper.className = "card-item-wrapper";
-
-                const cardPreviewInstance = document.createElement("card-preview");
-                cardPreviewInstance.setAttribute("data-front-text", card.frontText);
-                cardPreviewInstance.setAttribute("data-back-text", card.backText);
-                cardPreviewInstance.setAttribute("data-card-index", index);
-                if (card.time !== undefined) {
-                    cardPreviewInstance.setAttribute("data-time", String(card.time));
-                }
-
-                cardItemWrapper.appendChild(cardPreviewInstance);
-
-                const actionsDiv = document.createElement("div");
-                actionsDiv.className = "card-item-actions";
-                actionsDiv.innerHTML = `
-                    <button class="edit-card-btn button-small" data-card-index="${index}">Edit</button>
-                    <button class="delete-card-btn button-small danger" data-card-index="${index}">Delete</button>
-                `;
-                cardItemWrapper.appendChild(actionsDiv);
-
-                cardDisplayArea.appendChild(cardItemWrapper);
-            });
-        }
-
-        // Add event listeners
-        backToDecksBtn.addEventListener("click", swapToExisting);
-        studyDeckBtn.addEventListener("click", initStudy);
-        editDeckBtn.addEventListener("click", editDeck);
-        cardDisplayArea.addEventListener("delete-card", deleteCard);
-        cardDisplayArea.addEventListener("edit-card", editCard);
-
-        /**
-         * Sets the current deck to let initCreate() know to use the existing deck instead of creating a new one, clear event listeners, and swap to the create deck screen.
-         */
-        function editDeck() {
-            appState.previousScreen = "deck";
-            appState.currentDeckInCreation = deckToView;
-            clearEvents();
-            initCreate();
-        }
-
-        /**
-         * Deletes a card from a deck and removes the corresponding element from the DOM
-         * @param {Event} event The event that triggered this function (should be "delete-card" event)
-         */
-        async function deleteCard(event) {
-            const index = getIndexInDOM(event.detail);
-            // TODO: Dialog confirmation
-            const deleted = deckToView.deleteCard(index);
-            if (deleted) {
-                cardDisplayArea.removeChild(cardDisplayArea.children[index]);
-                await saveDeck(deckToView);
-            }
-        }
-
-        function editCard(event) {
-            appState.previousScreen = "deck";
-            appState.currentDeckInCreation = deckToView;
-            const index = getIndexInDOM(event.detail);
-            if (index !== -1) {
-                clearEvents();
-                initCreate(index);
-            }
-        }
-
-        /**
-         * Clear event listeners before swapping to the existing deck screen
-         */
-        function swapToExisting() {
-            appState.previousScreen = "deck";
-            clearEvents();
-            initExisting();
-        }
-
-        /**
-         * Clears events for elements in the deck view screen
-         */
-        function clearEvents() {
-            backToDecksBtn.removeEventListener("click", initExisting);
-            studyDeckBtn.removeEventListener("click", initStudy);
-            editDeckBtn.removeEventListener("click", editDeck);
-            cardDisplayArea.removeEventListener("delete-card", deleteCard);
-            cardDisplayArea.removeEventListener("edit-card", editCard);
-        }
-    }
-
-    function initStudy() {
-        // TODO: Implement study screen
-    }
 }
+
 
 /**
  * Gets the index of an HTML element within its parent (i.e. the 5th child of its parent)
