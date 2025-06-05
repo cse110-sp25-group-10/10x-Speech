@@ -30,3 +30,15 @@ body {
     max-width: var(--max-width);
     place-items: center;
 }
+
+.custom-dialog form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.custom-dialog menu {
+    display: flex;
+    gap: 1em;
+    justify-content: flex-end;
+}
