@@ -10,8 +10,10 @@ class ExistingScreen extends HTMLElement {
                 <h3 class="motto">Study Less, Learn 10x More</h3>
             </header>
             <main>
-                <h2>Your Decks</h2>
-                <button id="add-new-button">Create</button>
+                <menu class="top">
+                    <h2>Your Decks</h2>
+                    <button id="create-speech-button">Create</button>
+                </menu>
                 <output class="flash-card-container"></output>
                 <menu class="bottom">
                     <button id="edit-speech-button">Edit</button>

@@ -1,6 +1,16 @@
 @import url("preparing_speech.css");
 @import url("deck_selection.css");
 
+@font-face {
+    font-family: "Jersey 10";
+    src: url("../assets/fonts/Jersey10-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Lilita One";
+    src: url("../assets/fonts/LilitaOne-Regular.ttf");
+}
+
 :root {
     /* Structural Variables  */
     --max-width: 75rem;
@@ -11,6 +21,7 @@
     --navy: rgb(19 16 45);
     --white:  rgb(241 236 254);
     --white-transparent: rgb(241 236 254 / 80%);
+    --underlay: rgba(1,1,1,0.75);
 }
 
 * {

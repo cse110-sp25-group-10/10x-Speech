@@ -1,55 +1,98 @@
+existing-screen {
+    align-items: center;
+    background-color: var(--underlay, rgba(1,1,1,0.75));
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+    padding: 2rem;
+}
+
+/* || Within <existing-screen> Component Styling */
+existing-screen > main {
+    align-items: center;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-rows: 10% 1fr 20%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
 .title {
-    display: flex;
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 4em;
     color: var(--white);
-    justify-content: center;
+    font-family: "Jersey 10", sans-serif;
+    font-size: 4em;
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
 }
 
 .motto {
-    display: flex;
     color: var(--lilac);
-    justify-content: center;
     font-family: "Lilita One", sans-serif;
     font-weight: 400;
     font-size: 1.5em;
     font-style: normal;
+    text-align: center;
+}
 
+/* || Within <main> Styling */
+existing-screen .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#create-speech-button {
+    font-size: 2em;
+    width: 6em;
+    height: 90%;
+    max-height: 2em;
+}
+
+existing-screen h2 {
+    color: var(--white);
+    font-family: "Jersey 10", sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 0.05em;
 }
 
 .flash-card-container {
     align-items: center;
     background-color: var(--light-blue);
     border-radius: 20px;
-    box-sizing: border-box;
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    height: 100%;
+    max-height: 100vh;
     justify-content: flex-start;
-    min-height: 50vh;
     overflow-x: scroll;
-    padding: 1em;
+    padding: 1rem;
+    scroll-behavior: smooth;
     scrollbar-color: var(--white) rgba(0,0,0,0);
+    scroll-padding-inline: 1rem;
+    scroll-snap-type: x mandatory;
+    width: 100%;
 }
 
 .speech {
     background-color: var(--white);
     color: var(--black);
+    cursor: pointer;
     border: solid var(--white);
     border-radius: 20px;
-    padding: 1em;
-    min-width: 200px;
-    max-width: 200px;
-    flex: 1 1 200px;
-    box-sizing: border-box;
-    height: 300px;
     font-family: "Jersey 10", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 2em;
-    cursor: pointer;
+    height: 80%;
+    padding: 24px;
+    scroll-snap-align: start;
+    min-width: calc((100% - 48px) / 4);
 }
 
 .speech:active {
@@ -76,67 +119,73 @@
     box-shadow: 0 0 20px 4px var(--white-transparent);
 }
 
-.bottom {
+existing-screen .bottom {
+    align-items: center;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    height: 100%;
+    gap: 2em;
+    width: 100%;
 }
 
-#edit-speech-button {
+/* || <menu> styling */
+existing-screen .bottom button {    
     background-color: var(--white-transparent);
     color: var(--black);
     border-radius: 10px;
-    width: 20vw;
-    height: 7vh;
     font-family: "Jersey 10", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-size: 2em;
-}
-
-#study-button {
-    background-color: var(--white-transparent);
-    color: var(--black);
-    border-radius: 10px;
-    width: 20vw;
-    height: 7vh;
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 2em;
-}
-
-#delete-speech-button {
-    background-color: var(--white-transparent);
-    color: var(--black);
-    border-radius: 10px;
-    width: 20vw;
-    height: 7vh;
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 2em;
+    height: 50%;
+    max-height: 2em;
+    width: 25%;
 }
 
 /* FOR WHEN WINDOW SIZE IS SMALL */
-@media (max-width: 600px) {
+@media (max-width: 640px) {
+    existing-screen {
+        grid-template-rows: auto 1fr;
+    }
+
+    .title {
+        font-size: 3em;
+    }
+
+    .motto {
+        font-size: 1em;
+    }
+
     .flash-card-container {
-        justify-content: center;
         flex-direction: column;
-        align-items: center;
-        min-width: 50vw;
+        gap: 1rem;
+        height: 100%;
+        justify-content: flex-start;
+        overflow-x: hidden;
+        overflow-y: scroll;
         padding: 1rem;
+        scroll-behavior: smooth;
+        scrollbar-color: var(--white) rgba(0,0,0,0);
+        scroll-padding: 1rem;
+        scroll-snap-type: y mandatory;
+        width: 100%;
     }
 
     .speech {
-        width: 100vw;
-        height: auto;
-        padding: 2rem;
-        font-size: 1.5em;
+        width: 100%;
+        min-height: calc((100% - 48px) / 2);
     }
 
     .add-speech {
         width: 60px;
         height: 60px;
         font-size: 3em;
+    }
+}
+
+/* FOR WHEN WINDOW SIZE IS MEDIUM */
+@media (min-width: 641px) and (max-width: 1007px) {
+    .speech {
+        min-width: calc((100% - 48px) / 3);
     }
 }
