@@ -1,80 +1,125 @@
-:root {
-    /** Color Variables */
-    --white:  rgb(242 236 254);
-    --light-blue: rgb(176 202 227);
-    --lilac: rgb(229 201 228);
-    --navy: rgb(19 16 45);
-    --black: rgb(0 0 0);
-    --white-transparent: rgb(241 236 254 / 80%);
+
+existing-screen {
+    align-items: center;
+    background-color: var(--underlay, rgba(1,1,1,0.75));
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+    margin-inline: auto;
+    padding: var(--size-0);
 }
 
-body,html {
-    font-family: Arial, sans-serif;
-    color: var(--white);
-    margin: auto;
-    place-items: center;
-    padding: 5rem;
-    background-color: var(--navy); /** In case background img doesn't load */
-    background-image: url("../background.jpg");
-    background-size: cover;
-    background-attachment: fixed;
+/* || Within <existing-screen> Component Styling */
+existing-screen > main {
+    align-items: center;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-rows: auto 1fr auto;
+    height: 100%;
+    overflow: hidden;
+    padding: 1em 0; 
+    position: relative;
 }
 
 .title {
-    display: flex;
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 4em;
     color: var(--white);
-    justify-content: center;
+    font-family: "Jersey 10", sans-serif;
+    font-size: var(--size-5);
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
 }
 
 .motto {
-    display: flex;
     color: var(--lilac);
-    justify-content: center;
     font-family: "Lilita One", sans-serif;
     font-weight: 400;
-    font-size: 1.5em;
+    font-size: var(--size-2);
     font-style: normal;
+    text-align: center;
+}
 
+/* || Within <main> Styling */
+existing-screen .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#create-speech-button {
+    font-size: var(--size-2);
+    height: 100%;
+    max-height: 2em;
+    min-height: 1em;
+    width: 6em;
+}
+
+existing-screen h2 {
+    color: var(--white);
+    font-family: "Jersey 10", sans-serif;
+    font-size: var(--size-2);
+    letter-spacing: 0.05em;
 }
 
 .flash-card-container {
-    display: flex;
+    align-items: center;
     background-color: var(--light-blue);
     border-radius: 20px;
-    flex-wrap: wrap;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 1rem;
+    height: 100%;
     justify-content: flex-start;
-    align-items: center;
-    gap: 15px;
-    padding: 15px;
-    min-height: 50vh;
+    max-height: 60vh;
+    overflow-x: scroll;
+    padding: var(--size-1);
+    scroll-behavior: smooth;
+    scrollbar-color: var(--white) rgba(0,0,0,0);
+    scroll-padding-inline: 1rem;
+    scroll-snap-type: x mandatory;
     width: 100%;
-    box-sizing: border-box;
-    padding-left: 15px;
 }
 
-.speech {
-    background-color: var(--white);
+.flash-card-container > p {
+    align-self: center;
     color: var(--black);
-    border: solid var(--white);
-    border-radius: 20px;
-    padding: 1em;
-    min-width: 200px;
-    max-width: 200px;
-    flex: 1 1 200px;
-    box-sizing: border-box;
-    height: 300px;
+    border-radius: 10px;
     font-family: "Jersey 10", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 2em;
+    font-size: var(--size-2);
+    justify-self: center;
+    text-align: center;
+    width: 100%;
 }
 
-.speech:active {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
+deck-preview {
+    align-items: center;
+    background-color: var(--white);
+    border: solid var(--white);
+    border-radius: 20px;
+    color: var(--black);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: var(--size-1);
+    height: 100%;
+    max-height: 50vh;
+    justify-content: center;
+    padding: 0 24px;
+    scroll-snap-align: start;
+    min-width: calc((100% - 48px) / 3);
+}
+
+deck-preview.selected {
+    box-shadow: 0 0 5px 3px #191970;
 }
 
 .add-speech {
@@ -97,67 +142,108 @@ body,html {
     box-shadow: 0 0 20px 4px var(--white-transparent);
 }
 
-.bottom {
+existing-screen .bottom {
+    align-items: center;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
+    font-size: var(--size-3);
+    gap: 1em;
+    height: 100%;
+    width: 100%;
 }
 
-#edit-speech-button {
+/* || <menu> styling */
+existing-screen .bottom button {    
     background-color: var(--white-transparent);
     color: var(--black);
     border-radius: 10px;
-    width: 20vw;
-    height: 7vh;
     font-family: "Jersey 10", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 2em;
-}
-
-#study-button {
-    background-color: var(--white-transparent);
-    color: var(--black);
-    border-radius: 10px;
-    width: 20vw;
-    height: 7vh;
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 2em;
-}
-
-#delete-speech-button {
-    background-color: var(--white-transparent);
-    color: var(--black);
-    border-radius: 10px;
-    width: 20vw;
-    height: 7vh;
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 2em;
+    font-size: var(--size-2);
+    height: 100%;
+    max-height: 2em;
+    min-height: 1em;
+    width: 25%;
 }
 
 /* FOR WHEN WINDOW SIZE IS SMALL */
-@media (max-width: 600px) {
-    .flash-card-container {
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-        min-width: 50vw;
-        padding: 1rem;
+@media (max-width: 640px) {
+    existing-screen {
+        grid-template-rows: auto 1fr;
     }
 
+    existing-screen > main {
+        grid-template-rows: 10% auto 10%;
+    }
+
+    .flash-card-container {
+        flex-direction: column;
+        gap: 1rem;
+        height: 100%;
+        justify-content: flex-start;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        padding: 1rem;
+        scroll-behavior: smooth;
+        scrollbar-color: var(--white) rgba(0,0,0,0);
+        scroll-padding: 1rem;
+        scroll-snap-type: y mandatory;
+        width: 100%;
+    }
+
+    .flash-card-container > p {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+    
     .speech {
-        width: 100vw;
-        height: auto;
-        padding: 2rem;
-        font-size: 1.5em;
+        width: 100%;
+        min-height: calc((100% - 48px) / 2);
     }
 
     .add-speech {
         width: 60px;
         height: 60px;
         font-size: 3em;
+    }
+}
+
+/* FOR WHEN WINDOW SIZE IS MEDIUM */
+@media (min-width: 641px) and (max-width: 1024px) {
+    .speech {
+        min-width: calc((100% - 48px) / 2);
+    }
+}
+
+/* SMALL HEIGHT */
+@media screen and (max-height: 520px) {
+    existing-screen header {
+        display: none;
+    }
+
+    existing-screen {
+        grid-template-rows: 1fr;
+    }
+
+    existing-screen main {
+        grid-template-rows: 10% 1fr 10%;
+    }
+
+    .deck-length {
+        display: none;
+    }
+    
+    deck-preview {
+        font-size: var(--size-0);
+    }
+
+    #create-speech-button {
+        font-size: var(--size-0);
+    }
+
+    existing-screen .bottom button {
+        font-size: var(--size-0);
     }
 }
