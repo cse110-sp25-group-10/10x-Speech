@@ -556,6 +556,8 @@ function init() {
             appState.currentDeckInCreation = null;
         }
     }
+}
+
 
 /**
  * Gets the index of an HTML element within its parent (i.e. the 5th child of its parent)
