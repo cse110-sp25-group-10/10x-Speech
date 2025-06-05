@@ -1,5 +1,34 @@
+
+@import url("preparing_speech.css");
+
 :root {
-    --max-width: 70rem;
+    /* Structural Variables  */
+    --max-width: 75rem;
+    /* Color Variables */
+    --black: rgb(0 0 0);
+    --light-blue: rgb(176 202 227);
+    --lilac: rgb(229 201 228);
+    --navy: rgb(19 16 45);
+    --white:  rgb(241 236 254);
+    --white-transparent: rgb(241 236 254 / 80%);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-attachment: fixed;
+    background-color: var(--navy); /** In case background img doesn't load */
+    background-image: url("../background.jpg");
+    background-size: cover;
+    color: var(--white);
+    font-family: Arial, sans-serif;
+    margin: auto;
+    max-width: var(--max-width);
+    place-items: center;
 }
 
 .custom-dialog form {
