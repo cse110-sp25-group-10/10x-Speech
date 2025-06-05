@@ -447,11 +447,6 @@ function init() {
             if (appState.currentDeckInCreation && appState.currentDeckInCreation.deckName) {
                 if (appState.currentDeckInCreation.cards.length === 0) {
                     // TODO: Use dialog implementation
-                  const userConfirmed = await showDialog(
-                        "This deck has no cards. Do you still want to save it?",
-                        "Save Anyway",
-                        "Cancel"
-                    );
                 }
 
                 // Prevent navigation if invalid deck name
