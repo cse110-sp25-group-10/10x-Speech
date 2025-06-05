@@ -5,6 +5,7 @@ existing-screen {
     grid-template-rows: auto 1fr;
     height: 100vh;
     padding: 2rem;
+    width: 80vw;
 }
 
 /* || Within <existing-screen> Component Styling */
