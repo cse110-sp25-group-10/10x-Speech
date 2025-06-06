@@ -3,63 +3,122 @@ create-screen {
     background-color: rgba(1,1,1,0.75);
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
     max-width: var(--max-width, 70rem);
     padding: 1rem;
+    position: relative;
 }
 
-#speech-form {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-button {
+/* || <create-screen> Elements Styling */
+create-screen button {
     background-color: var(--white-transparent);
     border-radius: 10px;
     color: var(--black);
     font-family: "Jersey 10", sans-serif;
-    font-size: 1.5em;
+    font-size: var(--size-2);
     font-style: normal;
-}
-
-#title-speech {
-    background-color: var(--white);
-    border: solid var(--white);
-    border-radius: 10px;
-    font-family: "Jersey 10", sans-serif;
-    font-style: normal;
-    font-size: 2rem;
-    height: 2em;
-    text-align: center;
-    width: 10em;
-}
-
-label {
-    display: none;
-}
-
-form {
-    padding: 1rem;
 }
 
 fieldset {
-    display: flex;
     border: 0;
+}
+
+create-screen > menu {
     align-items: center;
-    column-gap: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#speech-form fieldset {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: var(--size-1);
+    justify-content: flex-start;
+    position: relative;
+    width: 100%;
 }
 
 #save-button {
-    align-items: center;
-    height: 2.5em;
-    width: 8em;
+    align-self: flex-end;
+    height: 2em;
+    text-align: center;
+    width: 6em;
 }
 
-#save-button:active {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
+#back-button {
+    height: 2em;
+    width: 4em;
+    align-self: flex-start;
+}
+
+create-screen > section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    margin-inline: auto;
+    max-width: 55vw;
+    width: 100%;
+}
+
+input:focus {
+    box-shadow: 0 0 10px 2px white;
+}
+
+textarea:focus {
+    box-shadow: 0 0 10px 2px white;
+}
+
+/* Card Creation Form Elements Styling */
+.card-nav-button {
+    align-self: center;
+    background-color: var(--white);
+    border: solid var(--white);
+    border-radius: 100px;
+    color: var(--black);
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: var(--size-1);
+    height: 2em;
+    position: absolute;
+    text-align: center;
+    width: 2em;
+}
+
+.next {
+    right: 3vw;
+}
+
+.previous {
+    transform: scaleX(-1);
+    left: 3vw;
+}
+
+.flash-card-creation {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%;
+    gap: 1.5em;
+    position: relative;
+    width: 100%;
+}
+
+.card-front {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+
+.card-back {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
 }
 
 #customize-card{
@@ -73,105 +132,71 @@ fieldset {
     width: 100%;   
 }
 
-.card-textareas {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    vertical-align: middle;
-    width: 100%;
+/* Speech Form Elements Styling*/
+.error {
+    color: var(--error-color);
+    font-size: var(--size--2);
+    position: absolute;
+    right: 0;
+    bottom: -1.2rem;
 }
 
-.flash-card-creation {
+.card-time span.error {
+    left: 0;
+    bottom: 0;
+}
+
+create-screen label {
     align-items: center;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    gap: 1.5em;
-    overflow-x: hidden;
-    position: relative;
-    width: 100%;
+    display: inline-flex;
+    font-size: var(--size-1);
+    justify-content: flex-start;
 }
 
-
-.card-nav-button {
+#title-speech {
     background-color: var(--white);
     border: solid var(--white);
-    border-radius: 100px;
-    color: var(--black);
+    border-radius: 10px;
     font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
     font-style: normal;
-    font-size: 1.5em;
+    font-size: var(--size-2);
     height: 2em;
     text-align: center;
-    width: 2em; 
-    
-}
-
-.previous {
-    transform: scaleX(-1);
-}
-
-.card-nav-button:active {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
-}
-
-.next-card-button {
-    display: flex;
-    background-color: var(--white);
-    color: var(--black);
-    border: solid var(--white);
-    border-radius: 100%;
-    width: 45px; 
-    height: 45px;
-    justify-content: center;
-    align-items: center;
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 1em;
-}
-
-.next-card-button:active {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
+    width: 10em;
 }
 
 #input-front-card {
-    background-color: var(--white);
-    color: var(--black);
-    border: solid var(--white);
-    border-radius: 10px;
-    text-align: center;
-    vertical-align: middle;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 15em;
-    width: 100%;
-    max-width: 30em;
+    position: relative;
 }
 
 #input-back-card {
+    justify-self: flex-end;
+    position: relative;
+}
+
+textarea {
     background-color: var(--white);
-    color: var(--black);
     border: solid var(--white);
     border-radius: 10px;
-    text-align: center;
-    vertical-align: middle;
+    color: var(--black);
+    height: 15em;
+    max-width: 30vw;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
-    height: 15em;
+    text-align: center;
+    vertical-align: middle;
     width: 100%;
-    max-width: 30em;
+    
 }
 
 .card-time {
+    align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    padding: 1.5rem 0;
     width: 100%;
 }
 
@@ -183,39 +208,20 @@ fieldset {
     height: 2em;
     width: 7em;
     font-family: "Jersey 10", sans-serif;
-    font-size: 1.5em;
+    font-size: var(--size-2);
     font-style: normal;
-    padding: 0.5em;   
+    padding: 0.5em;
+    position: relative;
 }
 
-#set-time:active {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
-}
-
-#upload-card { /* Save & Finish */
+#upload-card {
     align-items: center;
-    justify-self: flex-end;
-    background-color: var(--white-transparent);
-    border-radius: 10px;
-    color: var(--black);
-    font-family: "Jersey 10", sans-serif;
-    font-size: 1.5em;
+    bottom: 1.5rem;
     font-style: normal;
     height: 2em;
     position: absolute;
     right: 0;
-    bottom: 0;
     width: 6em;
-}
-
-#upload-card:active {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
-}
-
-#save-name-button {
-    font-size: 1em;
-    height: 2em;
-    width: 4em;
 }
 
 #sort-up {
@@ -253,7 +259,6 @@ fieldset {
 .flash-card-list-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 1.5rem;
     padding: 1rem;
     border-radius: 20px;
@@ -263,11 +268,18 @@ hr {
     display: none;
 }
 
+/* || Flash Card List Element Styling */
 card-preview {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 1rem;
+    margin-inline: auto;
+    max-width: 60vw;
     width: 100%;
+}
+
+card-preview.selected section {
+    background-color: var(--lilac);
 }
 
 card-preview > section {
@@ -295,40 +307,17 @@ card-preview > menu {
     right: 1rem;
 }
 
-card-preview:active {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
-}
-
-.edit-card-btn {
+.flash-card-list-container button {
     background-color: var(--white-transparent);
     outline: none;
     color: var(--black);
     border-radius: 10px;
-    width: 6em;
+    width: 5em;
     height: 2em;
     font-family: "Jersey 10", sans-serif;
     font-style: normal;
-    font-size: 1.5em;
+    font-size: var(--size-1);
     align-items: center;
-}
-
-.delete-card-btn {
-    background-color: var(--white-transparent);
-    outline: none;
-    color: var(--black);
-    border-radius: 10px;
-    width: 6em;
-    height: 2em;
-    font-family: "Jersey 10", sans-serif;
-    font-style: normal;
-    font-size: 1.5em;
-    align-items: center;
-}
-
-#back-button {
-    height: 2em;
-    width: 4em;
-    align-self: flex-start;
 }
 
 .snap-to-top-button {
@@ -339,21 +328,22 @@ card-preview:active {
 }
 
 @media screen and (max-width: 1024px) {
-    .card-textareas {
+    .flash-card-creation {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 1rem;
+        gap: 2rem;
+    }
+
+    card-preview {
+        max-width: 100%;
     }
 
     #input-front-card {
-        max-width: 30rem;
-        width: 100%;
+        max-width: 100%;
     }
 
     #input-back-card {
-        max-width: 30rem;
-        width: 100%;
+        max-width: 100%;
     }
 
     #set-time {
