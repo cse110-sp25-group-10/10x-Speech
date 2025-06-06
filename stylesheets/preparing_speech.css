@@ -1,97 +1,118 @@
-:root {
-    /** Color Variables */
-    --white:  rgb(241 236 254);
-    --light-blue: rgb(176 202 227);
-    --lilac: rgb(229 201 228);
-    --navy: rgb(19 16 45);
-    --black: rgb(0 0 0);
-    --white-transparent: rgb(241 236 254 / 80%);
-}
-
-body {
-    font-family: Arial, sans-serif;
-    color: var(--white);
-    margin: auto;
-    place-items: center;
-    padding: 5rem;
-    background-color: var(--navy); /** In case background img doesn't load */
-    background-image: url("../10xCardsBG.png");
-    background-attachment: fixed;
-}
-
-#customize-card {
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-}
-
-.top {
+/* || Container Styling */
+create-screen {
+    background-color: rgba(1,1,1,0.75);
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     gap: 1rem;
-    margin-bottom: 1.5rem;
-    width: 100%;
-    height: 100%;
+    max-width: var(--max-width, 70rem);
+    padding: 1rem;
+}
+
+#speech-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+button {
+    background-color: var(--white-transparent);
+    border-radius: 10px;
+    color: var(--black);
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.5em;
+    font-style: normal;
 }
 
 #title-speech {
     background-color: var(--white);
     border: solid var(--white);
     border-radius: 10px;
-    height: 2em;
-    width: 10em;
     font-family: "Jersey 10", sans-serif;
     font-style: normal;
     font-size: 2rem;
+    height: 2em;
     text-align: center;
+    width: 10em;
+}
+
+label {
+    display: none;
+}
+
+form {
+    padding: 1rem;
+}
+
+fieldset {
+    display: flex;
+    border: 0;
+    align-items: center;
+    column-gap: 1em;
 }
 
 #save-button {
-    font-family: "Jersey 10", sans-serif;
-    background-color: var(--white-transparent);
-    color: var(--black);
-    border-radius: 10px;
-    width: 6em;
-    height: 2em;
-    font-style: normal;
-    font-size: 1.5em;
     align-items: center;
+    height: 2.5em;
+    width: 8em;
 }
 
 #save-button:active {
     box-shadow: 0 0 20px 4px var(--white-transparent);
 }
 
-.flash-card-container {
+#customize-card{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    row-gap: 1em;
+    column-gap: 2em;
+    height: 100%;
+    position: relative;
+    width: 100%;   
+}
+
+.card-textareas {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    flex-wrap: nowrap;
-    overflow-x: hidden;
+    vertical-align: middle;
     width: 100%;
-    height: 100%;
+}
+
+.flash-card-creation {
     align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 1.5em;
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
 }
 
 
-.previous-card-button {
-    display: flex;
+.card-nav-button {
     background-color: var(--white);
-    color: var(--black);
     border: solid var(--white);
     border-radius: 100px;
-    width: 45px; 
-    height: 45px;
-    justify-content: center;
-    align-items: center;
+    color: var(--black);
     font-family: "Jersey 10", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 1em;
+    font-size: 1.5em;
+    height: 2em;
+    text-align: center;
+    width: 2em; 
+    
 }
 
-.previous-card-button:active {
+.previous {
+    transform: scaleX(-1);
+}
+
+.card-nav-button:active {
     box-shadow: 0 0 20px 4px var(--white-transparent);
 }
 
@@ -127,7 +148,8 @@ body {
     padding-left: 10px;
     padding-right: 10px;
     height: 15em;
-    width: 30%;
+    width: 100%;
+    max-width: 30em;
 }
 
 #input-back-card {
@@ -142,47 +164,58 @@ body {
     padding-left: 10px;
     padding-right: 10px;
     height: 15em;
-    width: 30%;
-}
-
-.bottom {
-    display: flex;
     width: 100%;
-    height: 100%;
-    justify-content: space-between;
-    align-items: center;
+    max-width: 30em;
 }
 
-#set-timer {
+.card-time {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+#set-time {
+    align-items: center;
     background-color: var(--white-transparent);
-    color: var(--black);
     border-radius: 10px;
-    width: 7em;
+    color: var(--black);
     height: 2em;
+    width: 7em;
     font-family: "Jersey 10", sans-serif;
-    font-style: normal;
     font-size: 1.5em;
-    align-items: center;
+    font-style: normal;
+    padding: 0.5em;   
 }
 
-#set-timer:active {
+#set-time:active {
     box-shadow: 0 0 20px 4px var(--white-transparent);
 }
 
 #upload-card { /* Save & Finish */
-    background-color: var(--white-transparent);
-    color: var(--black);
-    border-radius: 10px;
-    width: 6em;
-    height: 2em;
-    font-family: "Jersey 10", sans-serif;
-    font-style: normal;
-    font-size: 1.5em;
     align-items: center;
+    justify-self: flex-end;
+    background-color: var(--white-transparent);
+    border-radius: 10px;
+    color: var(--black);
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.5em;
+    font-style: normal;
+    height: 2em;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 6em;
 }
 
 #upload-card:active {
     box-shadow: 0 0 20px 4px var(--white-transparent);
+}
+
+#save-name-button {
+    font-size: 1em;
+    height: 2em;
+    width: 4em;
 }
 
 #sort-up {
@@ -199,32 +232,6 @@ body {
     font-weight: 400;
     font-style: normal;
     font-size: 1em;
-}
-
-#edit-list-entry {
-    background-color: var(--white-transparent);
-    outline: none;
-    color: var(--black);
-    border-radius: 10px;
-    width: 6em;
-    height: 2em;
-    font-family: "Jersey 10", sans-serif;
-    font-style: normal;
-    font-size: 1.5em;
-    align-items: center;
-}
-
-#delete-list-entry {
-    background-color: var(--white-transparent);
-    outline: none;
-    color: var(--black);
-    border-radius: 10px;
-    width: 6em;
-    height: 2em;
-    font-family: "Jersey 10", sans-serif;
-    font-style: normal;
-    font-size: 1.5em;
-    align-items: center;
 }
 
 #sort-down {
@@ -252,17 +259,104 @@ body {
     border-radius: 20px;
 }
 
-.temp-card {
-    display: flex;
-    flex-direction: row;
-    background-color: var(--white);
-    color: var(--black);
-    border-radius: 10px;
-    height: 12em;
-    width: 65vw;
-    margin-bottom: 1rem;
+hr {
+    display: none;
 }
 
-.temp-card:active {
+card-preview {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    width: 100%;
+}
+
+card-preview > section {
+    align-items: center;
+    background-color: var(--white);
+    border-radius: 10px;
+    color: var(--black);
+    display: grid;
+    height: 12em;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+}
+
+card-preview > menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+}
+
+.time-text {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+card-preview:active {
     box-shadow: 0 0 20px 4px var(--white-transparent);
+}
+
+.edit-card-btn {
+    background-color: var(--white-transparent);
+    outline: none;
+    color: var(--black);
+    border-radius: 10px;
+    width: 6em;
+    height: 2em;
+    font-family: "Jersey 10", sans-serif;
+    font-style: normal;
+    font-size: 1.5em;
+    align-items: center;
+}
+
+.delete-card-btn {
+    background-color: var(--white-transparent);
+    outline: none;
+    color: var(--black);
+    border-radius: 10px;
+    width: 6em;
+    height: 2em;
+    font-family: "Jersey 10", sans-serif;
+    font-style: normal;
+    font-size: 1.5em;
+    align-items: center;
+}
+
+#back-button {
+    height: 2em;
+    width: 4em;
+    align-self: flex-start;
+}
+
+.snap-to-top-button {
+    background-color: var(--white-transparent);
+    height: 2em;
+    width: 2em;
+    justify-self: flex-end;
+}
+
+@media screen and (max-width: 1024px) {
+    .card-textareas {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    #input-front-card {
+        max-width: 30rem;
+        width: 100%;
+    }
+
+    #input-back-card {
+        max-width: 30rem;
+        width: 100%;
+    }
+
+    #set-time {
+        max-width: 30%;
+    }
 }

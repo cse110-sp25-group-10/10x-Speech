@@ -3,42 +3,24 @@
     <head>
         <title>Deck Selection</title>
         <meta charset="UTF-8">
-        <!--Jersey 10 Font-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Noto+Sans+Mandaic&family=Playwrite+AU+SA:wght@100..400&display=swap" rel="stylesheet">
-       <!--Lilita One Font-->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Lilita+One&family=Noto+Sans+Mandaic&family=Playwrite+AU+SA:wght@100..400&display=swap" rel="stylesheet">
-        
         <link rel="stylesheet" href="../../stylesheets/deck_selection.css">
-
     </head>
     <body>
-        <!-- title, motto text -->  
-        <header class="top">
-            <h1 class="title">10x Cards</h1>
-            <h3 class="motto">Study Less, Learn 10x More</h3>
-        </header>
-        
-        <!-- two example speeches, add speech button (remember to populate speeches left to right) -->
-        <main class="flash-card-container">
-            <button class="speech">
-                Example Speech 1
-            </button>
-
-            <button class="speech">
-                Example Speech 2
-            </button>
-
-            <button class="add-speech">+</button>
-        </main>
-
-        <nav class="bottom">
-            <button id="edit-speech-button">Edit</button>
-            <button id="study-button">Study</button>
-            <button id="delete-speech-button">Delete</button>
-        </nav>
+        <existing-screen>
+            <header>
+                <h1 class="title">10x Cards</h1>
+                <h3 class="motto">Study Less, Learn 10x More</h3>
+            </header>
+            <main>
+                <h2>Your Decks</h2>
+                <button id="add-new-button">Create</button>
+                <output class="flash-card-container"></output>
+                <menu class="bottom">
+                    <button id="edit-speech-button">Edit</button>
+                    <button id="study-button">Study</button>
+                    <button id="delete-speech-button">Delete</button>
+                </menu>
+            </main>
+        </existing-screen>
     </body>
 </html>

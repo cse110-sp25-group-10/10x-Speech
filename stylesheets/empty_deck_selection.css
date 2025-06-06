@@ -15,7 +15,8 @@ body {
     place-items: center;
     padding: 5rem;
     background-color: var(--navy); /** In case background img doesn't load */
-    background-image: url("../10xCardsBG.png");
+    background-image: url("../background.jpg");
+    background-size: cover;
     background-attachment: fixed;
 }
 
