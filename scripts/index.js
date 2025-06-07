@@ -244,10 +244,12 @@ function init() {
         }
 
         function handleSpeechNameInput() {
+            // Validate speech name input
             if (
                 speechName.validity.valid &&
                 speechName.value.length >= 1 &&
-                speechName.value.length <= 60
+                speechName.value.length <= 60 &&
+                !Object.keys(appState.decks).includes(speechName.value.trim())
             ) {
                 speechNameError.textContent = "";
                 speechNameError.className = "error";
@@ -260,6 +262,8 @@ function init() {
                 speechNameError.textContent = "You need to enter a deck name.";
             } else if (speechName.value.length < 1 || speechName.value.length > 60) {
                 speechNameError.textContent = "Deck name must be 1-60 characters.";
+            } else if (Object.keys(appState.decks).includes(speechName.value.trim())) {
+                speechNameError.textContent = "Deck name already exists. Please choose another.";
             }
             speechNameError.className = "error active";
         }
