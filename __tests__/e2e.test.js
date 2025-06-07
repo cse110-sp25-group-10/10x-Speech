@@ -1,6 +1,6 @@
 describe('User creates a deck for the first time', () => {
     beforeAll(async () => {
-        await page.goto('https://cse110-sp25-group-10.github.io/Flashcard-Project/');
+        await page.goto('https://team10xflashcard.netlify.app/');
     });
     
     it('pressing the "Create" button should bring you to the create screen', async () => {
