@@ -49,6 +49,7 @@ describe('User creates a deck for the first time', () => {
         const deckNames = decks.map(d => d.deckName);
         expect(deckNames).toContain('My First Speech!');
         const deck = decks.find(d => d.deckName === 'My First Speech!');
+        expect(deck.cards.length).toBe(1);
         const card = deck.cards[0];
         expect(card.frontText).toBe('What I Have To Say');
         expect(card.backText).toBe('I have nothing to say');
@@ -76,6 +77,7 @@ describe('User creates a deck for the first time', () => {
         const deckNames = decks.map(d => d.deckName);
         expect(deckNames).toContain('My First Speech!');
         const deck = decks.find(d => d.deckName === 'My First Speech!');
+        expect(deck.cards.length).toBe(1);
         const card = deck.cards[0];
         expect(card.frontText).toBe('What I Have To Say');
         expect(card.backText).toBe('I have nothing to say');
