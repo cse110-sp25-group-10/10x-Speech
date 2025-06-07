@@ -1,3 +1,4 @@
+
 existing-screen {
     align-items: center;
     background-color: var(--underlay, rgba(1,1,1,0.75));
@@ -119,6 +120,10 @@ deck-preview {
 
 deck-preview.selected {
     box-shadow: 0 0 5px 3px #191970;
+}
+
+.speech:active {
+    box-shadow: 0 0 20px 4px var(--white-transparent);
 }
 
 .add-speech {
