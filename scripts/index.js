@@ -105,7 +105,115 @@ function init() {
         const speechForm = flashcardApp.querySelector("#speech-form");
         const speechName = flashcardApp.querySelector("#title-speech");
 
-        // Add event listeners
+        // Helper to attach error span after input if not present
+        function ensureErrorSpan(input) {
+            let errorSpan = input.nextElementSibling;
+            if (!errorSpan || !errorSpan.classList.contains("error")) {
+                errorSpan = document.createElement("span");
+                errorSpan.className = "error";
+                input.parentNode.insertBefore(errorSpan, input.nextSibling);
+            }
+            return errorSpan;
+        }
+
+        // Attach error spans for all inputs
+        const frontError = ensureErrorSpan(front);
+        const backError = ensureErrorSpan(back);
+        const timeError = ensureErrorSpan(time);
+        const speechNameError = ensureErrorSpan(speechName);
+
+        // Validation and error display for each input
+        front.addEventListener("input", handleFrontInput);
+        back.addEventListener("input", handleBackInput);
+        time.addEventListener("input", handleTimeInput);
+        speechName.addEventListener("input", handleSpeechNameInput);
+
+        function handleFrontInput() {
+            if (front.validity.valid && front.value.length >= 1 && front.value.length <= 60) {
+                frontError.textContent = "";
+                frontError.className = "error";
+            } else {
+                showFrontError();
+            }
+        }
+        function showFrontError() {
+            if (front.validity.valueMissing) {
+                frontError.textContent = "You need to enter front text.";
+            } else if (front.value.length < 1 || front.value.length > 60) {
+                frontError.textContent = "Front text must be 1-60 characters.";
+            }
+            frontError.className = "error active";
+        }
+
+        function handleBackInput() {
+            if (back.validity.valid && back.value.length >= 1 && back.value.length <= 250) {
+                backError.textContent = "";
+                backError.className = "error";
+            } else {
+                showBackError();
+            }
+        }
+        function showBackError() {
+            if (back.validity.valueMissing) {
+                backError.textContent = "You need to enter back text.";
+            } else if (back.value.length < 1 || back.value.length > 250) {
+                backError.textContent = "Back text must be 1-250 characters.";
+            }
+            backError.className = "error active";
+        }
+
+        function handleTimeInput() {
+            if (
+                time.validity.valid &&
+                !isNaN(Number(time.value)) &&
+                Number(time.value) >= 1 &&
+                Number(time.value) <= 60
+            ) {
+                timeError.textContent = "";
+                timeError.className = "error";
+            } else {
+                showTimeError();
+            }
+        }
+        function showTimeError() {
+            if (time.validity.valueMissing) {
+                timeError.textContent = "You need to enter a time.";
+            } else if (
+                isNaN(Number(time.value)) ||
+                Number(time.value) < 1 ||
+                Number(time.value) > 60
+            ) {
+                timeError.textContent = "Time must be a number between 1 and 60.";
+            }
+            timeError.className = "error active";
+        }
+
+        function handleSpeechNameInput() {
+            // Validate speech name input
+            if (
+                speechName.validity.valid &&
+                speechName.value.length >= 1 &&
+                speechName.value.length <= 60 &&
+                !Object.keys(appState.decks).includes(speechName.value.trim())
+            ) {
+                speechNameError.textContent = "";
+                speechNameError.className = "error";
+            } else {
+                showSpeechNameError();
+            }
+        }
+        function showSpeechNameError() {
+            if (speechName.validity.valueMissing) {
+                speechNameError.textContent = "You need to enter a deck name.";
+            } else if (speechName.value.length < 1 || speechName.value.length > 60) {
+                speechNameError.textContent = "Deck name must be 1-60 characters.";
+            } else if (Object.keys(appState.decks).includes(speechName.value.trim())) {
+                speechNameError.textContent = "Deck name already exists. Please choose another.";
+            }
+            speechNameError.className = "error active";
+        }
+
+        // Only use named submit handlers for validation and submission
         cardForm.addEventListener("submit", handleCardSubmit);
         speechForm.addEventListener("submit", handleDeckNameSubmit);
         saveBtn.addEventListener("click", handleSaveDeckAndGoHome);
