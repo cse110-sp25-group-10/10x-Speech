@@ -33,8 +33,54 @@ describe('User creates a deck for the first time', () => {
         await page.click('#save-button');
         await page.waitForSelector("existing-screen");
 
-        // TODO: access database and check for the deck and its contents in data base
+        const decks = await page.evaluate(async () => {
+            const request = indexedDB.open('FlashcardAppDB');
+            return await new Promise((resolve) => {
+            request.onsuccess = () => {
+                const db = request.result;
+                const tx = db.transaction('decks', 'readonly');
+                const store = tx.objectStore('decks');
+                const getAll = store.getAll();
+                getAll.onsuccess = () => resolve(getAll.result);
+            };
+            });
+        });
+        expect(decks.length).toBe(1);
+        const deckNames = decks.map(d => d.deckName);
+        expect(deckNames).toContain('My First Speech!');
+        const deck = decks.find(d => d.deckName === 'My First Speech!');
+        const card = deck.cards[0];
+        expect(card.frontText).toBe('What I Have To Say');
+        expect(card.backText).toBe('I have nothing to say');
+        expect(card.time).toBe(30);
 
     }, 10000);
 
-}) ;
+    it('checking number of decks and the cards in the deck after reload', async () => {
+        console.log('Checking number of decks and the cards in the deck after reload');
+        await page.reload();
+
+        const decks = await page.evaluate(async () => {
+            const request = indexedDB.open('FlashcardAppDB');
+            return await new Promise((resolve) => {
+            request.onsuccess = () => {
+                const db = request.result;
+                const tx = db.transaction('decks', 'readonly');
+                const store = tx.objectStore('decks');
+                const getAll = store.getAll();
+                getAll.onsuccess = () => resolve(getAll.result);
+            };
+            });
+        });
+        expect(decks.length).toBe(1);
+        const deckNames = decks.map(d => d.deckName);
+        expect(deckNames).toContain('My First Speech!');
+        const deck = decks.find(d => d.deckName === 'My First Speech!');
+        const card = deck.cards[0];
+        expect(card.frontText).toBe('What I Have To Say');
+        expect(card.backText).toBe('I have nothing to say');
+        expect(card.time).toBe(30);
+
+    }, 10000);
+
+});
