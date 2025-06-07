@@ -544,7 +544,7 @@ function init() {
 
         studyDeckBtn.addEventListener("click", () => {
             // TODO: Implement the logic to study the deck
-            initStudying();
+            initStudying(deckToView.deckName);
             alert(`Studying deck: ${deckToView.deckName} - Feature to be implemented!`);
         });
 
@@ -652,7 +652,7 @@ function init() {
                 `Card at index ${cardIndex} in deck "${deck.deckName}" updated and deck saved.`
             );
             // Re-render this deck view to show changes
-            initDeckViewScreen(deck.deckName);
+            initDeckViewScreen(deckToStudy.deckName);
         } catch (error) {
             console.error("Error saving deck after editing card:", error);
             alert("Failed to save card changes.");
