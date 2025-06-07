@@ -5,6 +5,7 @@
     width: 4em;
     align-self: flex-start;
 }
+
 #practice-button,
 #clear-attempts-button {
     height: 2em;
@@ -106,7 +107,7 @@
     width: 100%;
     max-width: none;
     height: 300px;
-    transform: none !important;
+    transform: none;
     box-shadow: none;
     position: static;
 }
@@ -189,8 +190,8 @@ dialog.custom-dialog {
     transform: translate(-50%, -50%);
     border: none;
     border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-    padding: 2em 2em 1.5em 2em;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    padding: 2em 2em 1.5em;
     background: #fff;
     color: #222;
     font-family: inherit;
@@ -200,7 +201,7 @@ dialog.custom-dialog {
 }
 
 dialog.custom-dialog::backdrop {
-    background: rgba(0,0,0,0.25);
+    background: rgba(0, 0, 0, 0.25);
 }
 
 dialog.custom-dialog p {
