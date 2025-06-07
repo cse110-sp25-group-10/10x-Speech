@@ -1,4 +1,5 @@
 import { saveDeck } from "../database.js";
+import { shuffleCards } from "../deck.js";
 
 const template = document.createElement("template");
 template.innerHTML = `
@@ -25,6 +26,7 @@ template.innerHTML = `
     <footer>
         <section class="status">
             <button id="practice-button">Start Practice</button>
+            <button id="shuffle-toggle-button">Shuffle: On</button>
             <span class="timer">Time: 0s</span>
         </section>
         <nav class="controls bottom">
@@ -43,6 +45,7 @@ class StudyScreen extends HTMLElement {
 
         this._deck = null;
         this.shuffledCards = [];
+        this.shouldShuffle = true;
         this.currentIndex = 0;
         this.isPracticing = false;
         this.timerInterval = null;
@@ -71,6 +74,7 @@ class StudyScreen extends HTMLElement {
             flipCardContainer: this.shadowRoot.querySelector(".flip-card"),
             cardTimestamps: this.shadowRoot.querySelector(".card-timestamps"),
             clearAttemptsButton: this.shadowRoot.querySelector("#clear-attempts-button"),
+            shuffleToggleButton: this.shadowRoot.querySelector("#shuffle-toggle-button"),
         };
 
         // Add event listeners using named functions
@@ -79,6 +83,11 @@ class StudyScreen extends HTMLElement {
             "click",
             this.handlePracticeButtonClick.bind(this)
         );
+
+        this.elements.shuffleToggleButton = this.shadowRoot.querySelector("#shuffle-toggle-button");
+        this.elements.shuffleToggleButton.addEventListener("click", this.handleShuffleToggleClick.bind(this));
+
+        
         this.elements.nextButton.addEventListener("click", this.handleNextButtonClick.bind(this));
         this.elements.prevButton.addEventListener("click", this.handlePrevButtonClick.bind(this));
         this.elements.flipButton.addEventListener("click", this.handleFlipButtonClick.bind(this));
@@ -90,6 +99,8 @@ class StudyScreen extends HTMLElement {
             "click",
             this.handleClearAttemptsClick.bind(this)
         );
+
+        this.updateShuffleButtonLabel();
 
         this.render();
     }
@@ -117,14 +128,18 @@ class StudyScreen extends HTMLElement {
             this.practiceTimes = Array(this.shuffledCards.length).fill(0);
             this.practiceStart = Date.now();
             this.lastCardIndex = this.currentIndex;
-            // Shuffle the deck
-            this.shuffledCards = this.shuffle([...this._deck.cards]);
+            // Shuffle the deck depending on toggleable state
+            this.shuffledCards = this.shouldShuffle
+                ? shuffleCards([...this._deck.cards])
+                : [...this._deck.cards];
+        
             this.currentIndex = 0;
 
             // Update UI
             this.elements.practiceButton.textContent = "End Practice";
             this.elements.practiceButton.classList.add("active");
             this.elements.flipButton.removeAttribute("disabled");
+            this.elements.shuffleToggleButton.disabled = this.isPracticing;
             this.startTimer();
 
             // Switch to practice mode layout
@@ -143,6 +158,8 @@ class StudyScreen extends HTMLElement {
 
             // Switch to default layout
             this.elements.cardContainer.classList.remove("practice-mode");
+            this.elements.shuffleToggleButton.disabled = false;
+
         }
         this.render();
     }
@@ -282,28 +299,6 @@ class StudyScreen extends HTMLElement {
     }
 
     /**
-     * Shuffles an array using the Fisher-Yates (aka Knuth) Shuffle algorithm.
-     * @param {Array} array The array to shuffle.
-     * @returns {Array} The shuffled array.
-     */
-    shuffle(array) {
-        let currentIndex = array.length,
-            randomIndex;
-
-        // While there remain elements to shuffle.
-        while (currentIndex !== 0) {
-            // Pick a remaining element.
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex--;
-
-            // And swap it with the current element.
-            [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-        }
-
-        return array;
-    }
-
-    /**
      * Save practice times for each card to IndexedDB.
      */
     async savePracticeTimes() {
@@ -318,7 +313,14 @@ class StudyScreen extends HTMLElement {
             if (originalIndex !== -1) {
                 const card = this._deck.cards[originalIndex];
                 if (!Array.isArray(card.practiceTimes)) card.practiceTimes = [];
+                
+                // Push new time into specific card
                 card.practiceTimes.push(this.practiceTimes[i]);
+
+                // Remove oldest attempt to keep 5 latest attempts per card
+                while (card.practiceTimes.length > 5) {
+                    card.practiceTimes.shift();
+                }
             }
         }
         // Save the deck
@@ -361,6 +363,17 @@ class StudyScreen extends HTMLElement {
     handleCardContainerClick() {
         this.flipCard();
     }
+
+    handleShuffleToggleClick() {
+        this.shouldShuffle = !this.shouldShuffle;
+        this.elements.shuffleToggleButton.textContent = `Shuffle: ${this.shouldShuffle ? "On" : "Off"}`;
+    }
+
+    updateShuffleButtonLabel() {
+        this.elements.shuffleToggleButton.textContent = `Shuffle: ${this.shouldShuffle ? "On" : "Off"}`;
+    }
+    
+    
 
     /**
      * Handles clearing attempts for the current card.
