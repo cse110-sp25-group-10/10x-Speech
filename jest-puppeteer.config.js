@@ -1,6 +1,6 @@
 export default {
   launch: {
     headless: false,
-    slowMo: 100,
+    slowMo: 40,
   },
 };
