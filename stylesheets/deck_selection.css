@@ -50,10 +50,12 @@ existing-screen .top {
 
 #create-speech-button {
     font-size: var(--size-2);
-    height: 100%;
-    max-height: 2em;
-    min-height: 1em;
-    width: 6em;
+    height: 2em;
+    width: 2em;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 existing-screen h2 {
