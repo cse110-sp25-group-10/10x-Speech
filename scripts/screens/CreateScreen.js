@@ -18,7 +18,7 @@ class CreateScreen extends HTMLElement {
             <form id="customize-card">
                 <!-- previous button, front of card, back of card, next button -->
                 <button type="button" class="previous card-nav-button">➤</button>
-                <fieldset class="flash-card-container">
+                <fieldset class="flash-card-creation">
                     <!-- textareas let us go multi-line, also do we want the user to be able to easily do bullet points? -->
                     <section class="card-textareas">
                         <textarea id="input-front-card" placeholder="Front Text"></textarea>
