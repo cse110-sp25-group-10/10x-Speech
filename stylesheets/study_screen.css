@@ -19,6 +19,14 @@
     --card-text-size: 2rem;
 }
 
+#study-controls {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+
 /* These are the buttons in the menu. */
 #prev-card,
 #flip-card,
@@ -28,11 +36,16 @@
     align-self: flex-start;
 }
 
-/* This is another button */
+/* This is the practice button */
 #practice-button {
     height: 2em;
-    width: 6em;
+    width: 12em;
     align-self: flex-end;
+}
+
+/* The practice button turns red when clicked. */
+#practice-button.active {
+    background-color: rgb(247, 104, 123)
 }
 
 .timer {

@@ -27,7 +27,7 @@ template.innerHTML = `
         <section class="status">
             <span class="timer">Time: 0s</span>
         </section>
-        <nav class="controls bottom">
+        <nav id="study-controls" class="controls bottom">
             <button id="prev-card" disabled>Previous</button>
             <button id="practice-button">Start Practice</button>
             <button id="next-card" disabled>Next</button>
