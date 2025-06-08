@@ -40,6 +40,17 @@ describe('User creates a deck for the first time', () => {
 
     }, 10000);
 
+    it('adding another card', async () => {
+
+        // fill in card information and add it to the deck
+        await page.waitForSelector('#input-front-card');
+        await page.type('#input-front-card', 'The Meaning of Life');
+        await page.waitForSelector('#input-back-card');
+        await page.type('#input-back-card', "I don't know");
+        await page.click('#upload-card');
+
+    }, 10000);
+
     it('saving the deck and going back to home screen', async () => {
         await page.click('#save-button');
         await page.waitForSelector("existing-screen");
@@ -56,14 +67,21 @@ describe('User creates a deck for the first time', () => {
             };
             });
         });
+
+        // make sure there is only one deck and that it is the correct one
         expect(decks.length).toBe(1);
         const deckNames = decks.map(d => d.deckName);
         expect(deckNames).toContain('My First Speech!');
+
+        // making sure the cards are in thd deck
         const deck = decks.find(d => d.deckName === 'My First Speech!');
-        expect(deck.cards.length).toBe(1);
-        const card = deck.cards[0];
-        expect(card.frontText).toBe('What I Have To Say');
-        expect(card.backText).toBe('I have nothing to say');
+        expect(deck.cards.length).toBe(2);
+        const card1 = deck.cards[0];
+        expect(card1.frontText).toBe('What I Have To Say');
+        expect(card1.backText).toBe('I have nothing to say');
+        const card2 = deck.cards[1];
+        expect(card2.frontText).toBe('The Meaning of Life');
+        expect(card2.backText).toBe("I don't know");
 
     }, 10000);
 
@@ -83,14 +101,21 @@ describe('User creates a deck for the first time', () => {
             };
             });
         });
+
+        // make sure there is only one deck and that it is the correct one
         expect(decks.length).toBe(1);
         const deckNames = decks.map(d => d.deckName);
         expect(deckNames).toContain('My First Speech!');
+
+        // making sure the cards are in thd deck
         const deck = decks.find(d => d.deckName === 'My First Speech!');
-        expect(deck.cards.length).toBe(1);
-        const card = deck.cards[0];
-        expect(card.frontText).toBe('What I Have To Say');
-        expect(card.backText).toBe('I have nothing to say');
+        expect(deck.cards.length).toBe(2);
+        const card1 = deck.cards[0];
+        expect(card1.frontText).toBe('What I Have To Say');
+        expect(card1.backText).toBe('I have nothing to say');
+        const card2 = deck.cards[1];
+        expect(card2.frontText).toBe('The Meaning of Life');
+        expect(card2.backText).toBe("I don't know");
 
     }, 10000);
 
