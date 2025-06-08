@@ -65,7 +65,7 @@ function init() {
         // Add existing decks to the deck list
         if (Object.keys(appState.decks).length === 0) {
             deckListContainer.innerHTML = `
-                <p>There are no decks yet. Please create one.</p>
+            <p>There are no decks yet. Please create one.</p>
             `;
             deckListContainer.style.display = "flex";
             deckListContainer.style.flexDirection = "column";
@@ -73,6 +73,12 @@ function init() {
             deckListContainer.style.justifyContent = "center";
             createBtn.style.marginTop = "10px";
             deckListContainer.appendChild(createBtn);
+
+            // Center the button absolutely in the middle
+            createBtn.style.position = "absolute";
+            createBtn.style.top = "60%";
+            createBtn.style.left = "50%";
+            createBtn.style.transform = "translate(-50%, -50%)";
         } else {
             for (const deckName in appState.decks) {
                 const deck = appState.decks[deckName]
@@ -150,6 +156,12 @@ function init() {
                 deckListContainer.style.justifyContent = "center";
                 createBtn.style.marginTop = "10px";
                 deckListContainer.appendChild(createBtn);
+
+                // Center the button absolutely in the middle
+                createBtn.style.position = "absolute";
+                createBtn.style.top = "60%";
+                createBtn.style.left = "50%";
+                createBtn.style.transform = "translate(-50%, -50%)";
             }
         }
 

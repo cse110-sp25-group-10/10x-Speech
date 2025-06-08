@@ -49,13 +49,15 @@ existing-screen .top {
 }
 
 #create-speech-button {
-    font-size: var(--size-2);
-    height: 2em;
-    width: 2em;
+    font-size: var(--size-4);
+    height: 1.5em;
+    width: 1.5em;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-width: 1.5em;
+    min-height: 1.5em;
 }
 
 existing-screen h2 {
