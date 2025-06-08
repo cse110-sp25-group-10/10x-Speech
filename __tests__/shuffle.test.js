@@ -64,10 +64,10 @@ test("shuffling with single card deck shouldn't change anything", () => {
     const card1 = Card("Example Topic1", "Example description1");
     deck.addCard(card1);
 
-    const shuffled = shuffleCards(deck.cards);
+    shuffleCards(deck.cards);
 
 
-    expect(shuffled).toStrictEqual(deck.cards);
+    expect(deck.cards).toStrictEqual([card1]);
 });
 
 test("returns null for shuffling non-array objects", () => {
@@ -81,7 +81,7 @@ test("returns null for shuffling non-array objects", () => {
 test("shuffling empty deck should still work and keep deck empty", () => {
     // creating deck
     const deck = Deck("Example Title");
-    const shuffled = shuffleCards(deck.cards);
+    shuffleCards(deck.cards);
 
-    expect(shuffled).toStrictEqual(deck.cards);
+    expect(deck.cards).toStrictEqual([]);
 });
