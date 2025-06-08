@@ -28,21 +28,11 @@
     align-self: flex-start;
 }
 
+/* This is another button */
 #practice-button {
     height: 2em;
     width: 6em;
     align-self: flex-end;
-}
-
-.card-counter {
-    display: block;
-    width: 100%;
-    text-align: right;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-    padding-right: 2em;
-    font-size: 1.5em;
-    font-family: "Jersey 10", sans-serif;
 }
 
 .timer {

@@ -62,7 +62,8 @@ class StudyScreen extends HTMLElement {
             backButton: this.shadowRoot.querySelector("#back-button"),
             practiceButton: this.shadowRoot.querySelector("#practice-button"),
             timer: this.shadowRoot.querySelector(".timer"),
-            cardCounter: this.shadowRoot.querySelector(".card-counter"),
+            // FLAG: DELETEME
+            // cardCounter: this.shadowRoot.querySelector(".card-counter"),
             prevButton: this.shadowRoot.querySelector("#prev-card"),
             flipButton: this.shadowRoot.querySelector("#flip-card"),
             nextButton: this.shadowRoot.querySelector("#next-card"),
