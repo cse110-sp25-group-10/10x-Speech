@@ -107,14 +107,14 @@
 
 
 /* Practice mode: show only one card, flipable */
-.flash-card-container .flip-card {
+ .flip-card {
     display: flex;
     justify-content: center;
     align-items: center;
     perspective: 1000px;
 }
 
-.flash-card-container .flip-card-inner {
+ .flip-card-inner {
     position: relative;
     width: 90%;
     max-width: 600px;
@@ -124,8 +124,34 @@
     display: block;
 }
 
-.flash-card-container .card-front,
-.flash-card-container .card-back {
+ .card-front,
+ .card-back {
+
+    /* card background color */
+    background-color: var(--card-background-color);
+    
+    /* card border styling */
+    border-style: var(--card-border-style);
+    border-radius: var(--card-border-radius);
+    border-color: var(--card-border-color);
+    border-width: var(--card-border-width);
+
+    /* card font */
+    font-family: var(--card-font), var(--card-font-serif);
+    font-size: var(--card-text-size);
+
+    /* card size/shape */
+    width: var(--card-width);
+    height: var(--card-height);
+
+    /* text alignment */
+    display: flex;
+    text-align: left; 
+
+    /* This tells desktop users that the cards are clickable */
+    cursor: pointer;
+
+    /*
     position: absolute;
     width: 100%;
     height: 100%;
@@ -141,6 +167,7 @@
     top: 0;
     transform: none;
     direction: ltr;
+    */
 }
 
 .flash-card-container .card-back {
