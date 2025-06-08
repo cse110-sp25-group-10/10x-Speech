@@ -1,4 +1,3 @@
-/* || Container Styling */
 create-screen {
     background-color: rgba(1,1,1,0.75);
     display: flex;
@@ -81,7 +80,7 @@ fieldset {
     width: 100%;
 }
 
-.flash-card-creation {
+.flash-card-container {
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -294,6 +293,11 @@ card-preview > menu {
     bottom: 1rem;
     right: 1rem;
 }
+
+card-preview.selected {
+    box-shadow: 0 0 20px 4px var(--white-transparent);
+}
+
 
 card-preview:active {
     box-shadow: 0 0 20px 4px var(--white-transparent);
