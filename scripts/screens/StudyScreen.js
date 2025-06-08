@@ -12,6 +12,7 @@ template.innerHTML = `
         <h2 id="deck-name" class="title"></h2>
         <button id="back-button">Back</button>
     </header id="study-screen-header">
+    <button id="shuffle-toggle-button">Shuffle: Off</button>
     <section id="card-container">
         <div class="flip-card">
             <div class="flip-card-inner">
@@ -20,15 +21,14 @@ template.innerHTML = `
             </div>
         </div>
     </section>
+    <button id="flip-card">Flip</button>
     <footer>
         <section class="status">
-            <button id="practice-button">Start Practice</button>
-            <button id="shuffle-toggle-button">Shuffle: Off</button>
             <span class="timer">Time: 0s</span>
         </section>
         <nav class="controls bottom">
             <button id="prev-card" disabled>Previous</button>
-            <button id="flip-card">Flip</button>
+            <button id="practice-button">Start Practice</button>
             <button id="next-card" disabled>Next</button>
         </nav>
     </footer>
