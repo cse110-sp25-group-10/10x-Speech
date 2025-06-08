@@ -115,7 +115,7 @@ test("returns null for reading card outside of index", () => {
 });
 
 // deleteCard tests
-test.skip("updates the deck by deleting the card at index 1", () => {
+test("updates the deck by deleting the card at index 1", () => {
     const deck = Deck("Example Title");
     const card1 = Card("Example Topic1", "Example description1");
     const card2 = Card("Example Topic2", "Example description2");
@@ -138,7 +138,7 @@ test.skip("updates the deck by deleting the card at index 1", () => {
     expect(deck.deckName).toBe("Example Title");
 });
 
-test.skip("updates the deck by deleting every card until the deck is empty", () => {
+test("updates the deck by deleting every card until the deck is empty", () => {
     const deck = Deck("Example Title");
     const card1 = Card("Example Topic1", "Example description1");
     const card2 = Card("Example Topic2", "Example description2");
@@ -160,7 +160,7 @@ test("returns null for empty deck", () => {
     expect(deck.deckName).toBe("Empty Deck");
 });
 
-test.skip("returns null for deleting card outside of index", () => {
+test("returns null for deleting card outside of index", () => {
     const deck = Deck("Empty Deck");
     const card = Card("Example Topic1", "Example description1");
     deck.addCard(card);
@@ -304,7 +304,7 @@ test("returns false for updating deck with not a card", () => {
     expect(deck.deckName).toBe("Example Title");
 });
 
-test.skip("returns false for updating deck with null object", () => {
+test("returns false for updating deck with null object", () => {
     const deck = Deck("Example Title");
     const card1 = Card("Example Topic1", "Example description1");
     const card2 = Card("Example Topic2", "Example description2");
