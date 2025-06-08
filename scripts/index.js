@@ -53,16 +53,32 @@ function init() {
         // Get references to elements in existing decks screen
         const deckListContainer = existingDecksScreen.querySelector(".flash-card-container");
         const editBtn = existingDecksScreen.querySelector("#edit-speech-button");
-        const createBtn = existingDecksScreen.querySelector("#create-speech-button");
         const studyBtn = existingDecksScreen.querySelector("#study-button");
         const deleteBtn = existingDecksScreen.querySelector("#delete-speech-button");
         const deckCount = existingDecksScreen.querySelector(".deck-count");
 
+
+        const createBtn = document.createElement("button");
+        createBtn.id = "create-speech-button";
+        createBtn.textContent = "+";
+
         // Add existing decks to the deck list
         if (Object.keys(appState.decks).length === 0) {
             deckListContainer.innerHTML = `
-                <p>There are no decks yet. Please create one.</p>
+            <p>There are no decks yet. Please create one.</p>
             `;
+            deckListContainer.style.display = "flex";
+            deckListContainer.style.flexDirection = "column";
+            deckListContainer.style.alignItems = "center";
+            deckListContainer.style.justifyContent = "center";
+            createBtn.style.marginTop = "10px";
+            deckListContainer.appendChild(createBtn);
+
+            // Center the button absolutely in the middle
+            createBtn.style.position = "absolute";
+            createBtn.style.top = "60%";
+            createBtn.style.left = "50%";
+            createBtn.style.transform = "translate(-50%, -50%)";
         } else {
             for (const deckName in appState.decks) {
                 const deck = appState.decks[deckName]
@@ -73,7 +89,9 @@ function init() {
                 deckListContainer.appendChild(deckPreview);
                 deckCount.textContent = `${Object.keys(appState.decks).length}`;
             }
+            deckListContainer.appendChild(createBtn);
         }
+
 
         // Add event listeners
         deckListContainer.addEventListener("deck-select", selectDeck);
@@ -126,6 +144,24 @@ function init() {
                 delete appState.decks[appState.currentDeckInCreation.deckName];
                 appState.currentDeckInCreation = null;
                 deckCount.textContent = `${Object.keys(appState.decks).length}`;
+            }
+
+            if( Object.keys(appState.decks).length === 0) {
+                deckListContainer.innerHTML = `
+                    <p>There are no decks yet. Please create one.</p>
+                `;
+                deckListContainer.style.display = "flex";
+                deckListContainer.style.flexDirection = "column";
+                deckListContainer.style.alignItems = "center";
+                deckListContainer.style.justifyContent = "center";
+                createBtn.style.marginTop = "10px";
+                deckListContainer.appendChild(createBtn);
+
+                // Center the button absolutely in the middle
+                createBtn.style.position = "absolute";
+                createBtn.style.top = "60%";
+                createBtn.style.left = "50%";
+                createBtn.style.transform = "translate(-50%, -50%)";
             }
         }
 
