@@ -20,8 +20,6 @@ template.innerHTML = `
             </div>
         </div>
     </section>
-    <div class="card-timestamps"></div>
-    <button id="clear-attempts-button" style="margin-top:8px;">Clear Attempts</button>
     <footer>
         <section class="status">
             <button id="practice-button">Start Practice</button>
@@ -95,10 +93,17 @@ class StudyScreen extends HTMLElement {
             "click",
             this.handleCardContainerClick.bind(this)
         );
+
+        // TODO: This is no longer appropriate
+        //       I'm unsure if the DELETEME flag is necessary here 
+        //       but I'm ADDING IT ANYWAY
+        // FLAG: DELETEME
+        /*
         this.elements.clearAttemptsButton.addEventListener(
             "click",
             this.handleClearAttemptsClick.bind(this)
         );
+        */
 
         this.updateShuffleButtonLabel();
 
