@@ -129,13 +129,7 @@
     direction: ltr;
 }
 
-.flash-card-container:not(.practice-mode) .card-front {
-    margin-right: 0;
-}
 
-.flash-card-container:not(.practice-mode) .card-back {
-    margin-left: 2rem;
-}
 
 /* Practice mode: show only one card, flipable */
 .flash-card-container.practice-mode .flip-card {
@@ -180,69 +174,4 @@
 
 .flash-card-container.practice-mode .flip-card.flipped .flip-card-inner {
     transform: rotateY(180deg);
-}
-
-/* Custom dialog for clear attempts */
-dialog.custom-dialog {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-    padding: 2em 2em 1.5em;
-    background: #fff;
-    color: #222;
-    font-family: inherit;
-    max-width: 320px;
-    text-align: center;
-    z-index: 1000;
-}
-
-dialog.custom-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.25);
-}
-
-dialog.custom-dialog p {
-    font-size: 1.1em;
-    margin-bottom: 1.2em;
-}
-
-dialog.custom-dialog menu {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7em;
-    padding: 0;
-    margin: 0;
-}
-
-dialog.custom-dialog button {
-    font-size: 1em;
-    padding: 0.6em 1.2em;
-    border: none;
-    border-radius: 8px;
-    background: #c2e9fb;
-    color: #222;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-dialog.custom-dialog button[value="clear-all"] {
-    background: #ffb3b3;
-    color: #222;
-}
-
-dialog.custom-dialog button[value="clear-current"] {
-    background: #ffe9a7;
-    color: #222;
-}
-
-dialog.custom-dialog button[value="cancel"] {
-    background: #eee;
-    color: #666;
-}
-
-dialog.custom-dialog button:hover {
-    filter: brightness(0.95);
 }
