@@ -4,9 +4,6 @@ import { shuffleCards } from "../deck.js";
 const template = document.createElement("template");
 template.innerHTML = `
     <link rel="stylesheet" href="../../stylesheets/styles.css">
-    <link rel="stylesheet" href="../../stylesheets/deck_selection.css">
-    <link rel="stylesheet" href="../../stylesheets/preparing_speech.css">
-    <link rel="stylesheet" href="../../stylesheets/existing_flashcard.css">
     <link rel="stylesheet" href="../../stylesheets/study_screen.css">
     <header>
         <h2 id="deck-name" class="title"></h2>
@@ -16,8 +13,12 @@ template.innerHTML = `
     <section id="card-container">
         <div class="flip-card">
             <div class="flip-card-inner">
-                <div class="card card-front"></div>
-                <div class="card card-back"></div>
+                <div class="card card-front">
+                    <p id="front-content" class="card-content" style="color:red">Tomatoes!</p>
+                </div>
+                <div class="card card-back">
+                    <p id="back-content" class="card-content" style="color:red">Potatoes!</p>
+                </div>
             </div>
         </div>
     </section>
@@ -68,6 +69,8 @@ class StudyScreen extends HTMLElement {
             cardContainer: this.shadowRoot.querySelector("#card-container"),
             cardFront: this.shadowRoot.querySelector(".card-front"),
             cardBack: this.shadowRoot.querySelector(".card-back"),
+            cardFrontContent: this.shadowRoot.querySelector("#front-content"),
+            cardBackContent: this.shadowRoot.querySelector("#back-content"),
             flipCardContainer: this.shadowRoot.querySelector(".flip-card"),
             // FLAG: DELETEME
             // cardTimestamps: this.shadowRoot.querySelector(".card-timestamps"),
@@ -220,8 +223,8 @@ class StudyScreen extends HTMLElement {
 
         const cardCount = this.shuffledCards.length;
         if (cardCount === 0) {
-            this.elements.cardFront.textContent = "This deck has no cards.";
-            this.elements.cardBack.textContent = "";
+            this.elements.cardFrontContent.textContent = "This deck has no cards.";
+            this.elements.cardBackContent.textContent = "";
             // FLAG: DELETEME
             //this.elements.cardCounter.textContent = "Card 0 / 0";
             this.elements.practiceButton.setAttribute("disabled", "");
@@ -234,8 +237,8 @@ class StudyScreen extends HTMLElement {
 
         // Update card content
         const currentCard = this.shuffledCards[this.currentIndex];
-        this.elements.cardFront.textContent = currentCard.frontText;
-        this.elements.cardBack.textContent = currentCard.backText;
+        this.elements.cardFrontContent.textContent = currentCard.frontText;
+        this.elements.cardBackContent.textContent = currentCard.backText;
 
         // Update card counter
         // FLAG: DELETEME
@@ -401,7 +404,10 @@ class StudyScreen extends HTMLElement {
     /**
      * Handles clearing attempts for the current card.
      * Shows a dialog to choose between clearing the last attempt or all attempts.
+     * TODO: Re-evaluate the neccesity of this. We are removing the only button that uses this.
      */
+
+    /*
     async handleClearAttemptsClick() {
         const currentCard = this.shuffledCards[this.currentIndex];
         const originalCard = this._deck.cards.find(
@@ -447,6 +453,8 @@ class StudyScreen extends HTMLElement {
             }
         }
     }
+
+    */
 }
 
 customElements.define("study-screen", StudyScreen);
