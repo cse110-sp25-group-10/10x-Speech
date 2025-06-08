@@ -144,10 +144,12 @@ function init() {
                 deckListContainer.innerHTML = `
                     <p>There are no decks yet. Please create one.</p>
                 `;
+                deckListContainer.style.display = "flex";
+                deckListContainer.style.flexDirection = "column";
+                deckListContainer.style.alignItems = "center";
+                deckListContainer.style.justifyContent = "center";
+                createBtn.style.marginTop = "10px";
                 deckListContainer.appendChild(createBtn);
-                studyBtn.setAttribute("disabled", "true");
-                editBtn.setAttribute("disabled", "true");
-                deleteBtn.setAttribute("disabled", "true");
             }
         }
 
