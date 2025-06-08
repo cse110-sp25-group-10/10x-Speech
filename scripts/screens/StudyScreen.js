@@ -25,7 +25,7 @@ template.innerHTML = `
     <footer>
         <section class="status">
             <button id="practice-button">Start Practice</button>
-            <button id="shuffle-toggle-button">Shuffle: On</button>
+            <button id="shuffle-toggle-button">Shuffle: Off</button>
             <span class="timer">Time: 0s</span>
         </section>
         <nav class="controls bottom">
@@ -44,7 +44,7 @@ class StudyScreen extends HTMLElement {
 
         this._deck = null;
         this.shuffledCards = [];
-        this.shouldShuffle = true;
+        this.shouldShuffle = false;
         this.currentIndex = 0;
         this.isPracticing = false;
         this.timerInterval = null;
@@ -152,8 +152,9 @@ class StudyScreen extends HTMLElement {
             // Update UI
             this.elements.practiceButton.textContent = "Start Practice";
             this.elements.practiceButton.classList.remove("active");
-            this.elements.flipButton.setAttribute("disabled", "");
             this.stopTimer();
+
+            // TODO: You'll need to change this to get the time to render right!!!
             this.elements.timer.textContent = "Time: 0s";
 
             // Switch to default layout
