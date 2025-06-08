@@ -77,6 +77,11 @@
 #flip-card {
     height: 2em;
     width: 2em;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    margin-top: 1em;
 }
 
 /* This is the practice button */
