@@ -36,3 +36,11 @@ test("returns null for shuffling non-array objects", () => {
 
     expect(shuffled).toBe(null);
 });
+
+test("shuffling empty deck should still work and keep deck empty", () => {
+
+    const deck = Deck("Example Title");
+    const shuffled = shuffleCards(deck.cards);
+
+    expect(shuffled).toStrictEqual(deck.cards);
+});
