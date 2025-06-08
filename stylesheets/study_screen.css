@@ -21,6 +21,8 @@
 
 #study-screen-header {
     display: flex;
+    justify-content: center;
+    
     flex-direction: row;
     padding: 20px;
     gap: 10px;
@@ -37,6 +39,14 @@
     text-overflow: ellipsis;
     flex-shrink: 0;
     min-width: max-content;
+    padding-left: var(--card-content-horizontal-padding);
+    padding-right: var(--card-content-horizontal-padding);
+}
+
+#deck-name {
+    background-color: var(--white-transparent);
+    color: var(--black);
+    border-radius: 10px;
 }
 
 #back-button, #shuffle-toggle-button {
