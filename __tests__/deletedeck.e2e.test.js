@@ -79,8 +79,20 @@ describe('User loads their decks and deletes one of them', () => {
         });
         expect(decks.length).toBe(1);
         const deckNames = decks.map(d => d.deckName);
-        expect(deckNames).toContain('Whales');
 
+        // making sure the whale deck is unchanged
+        expect(deckNames).toContain('Whales');
+        const deckWhale = decks.find(d => d.deckName === 'Whales');
+        expect(deckWhale.cards.length).toBe(3);
+        const cardDolphin1 = deckWhale.cards[0];
+        expect(cardDolphin1.frontText).toBe('What are whales?');
+        expect(cardDolphin1.backText).toBe('Whales are a marine mammal.');
+        const cardDolphin2 = deckWhale.cards[1];
+        expect(cardDolphin2.frontText).toBe('Habitat');
+        expect(cardDolphin2.backText).toBe('They live in the ocean.');
+        const cardDolphin3 = deckWhale.cards[2];
+        expect(cardDolphin3.frontText).toBe('Food they eat');
+        expect(cardDolphin3.backText).toBe('Whales like to eat krill and plankton.');
 
     }, 10000);
 
@@ -102,8 +114,20 @@ describe('User loads their decks and deletes one of them', () => {
         });
         expect(decks.length).toBe(1);
         const deckNames = decks.map(d => d.deckName);
-        expect(deckNames).toContain('Whales');
         
+        // making sure the whale deck is unchanged
+        expect(deckNames).toContain('Whales');
+        const deckWhale = decks.find(d => d.deckName === 'Whales');
+        expect(deckWhale.cards.length).toBe(3);
+        const cardDolphin1 = deckWhale.cards[0];
+        expect(cardDolphin1.frontText).toBe('What are whales?');
+        expect(cardDolphin1.backText).toBe('Whales are a marine mammal.');
+        const cardDolphin2 = deckWhale.cards[1];
+        expect(cardDolphin2.frontText).toBe('Habitat');
+        expect(cardDolphin2.backText).toBe('They live in the ocean.');
+        const cardDolphin3 = deckWhale.cards[2];
+        expect(cardDolphin3.frontText).toBe('Food they eat');
+        expect(cardDolphin3.backText).toBe('Whales like to eat krill and plankton.');
 
     }, 10000);
 
