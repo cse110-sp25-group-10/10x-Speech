@@ -19,10 +19,36 @@
     --card-text-size: 2rem;
 }
 
-#deck-name {
-    background-color: var(--card-background-color);
-    border-radius: var(--card-border-radius);
-    color: black;
+#study-screen-header {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    gap: 10px;
+    margin: 0;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+#deck-name.title {
+    background-color:var(--white-transparent);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    min-width: max-content;
+}
+
+#back-button, #shuffle-toggle-button {
+    background-color: var(--white-transparent);
+    height: 2em;
+    width: 4em;
+    align-self: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    min-width: max-content;
 }
 
 #study-controls {
@@ -36,7 +62,6 @@
 #next-card {
     height: 2em;
     width: 4em;
-    align-self: flex-start;
 }
 
 #flip-card {

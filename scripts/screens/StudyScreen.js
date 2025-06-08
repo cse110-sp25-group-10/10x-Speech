@@ -5,11 +5,11 @@ const template = document.createElement("template");
 template.innerHTML = `
     <link rel="stylesheet" href="../../stylesheets/styles.css">
     <link rel="stylesheet" href="../../stylesheets/study_screen.css">
-    <header>
-        <h2 id="deck-name" class="title"></h2>
+    <header id="study-screen-header">
         <button id="back-button">Back</button>
+        <h2 id="deck-name" class="title"></h2>
+        <button id="shuffle-toggle-button">Shuffle: Off</button>
     </header id="study-screen-header">
-    <button id="shuffle-toggle-button">Shuffle: Off</button>
     <section id="card-container">
         <div class="flip-card">
             <div class="flip-card-inner">
