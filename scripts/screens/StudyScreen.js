@@ -11,8 +11,8 @@ template.innerHTML = `
     <header>
         <h2 id="deck-name" class="title"></h2>
         <button id="back-button">Back</button>
-    </header>
-    <section id="card-container" class="flash-card-container">
+    </header id="study-screen-header">
+    <section id="card-container">
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="card card-front"></div>
@@ -20,7 +20,6 @@ template.innerHTML = `
             </div>
         </div>
     </section>
-    <span class="card-counter">Card 0 / 0</span>
     <div class="card-timestamps"></div>
     <button id="clear-attempts-button" style="margin-top:8px;">Clear Attempts</button>
     <footer>
@@ -210,7 +209,8 @@ class StudyScreen extends HTMLElement {
         if (cardCount === 0) {
             this.elements.cardFront.textContent = "This deck has no cards.";
             this.elements.cardBack.textContent = "";
-            this.elements.cardCounter.textContent = "Card 0 / 0";
+            // FLAG: DELETEME
+            //this.elements.cardCounter.textContent = "Card 0 / 0";
             this.elements.practiceButton.setAttribute("disabled", "");
             return;
         }
@@ -225,7 +225,8 @@ class StudyScreen extends HTMLElement {
         this.elements.cardBack.textContent = currentCard.backText;
 
         // Update card counter
-        this.elements.cardCounter.textContent = `Card ${this.currentIndex + 1} / ${cardCount}`;
+        // FLAG: DELETEME
+        // this.elements.cardCounter.textContent = `Card ${this.currentIndex + 1} / ${cardCount}`;
 
         // Display all timestamps for the current card
         const originalCard = this._deck.cards.find(
