@@ -28,7 +28,7 @@ template.innerHTML = `
         </section>
         <nav class="controls bottom">
             <button id="prev-card" disabled>Previous</button>
-            <button id="flip-card" disabled>Flip</button>
+            <button id="flip-card">Flip</button>
             <button id="next-card" disabled>Next</button>
         </nav>
     </footer>
@@ -143,7 +143,10 @@ class StudyScreen extends HTMLElement {
             // Update UI
             this.elements.practiceButton.textContent = "End Practice";
             this.elements.practiceButton.classList.add("active");
-            this.elements.flipButton.removeAttribute("disabled");
+
+            // It turns out we want to be able to flip the card at all times.
+            // FLAG: DELETEME
+            //this.elements.flipButton.removeAttribute("disabled");
             this.elements.shuffleToggleButton.disabled = this.isPracticing;
             this.startTimer();
 
@@ -193,7 +196,10 @@ class StudyScreen extends HTMLElement {
      * Flips the current card to show the back or front.
      */
     flipCard() {
-        if (!this._deck || this._deck.cards.length === 0 || !this.isPracticing) return;
+        // The change that was made here is to remove the isPracticing check.
+        // FLAG: DELETEME
+        // if (!this._deck || this._deck.cards.length === 0 || !this.isPracticing) return;
+        if (!this._deck || this._deck.cards.length === 0) return;
         this.elements.flipCardContainer.classList.toggle("flipped");
     }
 
