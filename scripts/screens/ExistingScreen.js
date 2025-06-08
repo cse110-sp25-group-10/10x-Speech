@@ -12,7 +12,6 @@ class ExistingScreen extends HTMLElement {
             <main>
                 <menu class="top">
                     <h2>Your Decks (<span class="deck-count">0</span>)</h2>
-                    <button id="create-speech-button">Create</button>
                 </menu>
                 <output class="flash-card-container"></output>
                 <menu class="bottom">
