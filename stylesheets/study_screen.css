@@ -29,18 +29,21 @@
 
 /* These are the buttons in the menu. */
 #prev-card,
-#flip-card,
 #next-card {
     height: 2em;
     width: 4em;
     align-self: flex-start;
 }
 
+#flip-card {
+    height: 2em;
+    width: 2em;
+}
+
 /* This is the practice button */
 #practice-button {
     height: 2em;
     width: 12em;
-    align-self: flex-end;
 }
 
 /* The practice button turns red when clicked. */

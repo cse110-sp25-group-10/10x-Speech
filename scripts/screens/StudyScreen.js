@@ -220,7 +220,7 @@ class StudyScreen extends HTMLElement {
         }
 
         // Update deck name
-        this.elements.deckName.textContent = `Studying: ${this._deck.deckName}`;
+        this.elements.deckName.textContent = `${this._deck.deckName}`;
 
         const cardCount = this.shuffledCards.length;
         if (cardCount === 0) {
