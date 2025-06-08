@@ -1,3 +1,25 @@
+:root {
+    /** Sizing Variables */
+    --card-width: 45rem;                /* Note: Width = 2*height */
+    --card-height: 22.5rem;
+    --card-border-width: 0.5rem;
+    --card-border-radius: 0.5rem;
+    --card-content-horizontal-padding: 1rem;
+
+    /** Color Variables */
+    --card-background-color:  rgb(241, 236, 254);
+    --card-border-color: rgb(176, 202, 227);
+
+    /** Other Variables */
+    --card-border-style: solid;
+
+    /** Text variables */
+    --card-font: 'Rubik';
+    --card-font-serif: sans-serif;
+    --card-text-size: 3rem;
+}
+
+/* These are the buttons in the menu. */
 #prev-card,
 #flip-card,
 #next-card {
@@ -6,8 +28,7 @@
     align-self: flex-start;
 }
 
-#practice-button,
-#clear-attempts-button {
+#practice-button {
     height: 2em;
     width: 6em;
     align-self: flex-end;
@@ -93,53 +114,17 @@
     transform: rotateY(180deg);
 }
 
-/* Default: show both cards side by side */
-.flash-card-container:not(.practice-mode) .flip-card {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    perspective: none;
-    gap: 0;
-}
-
-.flash-card-container:not(.practice-mode) .flip-card-inner {
-    display: flex;
-    width: 100%;
-    max-width: none;
-    height: 300px;
-    transform: none;
-    box-shadow: none;
-    position: static;
-}
-
-.flash-card-container:not(.practice-mode) .card-front,
-.flash-card-container:not(.practice-mode) .card-back {
-    position: static;
-    width: 45%;
-    height: 100%;
-    backface-visibility: visible;
-    background: #edeaff;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2em;
-    transform: none;
-    direction: ltr;
-}
-
 
 
 /* Practice mode: show only one card, flipable */
-.flash-card-container.practice-mode .flip-card {
+.flash-card-container .flip-card {
     display: flex;
     justify-content: center;
     align-items: center;
     perspective: 1000px;
 }
 
-.flash-card-container.practice-mode .flip-card-inner {
+.flash-card-container .flip-card-inner {
     position: relative;
     width: 90%;
     max-width: 600px;
@@ -149,8 +134,8 @@
     display: block;
 }
 
-.flash-card-container.practice-mode .card-front,
-.flash-card-container.practice-mode .card-back {
+.flash-card-container .card-front,
+.flash-card-container .card-back {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -168,10 +153,10 @@
     direction: ltr;
 }
 
-.flash-card-container.practice-mode .card-back {
+.flash-card-container .card-back {
     transform: rotateY(180deg);
 }
 
-.flash-card-container.practice-mode .flip-card.flipped .flip-card-inner {
+.flash-card-container .flip-card.flipped .flip-card-inner {
     transform: rotateY(180deg);
 }
