@@ -6,12 +6,10 @@ class CardPreview extends HTMLElement {
     connectedCallback() {
         const frontText = this.getAttribute("data-front-text");
         const backText = this.getAttribute("data-back-text");
-        const time = this.getAttribute("data-time");
         this.innerHTML = `
             <section>
                 <p class="front-text">${frontText}</p>
                 <p class="back-text">${backText}</p>
-                <p class="time-text">${time}s</p>
             </section>
             <menu>
                 <button class="edit-card-btn button-small">Edit</button>

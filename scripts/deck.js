@@ -2,14 +2,12 @@
  * Creates a speech card with the appropriate data.
  * @param {string} frontText The text for the front of the card
  * @param {string} backText The text for the back of the card
- * @param {number} time The time length the user expects to spend on a card (in seconds)
  * @returns A JS object representing the speech card if valid and null otherwise
  */
-export const Card = function createCard(frontText, backText, time) {
-    // Validate that frontText and backText are strings and that time is a number
+export const Card = function createCard(frontText, backText) {
+    // Validate that frontText and backText are strings 
     // Validate that the front text is between 1 and 60 characters (inclusive)
     // Validate that the back text is between 1 and 250 characters (inclusive)
-    // Validate that the time length is between 1 and 60 seconds (inclusive)
     if (typeof frontText !== "string" || typeof backText !== "string") {
         return null;
     }
@@ -19,17 +17,10 @@ export const Card = function createCard(frontText, backText, time) {
     if (backText.length === 0 || backText.length > 250) {
         return null;
     }
-    if (typeof time !== "number" || isNaN(time)) {
-        return null;
-    }
-    if (time < 1 || time > 60) {
-        return null;
-    }
 
     return {
         "frontText": frontText,
         "backText": backText,
-        "time": time,
     };
 };
 
@@ -69,8 +60,7 @@ export const Deck = function createDeck(deckName) {
                 typeof card !== "object" ||
                 // Make sure the newCard object has the correct properties
                 !Object.hasOwn(card, "frontText") ||
-                !Object.hasOwn(card, "backText") ||
-                !Object.hasOwn(card, "time")
+                !Object.hasOwn(card, "backText")
             ) {
                 console.error("Invalid card.");
                 return false;
@@ -144,8 +134,7 @@ export const Deck = function createDeck(deckName) {
                 typeof newCard !== "object" ||
                 // Make sure the newCard object has the correct properties
                 !Object.hasOwn(newCard, "frontText") ||
-                !Object.hasOwn(newCard, "backText") ||
-                !Object.hasOwn(newCard, "time")
+                !Object.hasOwn(newCard, "backText") 
             ) {
                 console.error(
                     "Invalid newCard object for updateCard. It must be a complete card object."
@@ -170,10 +159,6 @@ export const Deck = function createDeck(deckName) {
                 console.error("Invalid backText for updateCard.");
                 return false;
             }
-            if (typeof newCard.time !== "number" || newCard.time < 1 || newCard.time > 60) {
-                console.error("Invalid time for updateCard.");
-                return false;
-            }
 
             // Update the card
             this.cards[index] = newCard;
@@ -185,21 +170,27 @@ export const Deck = function createDeck(deckName) {
 };
 
 /**
- * Shuffles the cards in a deck
- * @param {Array} deck - The deck of cards
- * @returns True if the deck was shuffled and false otherwise
+ * Shuffles an array using the Fisher-Yates (aka Knuth) Shuffle algorithm.
+ * @param {Array} array The array to shuffle.
+ * @returns {Array} The shuffled array.
  */
-export function shuffleCards(deck) {
-    if (!Array.isArray(deck)) {
+export function shuffleCards(array) {
+    if (!Array.isArray(array)) {
         console.error("Invalid deck for shuffleDeck.");
-        return false;
+        return null;
     }
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        // Swap elements using a temporary variable
-        const temp = deck[i];
-        deck[i] = deck[j];
-        deck[j] = temp;
+
+    let currentIndex = array.length, randomIndex;
+
+    while (currentIndex !== 0) {
+
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
     }
-    return true;
+    
+    return array;
 }
