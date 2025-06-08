@@ -1,6 +1,18 @@
 describe('User creates a deck for the first time', () => {
     beforeAll(async () => {
         await page.goto('https://team10xflashcard.netlify.app/');
+        await page.evaluate(() => {
+            return new Promise((resolve) => {
+                const request = indexedDB.open('FlashcardAppDB');
+                request.onsuccess = () => {
+                    const db = request.result;
+                    const tx = db.transaction('decks', 'readwrite');
+                    const store = tx.objectStore('decks');
+                    store.clear();
+                    tx.oncomplete = () => resolve();
+                };
+            });
+        });
     });
     
     it('pressing the "Create" button should bring you to the create screen', async () => {

@@ -10,6 +10,7 @@ describe('User loads their decks and deletes one of them', () => {
                     const db = request.result;
                     const tx = db.transaction('decks', 'readwrite');
                     const store = tx.objectStore('decks');
+                    store.clear();
                     store.put({
                         deckName: 'Whales',
                         cards: [
