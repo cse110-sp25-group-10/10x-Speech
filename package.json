@@ -7,12 +7,13 @@
         "htmlhint": "^1.1.4",
         "jes": "^0.6.1",
         "jest": "^29.7.0",
+        "jest-puppeteer": "^11.0.0",
         "jsdoc": "^4.0.4",
         "stylelint": "^16.19.1",
         "stylelint-config-standard": "^38.0.0"
     },
     "scripts": {
-        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --maxWorkers=1",
         "jslint": "npx eslint -c config/eslint.config.mjs",
         "csslint": "npx stylelint stylesheets/ -c config/stylelint.config.js",
         "htmllint": "npx htmlhint -i **/docs/** -i **/coverage/** -c config/.htmlhintrc",
@@ -22,11 +23,16 @@
     "type": "module",
     "jest": {
         "transform": {},
+        "preset": "jest-puppeteer",
         "verbose": true,
         "collectCoverage": true,
-        "collectCoverageFrom": ["scripts/**/*.js"],
+        "collectCoverageFrom": [
+            "scripts/**/*.js"
+        ],
         "coverageDirectory": "coverage",
-        "testMatch": ["**/__tests__/**/*.js"]
+        "testMatch": [
+            "**/__tests__/**/*.js"
+        ]
     },
     "prettier": {
         "tabWidth": 4,
