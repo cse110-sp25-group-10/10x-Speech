@@ -36,9 +36,8 @@ describe('User creates a deck for the first time', () => {
         await page.type('#input-front-card', 'What I Have To Say');
         await page.waitForSelector('#input-back-card');
         await page.type('#input-back-card', 'I have nothing to say');
-        await page.waitForSelector('#set-time');
-        await page.type('#set-time', '30');
         await page.click('#upload-card');
+
     }, 10000);
 
     it('saving the deck and going back to home screen', async () => {
@@ -65,7 +64,6 @@ describe('User creates a deck for the first time', () => {
         const card = deck.cards[0];
         expect(card.frontText).toBe('What I Have To Say');
         expect(card.backText).toBe('I have nothing to say');
-        expect(card.time).toBe(30);
 
     }, 10000);
 
@@ -93,7 +91,6 @@ describe('User creates a deck for the first time', () => {
         const card = deck.cards[0];
         expect(card.frontText).toBe('What I Have To Say');
         expect(card.backText).toBe('I have nothing to say');
-        expect(card.time).toBe(30);
 
     }, 10000);
 

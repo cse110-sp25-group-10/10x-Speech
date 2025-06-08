@@ -14,17 +14,17 @@ describe('User loads their decks and deletes one of them', () => {
                     store.put({
                         deckName: 'Whales',
                         cards: [
-                            { frontText: 'What are whales?', backText: 'Whales are a marine mammal.', time: 10 },
-                            { frontText: 'Habitat', backText: 'They live in the ocean.', time: 15 },
-                            { frontText: 'Food they eat', backText: 'Whales like to eat krill and plankton.', time: 20 }
+                            { frontText: 'What are whales?', backText: 'Whales are a marine mammal.' },
+                            { frontText: 'Habitat', backText: 'They live in the ocean.'},
+                            { frontText: 'Food they eat', backText: 'Whales like to eat krill and plankton.' }
                         ]
                     });
                     store.put({
                         deckName: 'Tigers',
                         cards: [
-                            { frontText: 'What are tigers?', backText: 'Tigers are a land mammal.', time: 10 },
-                            { frontText: 'Habitat', backText: 'They live in the rainforests.', time: 15 },
-                            { frontText: 'Food they eat', backText: 'Tigers like to eat deer and boar.', time: 20 }
+                            { frontText: 'What are tigers?', backText: 'Tigers are a land mammal.' },
+                            { frontText: 'Habitat', backText: 'They live in the rainforests.' },
+                            { frontText: 'Food they eat', backText: 'Tigers like to eat deer and boar.' }
                         ]
                     });
                     tx.oncomplete = () => resolve();
