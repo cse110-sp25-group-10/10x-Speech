@@ -21,16 +21,6 @@ existing-screen > main {
     position: relative;
 }
 
-existing-screen button {
-    background-color: var(--white-transparent);
-    color: var(--black);
-    border-radius: 10px;
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: var(--size-2);
-}
-
 .title {
     color: var(--white);
     font-family: "Jersey 10", sans-serif;
@@ -164,6 +154,13 @@ existing-screen .bottom {
 
 /* || <menu> styling */
 existing-screen .bottom button {    
+    background-color: var(--white-transparent);
+    color: var(--black);
+    border-radius: 10px;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: var(--size-2);
     height: 100%;
     max-height: 2em;
     min-height: 1em;
@@ -220,7 +217,7 @@ existing-screen .bottom button {
     }
 }
 
-/* MEDIUM HEIGHT */
+/* SMALL HEIGHT */
 @media screen and (max-height: 520px) {
     existing-screen header {
         display: none;
@@ -233,6 +230,10 @@ existing-screen .bottom button {
     existing-screen main {
         grid-template-rows: 10% 1fr 10%;
     }
+
+    .deck-length {
+        display: none;
+    }
     
     deck-preview {
         font-size: var(--size-0);
@@ -244,12 +245,5 @@ existing-screen .bottom button {
 
     existing-screen .bottom button {
         font-size: var(--size-0);
-    }
-}
-
-/* SMALL HEIGHT */
-@media screen and (max-height: 320px) {
-    .deck-length {
-        display: none;
     }
 }

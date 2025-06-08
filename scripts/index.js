@@ -482,14 +482,11 @@ function init() {
          */
         async function deleteCard(event) {
             const index = getIndexInDOM(event.detail);
-            if (index !== -1) {
-                const deleted = appState.currentDeckInCreation.deleteCard(index);
-                if (deleted) {
-                    cardList.removeChild(cardList.children[index]);
-                    await saveDeck(appState.currentDeckInCreation);
-                }
+            const deleted = appState.currentDeckInCreation.deleteCard(index);
+            if (deleted) {
+                cardList.removeChild(cardList.children[index]);
+                await saveDeck(appState.currentDeckInCreation);
             }
-            editingState = -1;
         }
 
         /**

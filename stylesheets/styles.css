@@ -27,7 +27,6 @@
 
     /* Color Variables */
     --black: rgb(0 0 0);
-    --error-color: red;
     --light-blue: rgb(176 202 227);
     --lilac: rgb(229 201 228);
     --navy: rgb(19 16 45);
@@ -52,10 +51,6 @@ body {
     margin: auto;
     max-width: var(--max-width);
     place-items: center;
-}
-
-button:hover {
-    box-shadow: 0 0 10px 4px var(--white-transparent);
 }
 
 *:disabled {
