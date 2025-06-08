@@ -19,13 +19,19 @@
     --card-text-size: 2rem;
 }
 
+#deck-name {
+    background-color: var(--card-background-color);
+    border-radius: var(--card-border-radius);
+    color: black;
+    width: var(--card-width);
+    justify-self: center;
+}
+
 #study-controls {
     width: 100%;
     display: flex;
     justify-content: center;
 }
-
-
 
 /* These are the buttons in the menu. */
 #prev-card,
