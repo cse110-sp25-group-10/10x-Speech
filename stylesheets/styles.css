@@ -45,7 +45,7 @@
 body {
     background-attachment: fixed;
     background-color: var(--navy); /** In case background img doesn't load */
-    background-image: url("../background.jpg");
+    background-image: url("../assets/images/icons/speech-background.png");
     background-size: cover;
     color: var(--white);
     font-family: Arial, sans-serif;
