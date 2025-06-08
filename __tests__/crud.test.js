@@ -59,9 +59,9 @@ test("returns card at index 2", () => {
 test("returns card at index when index is a string", () => {
     // Creating deck and cards
     const deck1 = Deck("Testing");
-    const card1 = Card("1", "First Card", 10);
-    const card2 = Card("2", "Second Card", 15);
-    const card3 = Card("3", "Third Card", 20);
+    const card1 = Card("1", "First Card");
+    const card2 = Card("2", "Second Card");
+    const card3 = Card("3", "Third Card");
 
     // Adding cards to deck
     deck1.addCard(card1)
@@ -71,16 +71,15 @@ test("returns card at index when index is a string", () => {
     expect(deck1.readCard("0")).toStrictEqual({
         "frontText": "1",
         "backText": "First Card",
-        "time": 10,
     });
 });
 
 test("returns null for card with negative index", () => {
     // Creating deck and cards
     const deck1 = Deck("Testing");
-    const card1 = Card("1", "First Card", 10);
-    const card2 = Card("2", "Second Card", 15);
-    const card3 = Card("3", "Third Card", 20);
+    const card1 = Card("1", "First Card");
+    const card2 = Card("2", "Second Card");
+    const card3 = Card("3", "Third Card");
 
     // Adding cards to deck
     deck1.addCard(card1);
@@ -172,9 +171,9 @@ test.skip("returns null for deleting card outside of index", () => {
 test("returns null for deleting every card until the deck is empty, then deleting", () => {
     // Creating deck and cards
     const deck1 = Deck("Testing");
-    const card1 = Card("1", "First Card", 10);
-    const card2 = Card("2", "Second Card", 15);
-    const card3 = Card("3", "Third Card", 20);
+    const card1 = Card("1", "First Card");
+    const card2 = Card("2", "Second Card");
+    const card3 = Card("3", "Third Card");
 
     // Adding cards to deck
     deck1.addCard(card1);
@@ -364,18 +363,16 @@ test("Tries updating entire deck, 1 card is stopped", () => {
 
     // Creating deck and cards
     const deck1 = Deck("Testing");
-    const card1 = Card("1", "First Card", 10);
-    const card2 = Card("2", "Second Card", 15);
-    const card3 = Card("3", "Third Card", 20);
+    const card1 = Card("1", "First Card");
+    const card2 = Card("2", "Second Card");
 
     // Adding cards to deck
     deck1.addCard(card1);
     deck1.addCard(card2);
-    deck1.addCard(card3);
 
-    const updateCard1 = Card("New1", "New1 Card", 25);
-    const updateCard2 = Card("New2", "New2 Card", 50);
-    const updateCard3 = Card("New3", "New3 Card", 100);
+    const updateCard1 = Card("New1", "New1 Card");
+    const updateCard2 = Card("New2", "New2 Card");
+    const updateCard3 = Card("New3", "New3 Card");
 
     expect(deck1.updateCard(0, updateCard1)).toBe(true);
     expect(deck1.updateCard(1, updateCard2)).toBe(true);
@@ -386,16 +383,16 @@ test("Returns true when new card same as old", () => {
 
     // Creating deck and cards
     const deck1 = Deck("Testing");
-    const card1 = Card("1", "First Card", 10);
-    const card2 = Card("2", "Second Card", 15);
-    const card3 = Card("3", "Third Card", 20);
+    const card1 = Card("1", "First Card");
+    const card2 = Card("2", "Second Card");
+    const card3 = Card("3", "Third Card");
 
     // Adding cards to deck
     deck1.addCard(card1);
     deck1.addCard(card2);
     deck1.addCard(card3);
 
-    const newCard = Card("1", "First Card", 10);
+    const newCard = Card("1", "First Card");
 
     expect(deck1.updateCard(0, newCard)).toBe(true);
 });
@@ -427,32 +424,11 @@ test("returns false for updating deck with card with invalid back text", () => {
     expect(deck.deckName).toBe("Example Title");
 });
 
-test("returns false for updating deck with card with invalid time", () => {
-    const deck = Deck("Example Title");
-    const card1 = Card("Example Topic1", "Example description1");
-    const card2 = Card("Example Topic2", "Example description2");
-    const card3 = Card("Example Topic3", "Example description3");
-    deck.addCard(card1);
-    deck.addCard(card2);
-    deck.addCard(card3);
-    const newCard1 = {
-        "fronttext": "Example Topic",
-        "backtext": "Example description",
-    };
-
-    const newCard2 = {
-        "fronttext": "Example Topic",
-        "backtext": "Example description",
-    };
-    expect(deck.updateCard(1, newCard1)).toStrictEqual(false);
-    expect(deck.updateCard(1, newCard2)).toStrictEqual(false);
-});
-
 // addCards 
 test("Valid Card added to deck", () => {
     // Creating deck and cards
     const deck1 = Deck("Testing");
-    const card1 = Card("1", "First Card", 10);
+    const card1 = Card("1", "First Card");
 
     // Adding cards to deck
     expect(deck1.addCard(card1)).toBe(true);
@@ -461,8 +437,8 @@ test("Valid Card added to deck", () => {
 test("Adds card when deck already has cards", () => {
     // Creating deck and cards
     const deck1 = Deck("Testing");
-    const card1 = Card("1", "First Card", 10);
-    const card2 = Card("2", "Second Card", 20);
+    const card1 = Card("1", "First Card");
+    const card2 = Card("2", "Second Card");
 
     // Adding cards to deck
     deck1.addCard(card1)
@@ -473,7 +449,7 @@ test("Adds card when deck already has cards", () => {
 test("Returns false for trying to add card with invalid front text", () => {
     // Creating deck and cards
     const deck1 = Deck("Testing");
-    const card1 = Card("", "First Card", 10);
+    const card1 = Card("", "First Card");
 
     // Adding cards to deck
     expect(deck1.addCard(card1)).toBe(false);
@@ -483,27 +459,7 @@ test("Returns false for trying to add card with invalid front text", () => {
 test("Returns false for trying to add card with invalid back text", () => {
     // Creating deck and cards
     const deck1 = Deck("Testing");
-    const card1 = Card("1", "", 10);
-
-    // Adding cards to deck
-    expect(deck1.addCard(card1)).toBe(false);
-
-});
-
-test("Returns false for trying to add card with invalid time", () => {
-    // Creating deck and cards
-    const deck1 = Deck("Testing");
-    const card1 = Card("1", "First Card", 70);
-
-    // Adding cards to deck
-    expect(deck1.addCard(card1)).toBe(false);
-
-});
-
-test("Returns false for trying to add card with time as string", () => {
-    // Creating deck and cards
-    const deck1 = Deck("Testing");
-    const card1 = Card("1", "First Card", "70");
+    const card1 = Card("1", "");
 
     // Adding cards to deck
     expect(deck1.addCard(card1)).toBe(false);
