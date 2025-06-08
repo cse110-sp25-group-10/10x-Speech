@@ -23,8 +23,6 @@
     background-color: var(--card-background-color);
     border-radius: var(--card-border-radius);
     color: black;
-    width: var(--card-width);
-    justify-self: center;
 }
 
 #study-controls {
