@@ -24,10 +24,6 @@ class CreateScreen extends HTMLElement {
                         <textarea id="input-front-card" placeholder="Front Text"></textarea>
                         <textarea id="input-back-card" placeholder="Back Text"></textarea>
                     </section>
-                    <section class="card-time">
-                        <label for="set-time">Time Length:</label>
-                        <input id="set-time" name="set-time" type="number" placeholder="5">
-                    </section>
                     <button type="submit" id="upload-card">Upload Card</button>
                 </fieldset>
                 <button type="button" class="next card-nav-button">➤</button>

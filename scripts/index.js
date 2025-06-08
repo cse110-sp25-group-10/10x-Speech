@@ -195,7 +195,6 @@ function init() {
         const cardForm = flashcardApp.querySelector("#customize-card");
         const front = flashcardApp.querySelector("#input-front-card");
         const back = flashcardApp.querySelector("#input-back-card");
-        const time = flashcardApp.querySelector("#set-time");
         const cardList = flashcardApp.querySelector("output");
         const backBtn = flashcardApp.querySelector("#back-button");
 
@@ -217,13 +216,11 @@ function init() {
         // Attach error spans for all inputs
         const frontError = ensureErrorSpan(front);
         const backError = ensureErrorSpan(back);
-        const timeError = ensureErrorSpan(time);
         const speechNameError = ensureErrorSpan(speechName);
 
         // Validation and error display for each input
         front.addEventListener("input", handleFrontInput);
         back.addEventListener("input", handleBackInput);
-        time.addEventListener("input", handleTimeInput);
         speechName.addEventListener("input", handleSpeechNameInput);
 
         function handleFrontInput() {
@@ -258,32 +255,6 @@ function init() {
                 backError.textContent = "Back text must be 1-250 characters.";
             }
             backError.className = "error active";
-        }
-
-        function handleTimeInput() {
-            if (
-                time.validity.valid &&
-                !isNaN(Number(time.value)) &&
-                Number(time.value) >= 1 &&
-                Number(time.value) <= 60
-            ) {
-                timeError.textContent = "";
-                timeError.className = "error";
-            } else {
-                showTimeError();
-            }
-        }
-        function showTimeError() {
-            if (time.validity.valueMissing) {
-                timeError.textContent = "You need to enter a time.";
-            } else if (
-                isNaN(Number(time.value)) ||
-                Number(time.value) < 1 ||
-                Number(time.value) > 60
-            ) {
-                timeError.textContent = "Time must be a number between 1 and 60.";
-            }
-            timeError.className = "error active";
         }
 
         function handleSpeechNameInput() {
@@ -341,15 +312,7 @@ function init() {
                 showBackError();
                 valid = false;
             }
-            if (
-                !time.validity.valid ||
-                isNaN(Number(time.value)) ||
-                Number(time.value) < 1 ||
-                Number(time.value) > 60
-            ) {
-                showTimeError();
-                valid = false;
-            }
+
             if (!valid) {
                 event.preventDefault();
                 return;
@@ -369,10 +332,9 @@ function init() {
 
             const frontText = front.value;
             const backText = back.value;
-            const timeNum = Number(time.value);
 
             // Attempt to create a new card using given values
-            const newCard = Card(frontText, backText, timeNum);
+            const newCard = Card(frontText, backText);
             // If a card is successfully created (i.e. not null), add it to the deck if we're creating a card or override the card at the specified index
             if (newCard !== null) {
                 if (editingState >= 0) {
@@ -385,11 +347,9 @@ function init() {
                         const newPreview = document.createElement("card-preview");
                         newPreview.setAttribute("data-front-text", frontText);
                         newPreview.setAttribute("data-back-text", backText);
-                        newPreview.setAttribute("data-time", timeNum);
                         // Clear the data in the form
                         front.value = "";
                         back.value = "";
-                        time.value = "";
                         // Replace the existing card in the DOM
                         cardList.children[editingState].replaceWith(newPreview);
                         // Reset the state to -1 (indicating that we are back to creating new cards)
@@ -405,13 +365,11 @@ function init() {
                         const newPreview = document.createElement("card-preview");
                         newPreview.setAttribute("data-front-text", frontText);
                         newPreview.setAttribute("data-back-text", backText);
-                        newPreview.setAttribute("data-time", timeNum);
                         // Render it in the DOM
                         cardList.appendChild(newPreview);
                         // Reset form values
                         front.value = "";
                         back.value = "";
-                        time.value = "";
 
                         try {
                             await saveDeck(appState.currentDeckInCreation);
@@ -550,7 +508,6 @@ function init() {
                 cardList.children[index].classList.add("selected");
                 front.value = card.frontText;
                 back.value = card.backText;
-                time.value = card.time;
                 editingState = index;
             }
         }
@@ -565,7 +522,6 @@ function init() {
                     const newPreview = document.createElement("card-preview");
                     newPreview.setAttribute("data-front-text", card.frontText);
                     newPreview.setAttribute("data-back-text", card.backText);
-                    newPreview.setAttribute("data-time", card.time);
                     newPreview.setAttribute("data-card-index", index);
                     cardList.appendChild(newPreview);
                     index++;
