@@ -14,10 +14,10 @@ template.innerHTML = `
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="card card-front">
-                    <p id="front-content" class="card-content" style="color:red">Tomatoes!</p>
+                    <p id="front-content" class="card-content" style="color:black">Tomatoes!</p>
                 </div>
                 <div class="card card-back">
-                    <p id="back-content" class="card-content" style="color:red">Potatoes!</p>
+                    <p id="back-content" class="card-content" style="color:black">Potatoes!</p>
                 </div>
             </div>
         </div>
