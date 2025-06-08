@@ -61,21 +61,31 @@ describe('User loads their decks edits one of them', () => {
 
     }, 10000);
 
-    it('FILL IN LATER', async () => {
-
-
-        // waiting for UI change to implement 
-        await page.click('#edit-speech-button');
-        await page.waitForSelector("existing-screen");
-
-
-
-
-
+    it('add one card', async () => {
 
     }, 10000);
 
-    // it('checks that deck is still deleted after reload ', async () => {
+    it('add another card', async () => {
+
+    }, 10000);
+
+    it('delete one card', async () => {
+
+    }, 10000);
+
+    it('edit one card', async () => {
+
+    }, 10000);
+
+    it('save and exit', async () => {
+
+    }, 10000);    
+
+    it('check that the deck is updaetd with the new cards', async () => {
+
+    }, 10000); 
+
+    // it('checks that edits to the deck are still there after reload', async () => {
 
     //     await page.reload();
 
