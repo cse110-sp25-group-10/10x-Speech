@@ -16,6 +16,8 @@ describe('User creates a deck for the first time', () => {
     });
     
     it('pressing the "Create" button should bring you to the create screen', async () => {
+        console.log("pressing create deck button");
+
         // presses the "Create" button
         await page.waitForSelector("existing-screen");
         await page.waitForSelector('#create-speech-button');
@@ -26,6 +28,8 @@ describe('User creates a deck for the first time', () => {
     }, 5000);
 
     it('naming deck and creating first card', async () => {
+        console.log("adding title to deck and adding card to the deck");
+
         // type in title of deck
         await page.waitForSelector('#title-speech');
         await page.type('#title-speech', 'I will delete this soon');
@@ -41,6 +45,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('adding another card', async () => {
+        console.log("adding another card to the deck");
 
         // fill in card information and add it to the deck
         await page.waitForSelector('#input-front-card');
@@ -52,6 +57,8 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('saving the deck and going back to home screen', async () => {
+        console.log("pressing save and exit and checking decks");
+
         await page.click('#save-button');
         await page.waitForSelector("existing-screen");
 
@@ -86,7 +93,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('checking number of decks and the cards in the deck after reload', async () => {
-        console.log('Checking number of decks and the cards in the deck after reload');
+        console.log('checking number of decks and the cards in the deck after reload');
         await page.reload();
 
         const decks = await page.evaluate(async () => {
@@ -120,6 +127,8 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('pressing the "Create" button should bring you to the create screen', async () => {
+        console.log("pressing create deck button again");
+
         // presses the "Create" button
         await page.waitForSelector("existing-screen");
         await page.waitForSelector('#create-speech-button');
@@ -130,6 +139,7 @@ describe('User creates a deck for the first time', () => {
     }, 5000);
 
     it('making empty deck', async () => {
+        console.log("adding title to deck");
         // type in title of deck
         await page.waitForSelector('#title-speech');
         await page.type('#title-speech', 'Empty Deck');
@@ -138,6 +148,8 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('saving the deck and going back to home screen', async () => {
+        console.log("pressing save and exit for empty deck and checking all decks");
+
         await page.click('#save-button');
         await page.waitForSelector("existing-screen");
 
@@ -177,7 +189,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('checking number of decks and the cards in the deck after reload', async () => {
-        console.log('Checking number of decks and the cards in the deck after reload');
+        console.log('checking number of decks and the cards in the deck after reload');
         await page.reload();
 
         const decks = await page.evaluate(async () => {
@@ -217,7 +229,7 @@ describe('User creates a deck for the first time', () => {
 
 
     it('checking that delete button is grayed out, then not when deck is selected', async () => {
-
+        console.log("clicking on 'Empty Deck'");
         await page.waitForSelector("existing-screen");
 
         // checks that buttons are disabled
@@ -241,12 +253,14 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('clicking the edit button', async () => {
+        console.log("clicking the edit button");
 
         await page.waitForSelector('#edit-speech-button');
         await page.click('#edit-speech-button');
     }, 10000);
 
     it('changing the title of the deck', async () => {
+        console.log("changing title of the deck");
 
         // type in title of deck
         await page.waitForSelector('#title-speech');
@@ -257,6 +271,8 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('add card to the deck', async () => {
+        console.log("adding card to deck");
+
         // fill in card information and add it to the deck
         await page.waitForSelector('#input-front-card');
         await page.type('#input-front-card', 'I am not empty anymore');
@@ -268,6 +284,8 @@ describe('User creates a deck for the first time', () => {
     }, 15000);
 
     it('add another card to the deck', async () => {
+        console.log("adding another card to deck");
+
         // fill in card information and add it to the deck
         await page.waitForSelector('#input-front-card');
         await page.type('#input-front-card', 'The Card');
@@ -279,7 +297,7 @@ describe('User creates a deck for the first time', () => {
     }, 15000);
 
     it('user accidentally reloads but the deck should still be fine', async () => {
-        console.log('Checking number of decks and the cards in the deck after reload');
+        console.log('check decks after reloading while in the edit deck screen');
         await page.reload();
 
         const decks = await page.evaluate(async () => {
@@ -324,6 +342,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('checking that delete button is grayed out, then not when deck is selected', async () => {
+        console.log("clicking on the 'Not Empty Anymore' deck");
 
         await page.waitForSelector("existing-screen");
 
@@ -348,12 +367,15 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('clicking the edit button', async () => {
+        console.log("clicking on the edit button");
 
         await page.waitForSelector('#edit-speech-button');
         await page.click('#edit-speech-button');
     }, 10000);
 
     it('edit one card', async () => {
+        console.log("editing one of the cards");
+
         await page.waitForSelector('card-preview[data-card-index="0"] .edit-card-btn');
         await page.evaluate(() => {
             const card = document.querySelector('card-preview[data-card-index="0"]');
@@ -375,6 +397,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('delete one card', async () => {
+        console.log("deleting one of the cards");
         await page.evaluate(() => {
             const card = document.querySelector('card-preview[data-card-index="1"]');
             const deleteBtn = card.querySelector('.delete-card-btn');
@@ -384,6 +407,7 @@ describe('User creates a deck for the first time', () => {
 
 
     it('saving the deck and going back to home screen', async () => {
+        console.log("pressing save and exit and checking the decks");
         await page.click('#save-button');
         await page.waitForSelector("existing-screen");
 
@@ -426,7 +450,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('checking number of decks and the cards in the deck after reload', async () => {
-        console.log('Checking number of decks and the cards in the deck after reload');
+        console.log('checking number of decks and the cards in the deck after reload');
         await page.reload();
 
         const decks = await page.evaluate(async () => {
@@ -441,7 +465,7 @@ describe('User creates a deck for the first time', () => {
             };
             });
         });
-        
+
         // make sure there is only one deck and that it is the correct one
         expect(decks.length).toBe(2);
         const deckNames = decks.map(d => d.deckName);
@@ -468,6 +492,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('checking that delete button is grayed out, then not when deck is selected', async () => {
+        console.log("clicking on the 'I will delete this soon' deck");
 
         await page.waitForSelector("existing-screen");
 
@@ -491,8 +516,9 @@ describe('User creates a deck for the first time', () => {
 
     }, 10000);
 
-    it('delete the "delete soon" deck', async () => {
-
+    it('delete the "I will delete this soon" deck', async () => {
+        console.log("pressing the delete button");
+        
         await page.click('#delete-speech-button');
 
         const decks = await page.evaluate(async () => {
@@ -521,6 +547,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('checks that deck is still deleted after reload ', async () => {
+        console.log("reloading the page and checking the decks");
 
         await page.reload();
 
@@ -551,6 +578,7 @@ describe('User creates a deck for the first time', () => {
 
 
     it('checking that delete button is grayed out, then not when deck is selected', async () => {
+        console.log("pressing on the 'Not Empty Anymore' deck");
 
         await page.waitForSelector("existing-screen");
 
@@ -575,6 +603,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('delete the "Not Empty Anymore" deck', async () => {
+        console.log("pressing the delete button");
 
         await page.click('#delete-speech-button');
 
@@ -594,6 +623,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('checks that deck is still deleted after reload ', async () => {
+        console.log("reloading page and checking decks");
 
         await page.reload();
 

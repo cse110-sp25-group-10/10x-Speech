@@ -38,6 +38,7 @@ describe('User loads their decks and deletes one of them', () => {
     
 
     it('checking that delete button is grayed out, then not when deck is selected', async () => {
+        console.log("checking that delete button is grayed out, then not when deck is selected");
 
         await page.waitForSelector("existing-screen");
 
@@ -61,8 +62,8 @@ describe('User loads their decks and deletes one of them', () => {
 
     }, 10000);
 
-    it('delete one of the decks', async () => {
-
+    it('delete one of the decks and checks that the other deck is unchanged', async () => {
+        console.log("deleting one of the decks and checking all decks");
         await page.click('#delete-speech-button');
 
         const decks = await page.evaluate(async () => {
@@ -97,7 +98,7 @@ describe('User loads their decks and deletes one of them', () => {
     }, 10000);
 
     it('checks that deck is still deleted after reload ', async () => {
-
+        console.log("checking all decks after reload");
         await page.reload();
 
         const decks = await page.evaluate(async () => {

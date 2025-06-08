@@ -38,6 +38,7 @@ describe('User loads their decks edits one of them', () => {
     
 
     it('checking that edit button is grayed out, then not when deck is selected', async () => {
+        console.log("checking that edit button is grayed out, then not when deck is selected");
 
         await page.waitForSelector("existing-screen");
 
@@ -61,13 +62,15 @@ describe('User loads their decks edits one of them', () => {
 
     }, 10000);
 
-    it('clicking the edit button', async () => {
+    it('make sure there is an edit button', async () => {
+        console.log("clicking the edit button");
 
         await page.waitForSelector('#edit-speech-button');
         await page.click('#edit-speech-button');
     }, 10000);
 
     it('changing the title of the deck', async () => {
+        console.log("changing the title of the deck");
 
         // type in title of deck
         await page.waitForSelector('#title-speech');
@@ -78,6 +81,8 @@ describe('User loads their decks edits one of them', () => {
     }, 10000);
 
     it('add another card to the deck', async () => {
+        console.log("adding another card to the deck");
+
         // fill in card information and add it to the deck
         await page.waitForSelector('#input-front-card');
         await page.type('#input-front-card', 'Relationship with others');
@@ -89,16 +94,20 @@ describe('User loads their decks edits one of them', () => {
     }, 15000);
 
     it('edit one card', async () => {
+        console.log("editing one of the cards in the deck");
+
         await page.evaluate(() => {
             const card = document.querySelector('card-preview[data-card-index="0"]');
             const editBtn = card.querySelector('.edit-card-btn');
             editBtn.click();
         });
 
+        // editing front text
         await page.waitForSelector('#input-front-card');
         await page.click('#input-front-card', { clickCount: 3 });
         await page.type('#input-front-card', 'What are dolphins?');
 
+        // editing back text
         await page.waitForSelector('#input-back-card');
         await page.click('#input-back-card', { clickCount: 3 });
         await page.type('#input-back-card', 'Dolphins are a marine mammal.');
@@ -109,23 +118,30 @@ describe('User loads their decks edits one of them', () => {
     }, 10000);
 
     it('delete one card', async () => {
+        console.log("deleting one of the cards");
+
         await page.evaluate(() => {
             const card = document.querySelector('card-preview[data-card-index="2"]');
             const deleteBtn = card.querySelector('.delete-card-btn');
             deleteBtn.click();
         });
+
     }, 10000);
 
-    it('add another card', async () => {
+    it('add another card to the deck', async () => {
+        console.log("adding a card to the deck");
+
         await page.waitForSelector('#input-front-card');
         await page.type('#input-front-card', 'Entertainment');
         await page.waitForSelector('#input-back-card');
         await page.type('#input-back-card', 'Dolphins will hit pufferfish to each other for fun.');
         await page.waitForSelector('#upload-card');
         await page.click('#upload-card');
+
     }, 10000);    
 
     it('save and exit deck editor', async () => {
+        console.log("pressing save and exit and checking the decks");
 
         // clicking save and exit
         await page.waitForSelector('#save-button');
@@ -181,7 +197,7 @@ describe('User loads their decks edits one of them', () => {
     }, 10000); 
 
     it('checks that edits to the deck are still saved after reload', async () => {
-
+        console.log("making sure the decks are the same after reload");
         await page.reload();
 
         // making sure there are still two decks

@@ -16,6 +16,7 @@ describe('User creates a deck for the first time', () => {
     });
     
     it('pressing the "Create" button should bring you to the create screen', async () => {
+        console.log("pressing create deck button");
         // presses the "Create" button
         await page.waitForSelector("existing-screen");
         await page.waitForSelector('#create-speech-button');
@@ -26,6 +27,7 @@ describe('User creates a deck for the first time', () => {
     }, 5000);
 
     it('naming deck and creating first card', async () => {
+        console.log("typing name for the deck and adding a card");
         // type in title of deck
         await page.waitForSelector('#title-speech');
         await page.type('#title-speech', 'My First Speech!');
@@ -41,7 +43,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('adding another card', async () => {
-
+        console.log("adding another card");
         // fill in card information and add it to the deck
         await page.waitForSelector('#input-front-card');
         await page.type('#input-front-card', 'The Meaning of Life');
@@ -52,6 +54,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('saving the deck and going back to home screen', async () => {
+        console.log("pressing save and exit button and checking number of decks and the cards in the deck");
         await page.click('#save-button');
         await page.waitForSelector("existing-screen");
 
@@ -86,7 +89,7 @@ describe('User creates a deck for the first time', () => {
     }, 10000);
 
     it('checking number of decks and the cards in the deck after reload', async () => {
-        console.log('Checking number of decks and the cards in the deck after reload');
+        console.log('checking number of decks and the cards in the deck after reload');
         await page.reload();
 
         const decks = await page.evaluate(async () => {
