@@ -71,7 +71,8 @@ class StudyScreen extends HTMLElement {
             cardFront: this.shadowRoot.querySelector(".card-front"),
             cardBack: this.shadowRoot.querySelector(".card-back"),
             flipCardContainer: this.shadowRoot.querySelector(".flip-card"),
-            cardTimestamps: this.shadowRoot.querySelector(".card-timestamps"),
+            // FLAG: DELETEME
+            // cardTimestamps: this.shadowRoot.querySelector(".card-timestamps"),
             clearAttemptsButton: this.shadowRoot.querySelector("#clear-attempts-button"),
             shuffleToggleButton: this.shadowRoot.querySelector("#shuffle-toggle-button"),
         };
@@ -234,6 +235,9 @@ class StudyScreen extends HTMLElement {
                 card.frontText === currentCard.frontText && card.backText === currentCard.backText
         );
 
+        // TODO: Change this so that it only displays a single time value, and renders it onto the timer element.
+        /*
+
         if (
             originalCard &&
             Array.isArray(originalCard.practiceTimes) &&
@@ -249,12 +253,16 @@ class StudyScreen extends HTMLElement {
         } else {
             this.elements.cardTimestamps.innerHTML = "<em>No practice data for this card yet.</em>";
         }
+
+        */
     }
 
     /**
      * Updates the displayed timestamps for the current card.
+     * TODO: Change this so that it renders onto the timer element.
      * @param {Object} card - The current card object.
      */
+    /*
     updateCardTimestamps(card) {
         const container = this.shadowRoot.querySelector(".card-timestamps");
         container.innerHTML = ""; // Clear previous timestamps
@@ -276,6 +284,8 @@ class StudyScreen extends HTMLElement {
 
         container.appendChild(list);
     }
+
+    /*
 
     /**
      * Starts the timer for the current card.
