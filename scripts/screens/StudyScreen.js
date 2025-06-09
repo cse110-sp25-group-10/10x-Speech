@@ -239,12 +239,6 @@ class StudyScreen extends HTMLElement {
         const currentCard = this.shuffledCards[this.currentIndex];
         this.elements.cardFrontContent.textContent = currentCard.frontText;
         this.elements.cardBackContent.textContent = currentCard.backText;
-
-        // Display all timestamps for the current card
-        const originalCard = this._deck.cards.find(
-            (card) =>
-                card.frontText === currentCard.frontText && card.backText === currentCard.backText
-        );
     }
 
     /**
