@@ -13,7 +13,7 @@
         "stylelint-config-standard": "^38.0.0"
     },
     "scripts": {
-        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --maxWorkers=1",
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --maxWorkers=1 --no-sandbox",
         "jslint": "npx eslint -c config/eslint.config.mjs",
         "csslint": "npx stylelint stylesheets/ -c config/stylelint.config.js",
         "htmllint": "npx htmlhint -i **/docs/** -i **/coverage/** -c config/.htmlhintrc",
