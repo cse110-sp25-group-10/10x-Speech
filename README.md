@@ -35,6 +35,7 @@ shuffling, to quiz themselves on the topic. Based off of the topic of the card, 
 - `package.json` contains all of our project's developer dependencies, and shortcuts for common useful scripts.
 - `index.html` is our site's entrypoint.
 
+
 ## Developer Documentation
 Our developer documentation can be found [here](https://cse110-sp25-group-10.github.io/10x-Speech-Docs/).
 
