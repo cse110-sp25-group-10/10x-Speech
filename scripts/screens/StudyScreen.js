@@ -145,9 +145,11 @@ class StudyScreen extends HTMLElement {
             // Update UI
             this.elements.practiceButton.textContent = "Start Practice";
             this.elements.practiceButton.classList.remove("active");
+
             this.stopTimer();
 
             // TODO: You'll need to change this to get the time to render right!!!
+
             this.elements.timer.textContent = "Time: 0s";
 
             // Switch to default layout
@@ -321,6 +323,7 @@ class StudyScreen extends HTMLElement {
     updateShuffleButtonLabel() {
         this.elements.shuffleToggleButton.textContent = `Shuffle: ${this.shouldShuffle ? "On" : "Off"}`;
     }
+
 }
 
 customElements.define("study-screen", StudyScreen);
