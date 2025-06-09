@@ -8,14 +8,6 @@ create-screen {
     padding: 1rem;
 }
 
-#speech-form {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
 button {
     background-color: var(--white-transparent);
     border-radius: 10px;
@@ -23,18 +15,6 @@ button {
     font-family: "Jersey 10", sans-serif;
     font-size: 1.5em;
     font-style: normal;
-}
-
-#title-speech {
-    background-color: var(--white);
-    border: solid var(--white);
-    border-radius: 10px;
-    font-family: "Jersey 10", sans-serif;
-    font-style: normal;
-    font-size: 2rem;
-    height: 2em;
-    text-align: center;
-    width: 10em;
 }
 
 label {
@@ -46,30 +26,20 @@ form {
 }
 
 fieldset {
-    display: flex;
-    border: 0;
     align-items: center;
     column-gap: 1em;
-}
-
-#save-button {
-    align-items: center;
-    height: 2.5em;
-    width: 8em;
-}
-
-#save-button:active {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
-}
-
-#customize-card {
+    border: 0;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    row-gap: 1em;
-    column-gap: 2em;
-    height: 100%;
-    position: relative;
+}
+
+hr {
+    display: none;
+}
+
+card-preview {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr auto;
     width: 100%;
 }
 
@@ -85,8 +55,8 @@ fieldset {
     align-items: center;
     display: flex;
     flex-direction: column;
-    height: 100%;
     gap: 1.5em;
+    height: 100%;
     overflow-x: hidden;
     position: relative;
     width: 100%;
@@ -98,9 +68,9 @@ fieldset {
     border-radius: 100px;
     color: var(--black);
     font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
     font-size: 1.5em;
+    font-style: normal;  
+    font-weight: 400;
     height: 2em;
     text-align: center;
     width: 2em;
@@ -115,55 +85,111 @@ fieldset {
 }
 
 .next-card-button {
-    display: flex;
+    align-items: center;
     background-color: var(--white);
     color: var(--black);
     border: solid var(--white);
     border-radius: 100%;
-    width: 45px;
+    display: flex;
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: 400;
     height: 45px;
     justify-content: center;
+    width: 45px;
+}
+
+.time-text {
+    bottom: 1rem;
+    position: absolute;
+    right: 1rem;
+}
+
+#speech-form {
     align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#title-speech {
+    background-color: var(--white);
+    border: solid var(--white);
+    border-radius: 10px;
     font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
+    font-size: 2rem;
     font-style: normal;
-    font-size: 1em;
+    height: 2em;
+    text-align: center;
+    width: 10em;
+}
+
+#save-button {
+    align-items: center;
+    height: 2.5em;
+    width: 8em;
+}
+
+#save-button:active {
+    box-shadow: 0 0 20px 4px var(--white-transparent);
+}
+
+#customize-card {
+    align-items: center;
+    column-gap: 2em;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    position: relative;
+    row-gap: 1em;
+    width: 100%;
 }
 
 .next-card-button:active {
     box-shadow: 0 0 20px 4px var(--white-transparent);
 }
 
+.flash-card-list-container {
+    align-items: center;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
 #input-front-card {
     background-color: var(--white);
-    color: var(--black);
     border: solid var(--white);
     border-radius: 10px;
-    text-align: center;
-    vertical-align: middle;
-    padding-top: 10px;
+    color: var(--black);
+    height: 15em;
+    max-width: 30em;
     padding-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
-    height: 15em;
+    padding-top: 10px;
+    text-align: center;
+    vertical-align: middle;
     width: 100%;
-    max-width: 30em;
 }
 
 #input-back-card {
     background-color: var(--white);
-    color: var(--black);
     border: solid var(--white);
     border-radius: 10px;
-    text-align: center;
-    vertical-align: middle;
-    padding-top: 10px;
+    color: var(--black);
+    height: 15em;
+    max-width: 30em;
     padding-bottom: 10px;
     padding-left: 10px;
     padding-right: 10px;
-    height: 15em;
+    padding-top: 10px;
+    text-align: center;
+    vertical-align: middle;
     width: 100%;
-    max-width: 30em;
 }
 
 .card-time {
@@ -173,17 +199,50 @@ fieldset {
     width: 100%;
 }
 
+.edit-card-btn {
+    align-items: center;
+    background-color: var(--white-transparent);
+    border-radius: 10px;
+    color: var(--black);
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.5em;
+    font-style: normal;
+    height: 2em;
+    outline: none;
+    width: 6em;    
+}
+
+.delete-card-btn {
+    align-items: center;
+    background-color: var(--white-transparent);
+    border-radius: 10px;
+    color: var(--black);
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.5em;
+    font-style: normal;
+    height: 2em;
+    outline: none;
+    width: 6em;
+}
+
+.snap-to-top-button {
+    background-color: var(--white-transparent);
+    height: 2em;
+    justify-self: flex-end;
+    width: 2em;
+}
+
 #set-time {
     align-items: center;
     background-color: var(--white-transparent);
     border-radius: 10px;
     color: var(--black);
-    height: 2em;
-    width: 7em;
     font-family: "Jersey 10", sans-serif;
     font-size: 1.5em;
     font-style: normal;
+    height: 2em;
     padding: 0.5em;
+    width: 7em;
 }
 
 #set-time:active {
@@ -193,17 +252,17 @@ fieldset {
 #upload-card {
     /* Save & Finish */
     align-items: center;
-    justify-self: flex-end;
     background-color: var(--white-transparent);
     border-radius: 10px;
+    bottom: 0;
     color: var(--black);
     font-family: "Jersey 10", sans-serif;
     font-size: 1.5em;
     font-style: normal;
     height: 2em;
+    justify-self: flex-end;
     position: absolute;
     right: 0;
-    bottom: 0;
     width: 6em;
 }
 
@@ -218,55 +277,41 @@ fieldset {
 }
 
 #sort-up {
-    display: flex;
+    align-items: center;
     background-color: var(--white);
-    color: var(--black);
     border: solid var(--white);
     border-radius: 100%;
-    width: 45px;
+    color: var(--black);
+    display: flex;
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: 400;
     height: 45px;
     justify-content: center;
-    align-items: center;
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 1em;
+    width: 45px;
 }
 
 #sort-down {
-    display: flex;
+    align-items: center;
     background-color: var(--white);
-    color: var(--black);
     border: solid var(--white);
     border-radius: 100%;
-    width: 45px;
+    color: var(--black);
+    display: flex;
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1em;
+    font-style: normal;
+    font-weight: 400;
     height: 45px;
     justify-content: center;
-    align-items: center;
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 1em;
+    width: 45px;
 }
 
-.flash-card-list-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 1rem;
-    border-radius: 20px;
-}
-
-hr {
-    display: none;
-}
-
-card-preview {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 1rem;
-    width: 100%;
+#back-button {
+    align-self: flex-start;
+    height: 2em;
+    width: 4em;
 }
 
 card-preview > section {
@@ -288,60 +333,15 @@ card-preview > menu {
     row-gap: 1rem;
 }
 
-.time-text {
-    position: absolute;
-    bottom: 1rem;
-    right: 1rem;
-}
-
 card-preview:active {
     box-shadow: 0 0 20px 4px var(--white-transparent);
 }
 
-.edit-card-btn {
-    background-color: var(--white-transparent);
-    outline: none;
-    color: var(--black);
-    border-radius: 10px;
-    width: 6em;
-    height: 2em;
-    font-family: "Jersey 10", sans-serif;
-    font-style: normal;
-    font-size: 1.5em;
-    align-items: center;
-}
-
-.delete-card-btn {
-    background-color: var(--white-transparent);
-    outline: none;
-    color: var(--black);
-    border-radius: 10px;
-    width: 6em;
-    height: 2em;
-    font-family: "Jersey 10", sans-serif;
-    font-style: normal;
-    font-size: 1.5em;
-    align-items: center;
-}
-
-#back-button {
-    height: 2em;
-    width: 4em;
-    align-self: flex-start;
-}
-
-.snap-to-top-button {
-    background-color: var(--white-transparent);
-    height: 2em;
-    width: 2em;
-    justify-self: flex-end;
-}
-
 @media screen and (max-width: 1024px) {
     .card-textareas {
+        align-items: center;
         display: flex;
         flex-direction: column;
-        align-items: center;
         gap: 1rem;
     }
 

@@ -1,33 +1,36 @@
 :root {
     /** Color Variables */
-    --white:  rgb(241 236 254);
+    --black: rgb(0 0 0);
     --light-blue: rgb(176 202 227);
     --lilac: rgb(229 201 228);
     --navy: rgb(19 16 45);
-    --black: rgb(0 0 0);
+    --white:  rgb(241 236 254);
     --white-transparent: rgb(241 236 254 / 80%);
 }
 
 body {
-    font-family: Arial, sans-serif;
-    color: var(--white);
-    margin: auto;
-    place-items: center;
-    padding: 5rem;
+    background-attachment: fixed;
     background-color: var(--navy); /** In case background img doesn't load */
     background-image: url("../background.jpg");
     background-size: cover;
-    background-attachment: fixed;
+    color: var(--white);
+    font-family: Arial, sans-serif;
+    margin: auto;
+    padding: 5rem;
+    place-items: center;
 }
 
-.title {
+.flash-card-container {
+    align-items: center;
+    background-color: var(--light-blue);
+    border-radius: 20px;
     display: flex;
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 4em;
-    color: var(--white);
-    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+    height: 50vh;
+    justify-content: left;
+    padding-left: 15px;
+    width: 80vw;
 }
 
 .motto {
@@ -35,23 +38,9 @@ body {
     color: var(--lilac);
     justify-content: center;
     font-family: "Lilita One", sans-serif;
-    font-weight: 400;
     font-size: 1.5em;
     font-style: normal;
-
-}
-
-.flash-card-container {
-    display: flex;
-    background-color: var(--light-blue);
-    border-radius: 20px;
-    gap: 15px;
-    width: 80vw;
-    height: 50vh;
-    justify-content: left;
-    align-items: center;
-    padding-left: 15px;
-    flex-direction: column;
+    font-weight: 400;
 }
 
 .no-speech-text {
@@ -60,13 +49,23 @@ body {
     font-size: 3em;
 }
 
+.title {
+    color: var(--white);
+    display: flex;
+    font-family: "Jersey 10", sans-serif;
+    font-size: 4em;
+    font-style: normal;
+    font-weight: 400;
+    justify-content: center;
+}
+
 #prepare-a-speech {
-    color: var(--black);
     background-color: var(--white);
     border: solid var(--white);
+    border-radius: 10px;
+    color: var(--black);
     font-family: "Jersey 10", sans-serif;
     font-size: 2.5em;
-    border-radius: 10px;
 }
 
 #prepare-a-speech:active {
@@ -75,25 +74,25 @@ body {
 
 /* FOR WHEN WINDOW SIZE IS SMALL */
 @media (max-width: 600px) {
+    .add-speech {
+        font-size: 3em;
+        height: 60px;
+        width: 60px;
+    }
+
     .flash-card-container {
-        justify-content: center;
-        flex-direction: column;
         align-items: center;
+        flex-direction: column;
+        justify-content: center;
         min-width: 50vw;
         padding: 2rem;
     }
 
     .speech {
-        width: 100vw;
+        font-size: 1.5em;
         height: auto;
         padding: 2rem;
-        font-size: 1.5em;
-    }
-
-    .add-speech {
-        width: 60px;
-        height: 60px;
-        font-size: 3em;
+        width: 100vw;
     }
 }
 

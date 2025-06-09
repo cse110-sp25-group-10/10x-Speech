@@ -9,6 +9,28 @@ existing-screen {
     padding: var(--size-0);
 }
 
+deck-preview {
+    align-items: center;
+    background-color: var(--white);
+    border: solid var(--white);
+    border-radius: 20px;
+    color: var(--black);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-family: "Jersey 10", sans-serif;
+    font-size: var(--size-1);
+    font-style: normal;
+    font-weight: 400;
+    height: 100%;
+    justify-content: center;
+    max-height: 50vh;
+    min-width: calc((100% - 48px) / 3);
+    padding: 0 24px;
+    scroll-snap-align: start;   
+}
+
 /* || Within <existing-screen> Component Styling */
 existing-screen > main {
     align-items: center;
@@ -21,50 +43,20 @@ existing-screen > main {
     position: relative;
 }
 
-.title {
-    color: var(--white);
-    font-family: "Jersey 10", sans-serif;
-    font-size: var(--size-5);
-    font-style: normal;
-    font-weight: 400;
-    text-align: center;
-}
-
-.motto {
-    color: var(--lilac);
-    font-family: "Lilita One", sans-serif;
-    font-weight: 400;
-    font-size: var(--size-2);
-    font-style: normal;
-    text-align: center;
-}
-
-/* || Within <main> Styling */
-existing-screen .top {
-    display: flex;
-    justify-content: space-between;
+.add-speech {
     align-items: center;
-    width: 100%;
-    height: 100%;
-}
-
-#create-speech-button {
-    font-size: var(--size-4);
-    height: 1.5em;
-    width: 1.5em;
-    border-radius: 50%;
+    background-color: var(--white);
+    border: solid var(--white);
+    border-radius: 100px;
+    color: var(--black);
     display: flex;
+    font-family: "Jersey 10", sans-serif;
+    font-size: 5em;
+    font-style: normal;
+    font-weight: 400;
+    height: 75px;
     justify-content: center;
-    align-items: center;
-    min-width: 1.5em;
-    min-height: 1.5em;
-}
-
-existing-screen h2 {
-    color: var(--white);
-    font-family: "Jersey 10", sans-serif;
-    font-size: var(--size-2);
-    letter-spacing: 0.05em;
+    width: 75px; 
 }
 
 .flash-card-container {
@@ -89,90 +81,98 @@ existing-screen h2 {
 
 .flash-card-container > p {
     align-self: center;
-    color: var(--black);
     border-radius: 10px;
+    color: var(--black);
     font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
     font-size: var(--size-2);
+    font-style: normal;
+    font-weight: 400;
     justify-self: center;
     text-align: center;
     width: 100%;
 }
 
-deck-preview {
-    align-items: center;
-    background-color: var(--white);
-    border: solid var(--white);
-    border-radius: 20px;
-    color: var(--black);
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
+.motto {
+    color: var(--lilac);
+    font-family: "Lilita One", sans-serif;
+    font-size: var(--size-2);
     font-style: normal;
-    font-size: var(--size-1);
-    height: 100%;
-    max-height: 50vh;
-    justify-content: center;
-    padding: 0 24px;
-    scroll-snap-align: start;
-    min-width: calc((100% - 48px) / 3);
+    font-weight: 400;
+    text-align: center;
+}
+
+.title {
+    color: var(--white);
+    font-family: "Jersey 10", sans-serif;
+    font-size: var(--size-5);
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
 }
 
 deck-preview.selected {
     box-shadow: 0 0 5px 3px #191970;
 }
 
-.speech:active {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
-}
-
-.add-speech {
-    display: flex;
-    background-color: var(--white);
-    color: var(--black);
-    border: solid var(--white);
-    border-radius: 100px;
-    width: 75px; 
-    height: 75px;
-    justify-content: center;
-    align-items: center;
+existing-screen h2 {
+    color: var(--white);
     font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 5em;
-}
-
-.add-speech:active {
-    box-shadow: 0 0 20px 4px var(--white-transparent);
+    font-size: var(--size-2);
+    letter-spacing: 0.05em;
 }
 
 existing-screen .bottom {
     align-items: center;
     display: flex;
-    justify-content: space-evenly;
     font-size: var(--size-3);
     gap: 1em;
     height: 100%;
+    justify-content: space-evenly;
     width: 100%;
+}
+
+/* || Within <main> Styling */
+existing-screen .top {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+    width: 100%;  
 }
 
 /* || <menu> styling */
 existing-screen .bottom button {    
     background-color: var(--white-transparent);
-    color: var(--black);
     border-radius: 10px;
+    color: var(--black);
     font-family: "Jersey 10", sans-serif;
-    font-weight: 400;
-    font-style: normal;
     font-size: var(--size-2);
+    font-style: normal;
+    font-weight: 400;
     height: 100%;
     max-height: 2em;
     min-height: 1em;
     width: 25%;
+}
+
+#create-speech-button {
+    align-items: center;
+    border-radius: 50%;
+    display: flex;
+    font-size: var(--size-4);
+    height: 1.5em;
+    justify-content: center;
+    min-height: 1.5em;
+    min-width: 1.5em;
+    width: 1.5em;  
+}  
+
+.add-speech:active {
+    box-shadow: 0 0 20px 4px var(--white-transparent);
+}
+
+.speech:active {
+    box-shadow: 0 0 20px 4px var(--white-transparent);
 }
 
 /* FOR WHEN WINDOW SIZE IS SMALL */
@@ -201,20 +201,20 @@ existing-screen .bottom button {
     }
 
     .flash-card-container > p {
-        display: flex;
         align-items: center;
+        display: flex;
         height: 100%;
     }
     
     .speech {
-        width: 100%;
         min-height: calc((100% - 48px) / 2);
+        width: 100%;
     }
 
     .add-speech {
-        width: 60px;
-        height: 60px;
         font-size: 3em;
+        height: 60px;
+        width: 60px;
     }
 }
 
