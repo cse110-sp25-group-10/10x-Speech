@@ -1,6 +1,8 @@
 # 10x Speech
 [![codecov](https://codecov.io/gh/cse110-sp25-group-10/Flashcard-Project/graph/badge.svg?token=DAKDEQDBUL)](https://codecov.io/gh/cse110-sp25-group-10/Flashcard-Project)
 
+The deployed site can be found at [https://team10xflashcard.netlify.app/](https://team10xflashcard.netlify.app/).
+
 10x Speech is an app that helps users practice 
 and study their speeches using cards.
 
@@ -31,6 +33,8 @@ shuffling, to quiz themselves on the topic. Based off of the topic of the card, 
 - The `src` directory contains all HTML files used in our website.
 - The `stylesheets` directory contains all CSS files used in our website.
 - `package.json` contains all of our project's developer dependencies, and shortcuts for common useful scripts.
+- `index.html` is our site's entrypoint.
+
 
 ## Developer Documentation
 Our developer documentation can be found [here](https://cse110-sp25-group-10.github.io/10x-Speech-Docs/).
