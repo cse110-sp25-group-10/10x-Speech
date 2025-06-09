@@ -22,11 +22,12 @@ jobs:
           node-version: 18
       - name: Main command
         env: 
-          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
-          COMMIT: ${{ github.sha }}
-          ORG_NAME: cse110-sp25-group-10
-          PROJECT_REPO_NAME: Flashcard-Project
-          REPO_NAME: Flashcard-Project-Docs
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }} # Alex's personal access token to authenticate for write permissions
+          COMMIT: ${{ github.sha }}              # The latest git commit merged
+          ORG_NAME: cse110-sp25-group-10         # Org / Person name
+          PROJECT_REPO_NAME: 10x-Speech   # Source repo name
+          REPO_NAME: 10x-Speech-Docs      # Docs repo name
+        # Very simple - clones repo, builds documentation, commits to git as github-actions[bot]
         run: |
           git clone https://x-access-token:${GITHUB_TOKEN}@github.com/${ORG_NAME}/${REPO_NAME}.git
           
