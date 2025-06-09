@@ -16,7 +16,6 @@
     /** Text variables */
     --card-font: "Rubik";
     --card-font-serif: sans-serif;
-    --card-text-size: 2rem;
 }
 
 #study-screen-header {
@@ -46,9 +45,13 @@
     background-color: var(--white-transparent);
     color: var(--black);
     border-radius: 10px;
+    font-size: var(--size-5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#back-button, #shuffle-toggle-button {
+#shuffle-toggle-button {
     background-color: var(--white-transparent);
     height: 2em;
     width: 4em;
@@ -61,17 +64,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0em 0.2em;
+    font-size: var(--size-2);
 }
 
 #back-button {
+    background-color: var(--white-transparent);
+    align-self: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    min-width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 2.5em;
     width: 2.5em;   
+    font-size: var(--size-2);
 }
 
 #study-controls {
     width: 100%;
     display: flex;
     justify-content: center;
+    gap: 1rem;
 }
 
 /* These are the buttons in the menu. */
@@ -92,12 +109,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-inline: auto;
 }
 
 /* This is the practice button */
 #practice-button {
     height: 2em;
-    width: 12em;
+    width: 6em;
 }
 
 /* The practice button turns red when clicked. */
@@ -117,7 +135,7 @@
     color: var(--black);
     
     font-family: "Jersey 10", sans-serif;
-    font-size: 1.5em;
+    font-size: var(--size-1);
     font-style: normal;
 
     width: 4em;
@@ -125,7 +143,7 @@
 
     position: absolute;
     left: 0em;
-    top: -2em;
+    top: -3em;
 
     text-align: center;
     display: flex;
@@ -135,7 +153,10 @@
 }
 
 
-
+#card-container {
+    max-width: 600px;
+    margin-inline: auto;
+}
 
 
 
@@ -176,7 +197,7 @@
 
     /* card font */
     font-family: var(--card-font), var(--card-font-serif);
-    font-size: var(--card-text-size);
+    font-size: var(--size-1);
 
     /* card size/shape */
     height: 100%;
