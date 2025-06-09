@@ -62,8 +62,6 @@ class StudyScreen extends HTMLElement {
             backButton: this.shadowRoot.querySelector("#back-button"),
             practiceButton: this.shadowRoot.querySelector("#practice-button"),
             timer: this.shadowRoot.querySelector(".timer"),
-            // FLAG: DELETEME
-            // cardCounter: this.shadowRoot.querySelector(".card-counter"),
             prevButton: this.shadowRoot.querySelector("#prev-card"),
             flipButton: this.shadowRoot.querySelector("#flip-card"),
             nextButton: this.shadowRoot.querySelector("#next-card"),
@@ -73,8 +71,6 @@ class StudyScreen extends HTMLElement {
             cardFrontContent: this.shadowRoot.querySelector("#front-content"),
             cardBackContent: this.shadowRoot.querySelector("#back-content"),
             flipCardContainer: this.shadowRoot.querySelector(".flip-card"),
-            // FLAG: DELETEME
-            // cardTimestamps: this.shadowRoot.querySelector(".card-timestamps"),
             clearAttemptsButton: this.shadowRoot.querySelector("#clear-attempts-button"),
             shuffleToggleButton: this.shadowRoot.querySelector("#shuffle-toggle-button"),
         };
@@ -97,17 +93,6 @@ class StudyScreen extends HTMLElement {
             "click",
             this.handleCardContainerClick.bind(this)
         );
-
-        // TODO: This is no longer appropriate
-        //       I'm unsure if the DELETEME flag is necessary here 
-        //       but I'm ADDING IT ANYWAY
-        // FLAG: DELETEME
-        /*
-        this.elements.clearAttemptsButton.addEventListener(
-            "click",
-            this.handleClearAttemptsClick.bind(this)
-        );
-        */
 
         this.updateShuffleButtonLabel();
 
@@ -147,10 +132,6 @@ class StudyScreen extends HTMLElement {
             // Update UI
             this.elements.practiceButton.textContent = "End Practice";
             this.elements.practiceButton.classList.add("active");
-
-            // It turns out we want to be able to flip the card at all times.
-            // FLAG: DELETEME
-            //this.elements.flipButton.removeAttribute("disabled");
             this.elements.shuffleToggleButton.disabled = this.isPracticing;
             this.startTimer();
 
@@ -200,9 +181,6 @@ class StudyScreen extends HTMLElement {
      * Flips the current card to show the back or front.
      */
     flipCard() {
-        // The change that was made here is to remove the isPracticing check.
-        // FLAG: DELETEME
-        // if (!this._deck || this._deck.cards.length === 0 || !this.isPracticing) return;
         if (!this._deck || this._deck.cards.length === 0) return;
         this.elements.flipCardContainer.classList.toggle("flipped");
     }
@@ -215,9 +193,10 @@ class StudyScreen extends HTMLElement {
         if (!this._deck) return;
 
         // Always reset flip on render in practice mode
-        if (this.isPracticing) {
-            this.elements.flipCardContainer.classList.remove("flipped");
-        }
+        // TODO: Determine the workflow we want (always reset on all screens?)
+        //if (this.isPracticing) {
+        this.elements.flipCardContainer.classList.remove("flipped");
+        //}
 
         // Update deck name
         this.elements.deckName.textContent = `${this._deck.deckName}`;
@@ -226,8 +205,6 @@ class StudyScreen extends HTMLElement {
         if (cardCount === 0) {
             this.elements.cardFrontContent.textContent = "This deck has no cards.";
             this.elements.cardBackContent.textContent = "";
-            // FLAG: DELETEME
-            //this.elements.cardCounter.textContent = "Card 0 / 0";
             this.elements.practiceButton.setAttribute("disabled", "");
             return;
         }
@@ -241,67 +218,12 @@ class StudyScreen extends HTMLElement {
         this.elements.cardFrontContent.textContent = currentCard.frontText;
         this.elements.cardBackContent.textContent = currentCard.backText;
 
-        // Update card counter
-        // FLAG: DELETEME
-        // this.elements.cardCounter.textContent = `Card ${this.currentIndex + 1} / ${cardCount}`;
-
         // Display all timestamps for the current card
         const originalCard = this._deck.cards.find(
             (card) =>
                 card.frontText === currentCard.frontText && card.backText === currentCard.backText
         );
-
-        // TODO: Change this so that it only displays a single time value, and renders it onto the timer element.
-        /*
-
-        if (
-            originalCard &&
-            Array.isArray(originalCard.practiceTimes) &&
-            originalCard.practiceTimes.length > 0
-        ) {
-            let html =
-                "<strong>All attempts for this card:</strong><ul style='margin:0;padding-left:1.2em'>";
-            originalCard.practiceTimes.forEach((t, i) => {
-                html += `<li>Attempt ${i + 1}: ${t}s</li>`;
-            });
-            html += "</ul>";
-            this.elements.cardTimestamps.innerHTML = html;
-        } else {
-            this.elements.cardTimestamps.innerHTML = "<em>No practice data for this card yet.</em>";
-        }
-
-        */
     }
-
-    /**
-     * Updates the displayed timestamps for the current card.
-     * TODO: Change this so that it renders onto the timer element.
-     * @param {Object} card - The current card object.
-     */
-    /*
-    updateCardTimestamps(card) {
-        const container = this.shadowRoot.querySelector(".card-timestamps");
-        container.innerHTML = ""; // Clear previous timestamps
-
-        if (!card.practiceTimes || card.practiceTimes.length === 0) {
-            const noDataMessage = document.createElement("div");
-            noDataMessage.textContent = "No practice data available for this card.";
-            container.appendChild(noDataMessage);
-            return;
-        }
-
-        // Create a list to display all practice times for the card
-        const list = document.createElement("ul");
-        card.practiceTimes.forEach((time, index) => {
-            const listItem = document.createElement("li");
-            listItem.textContent = `Attempt ${index + 1}: ${time}s`;
-            list.appendChild(listItem);
-        });
-
-        container.appendChild(list);
-    }
-
-    /*
 
     /**
      * Starts the timer for the current card.
@@ -399,63 +321,6 @@ class StudyScreen extends HTMLElement {
     updateShuffleButtonLabel() {
         this.elements.shuffleToggleButton.textContent = `Shuffle: ${this.shouldShuffle ? "On" : "Off"}`;
     }
-    
-    
-
-    /**
-     * Handles clearing attempts for the current card.
-     * Shows a dialog to choose between clearing the last attempt or all attempts.
-     * TODO: Re-evaluate the neccesity of this. We are removing the only button that uses this.
-     */
-
-    /*
-    async handleClearAttemptsClick() {
-        const currentCard = this.shuffledCards[this.currentIndex];
-        const originalCard = this._deck.cards.find(
-            (card) =>
-                card.frontText === currentCard.frontText && card.backText === currentCard.backText
-        );
-        if (!originalCard || !Array.isArray(originalCard.practiceTimes)) return;
-
-        // Custom dialog with two options
-        const dialog = document.createElement("dialog");
-        dialog.className = "custom-dialog";
-        dialog.innerHTML = `
-            <form method="dialog">
-                <p>What would you like to clear?</p>
-                <menu>
-                    <button value="clear-current">Clear Current Attempt</button>
-                    <button value="clear-all" autofocus>Clear All Attempts</button>
-                    <button value="cancel">Cancel</button>
-                </menu>
-            </form>
-        `;
-        document.body.appendChild(dialog);
-
-        const result = await new Promise((resolve) => {
-            function handleClose() {
-                resolve(dialog.returnValue);
-                dialog.removeEventListener("close", handleClose);
-                dialog.remove();
-            }
-            dialog.addEventListener("close", handleClose);
-            dialog.showModal();
-        });
-
-        if (result === "clear-all") {
-            originalCard.practiceTimes = [];
-            await saveDeck(this._deck);
-            this.render();
-        } else if (result === "clear-current") {
-            if (originalCard.practiceTimes.length > 0) {
-                originalCard.practiceTimes.pop();
-                await saveDeck(this._deck);
-                this.render();
-            }
-        }
-    }
-
-    */
 }
 
 customElements.define("study-screen", StudyScreen);
