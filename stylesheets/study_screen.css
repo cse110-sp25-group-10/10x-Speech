@@ -1,56 +1,145 @@
-#prev-card,
-#flip-card,
-#next-card {
+:root {
+    /** Sizing Variables */
+    --card-width: 45rem;                /* Note: Width = 2*height */
+    --card-height: 22.5rem;
+    --card-border-width: 0.5rem;
+    --card-border-radius: 0.5rem;
+    --card-content-horizontal-padding: 1rem;
+
+    /** Color Variables */
+    --card-background-color:  rgb(241, 236, 254);
+    --card-border-color: rgb(176, 202, 227);
+
+    /** Other Variables */
+    --card-border-style: solid;
+
+    /** Text variables */
+    --card-font: "Rubik";
+    --card-font-serif: sans-serif;
+    --card-text-size: 2rem;
+}
+
+#study-screen-header {
+    display: flex;
+    justify-content: center;
+    
+    flex-direction: row;
+    gap: 10px;
+    margin: 0;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+#deck-name.title {
+    background-color:var(--white-transparent);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    min-width: max-content;
+    padding-left: var(--card-content-horizontal-padding);
+    padding-right: var(--card-content-horizontal-padding);
+}
+
+#deck-name {
+    background-color: var(--white-transparent);
+    color: var(--black);
+    border-radius: 10px;
+}
+
+#back-button, #shuffle-toggle-button {
+    background-color: var(--white-transparent);
     height: 2em;
     width: 4em;
     align-self: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    min-width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#practice-button,
-#clear-attempts-button {
-    height: 2em;
-    width: 6em;
-    align-self: flex-end;
+#back-button {
+    height: 2.5em;
+    width: 2.5em;   
 }
 
-.card-counter {
-    display: block;
+#study-controls {
     width: 100%;
-    text-align: right;
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-    padding-right: 2em;
-    font-size: 1.5em;
-    font-family: "Jersey 10", sans-serif;
+    display: flex;
+    justify-content: center;
+}
+
+/* These are the buttons in the menu. */
+#prev-card,
+#next-card {
+    height: 2em;
+    width: 4em;
+}
+
+#flip-card {
+    gap: 0.5em;
+    height: 2em;
+    width: 4em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    justify-self: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* This is the practice button */
+#practice-button {
+    height: 2em;
+    width: 12em;
+}
+
+/* The practice button turns red when clicked. */
+#practice-button.active {
+    background-color: rgb(247, 104, 123);
+}
+
+#study-footer {
+    display: flex;
+    position: relative;
+    justify-content: center;
 }
 
 .timer {
-    display: inline-block;
-    font-size: 1.3em;
+    background-color: var(--white-transparent);
+    border-radius: 10px;
+    color: var(--black);
+    
     font-family: "Jersey 10", sans-serif;
-    color: #c2e9fb;
-    margin-left: 1em;
-    vertical-align: middle;
-    letter-spacing: 1px;
-    min-width: 80px;
-    text-shadow: 1px 1px 2px #222;
+    font-size: 1.5em;
+    font-style: normal;
+
+    width: 4em;
+    height: 2em;
+
+    position: absolute;
+    left: 0em;
+    top: -2em;
+
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
 }
 
-.card-front,
-.card-back {
-    transition: opacity 0.2s;
-}
 
-.hide-front .card-front {
-    opacity: 0;
-    pointer-events: none;
-}
 
-.hide-back .card-back {
-    opacity: 0;
-    pointer-events: none;
-}
 
+
+
+/* We have these containers and styles in order to accomodate card flipping. */
 .flip-card {
     background: transparent;
     width: 100%;
@@ -61,91 +150,8 @@
     align-items: center;
 }
 
+/* We have these containers and styles in order to accomodate card flipping. */
 .flip-card-inner {
-    position: relative;
-    width: 90%;
-    max-width: 600px;
-    height: 350px;
-    transition: transform 0.6s cubic-bezier(0.4, 2.08, 0.55, 0.44);
-    transform-style: preserve-3d;
-}
-
-.flip-card.flipped .flip-card-inner {
-    transform: rotateY(180deg);
-}
-
-.card.card-front,
-.card.card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2em;
-    border-radius: 16px;
-    background: #edeaff;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-}
-
-.card.card-back {
-    transform: rotateY(180deg);
-}
-
-/* Default: show both cards side by side */
-.flash-card-container:not(.practice-mode) .flip-card {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    perspective: none;
-    gap: 0;
-}
-
-.flash-card-container:not(.practice-mode) .flip-card-inner {
-    display: flex;
-    width: 100%;
-    max-width: none;
-    height: 300px;
-    transform: none;
-    box-shadow: none;
-    position: static;
-}
-
-.flash-card-container:not(.practice-mode) .card-front,
-.flash-card-container:not(.practice-mode) .card-back {
-    position: static;
-    width: 45%;
-    height: 100%;
-    backface-visibility: visible;
-    background: #edeaff;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2em;
-    transform: none;
-    direction: ltr;
-}
-
-.flash-card-container:not(.practice-mode) .card-front {
-    margin-right: 0;
-}
-
-.flash-card-container:not(.practice-mode) .card-back {
-    margin-left: 2rem;
-}
-
-/* Practice mode: show only one card, flipable */
-.flash-card-container.practice-mode .flip-card {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    perspective: 1000px;
-}
-
-.flash-card-container.practice-mode .flip-card-inner {
     position: relative;
     width: 90%;
     max-width: 600px;
@@ -155,94 +161,85 @@
     display: block;
 }
 
-.flash-card-container.practice-mode .card-front,
-.flash-card-container.practice-mode .card-back {
-    position: absolute;
-    width: 100%;
+/* The actual card rendering */
+ .card-front,
+ .card-back {
+
+    /* card background color */
+    background-color: var(--card-background-color);
+    
+    /* card border styling */
+    border-style: var(--card-border-style);
+    border-radius: var(--card-border-radius);
+    border-color: var(--card-border-color);
+    border-width: var(--card-border-width);
+
+    /* card font */
+    font-family: var(--card-font), var(--card-font-serif);
+    font-size: var(--card-text-size);
+
+    /* card size/shape */
     height: 100%;
-    backface-visibility: hidden;
+    width: 100%;
+
+    /* text alignment */
     display: flex;
+    text-align: left; 
+
+    /* This tells desktop users that the cards are clickable */
+    cursor: pointer;
+
+    /* This is stuff required to get the animated component rendering properly. */
+    position: absolute;
+    backface-visibility: hidden;
+    transform: none;
+    direction: ltr;
     align-items: center;
     justify-content: center;
-    font-size: 2em;
-    border-radius: 16px;
-    background: #edeaff;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
     left: 0;
     top: 0;
-    transform: none;
-    direction: ltr;
+
+    /* This CSS allows one face to be shown at a time when the card flips. */
+    transition: opacity 0.2s;
+
 }
 
-.flash-card-container.practice-mode .card-back {
+
+/* This styles the text inside of the cards */
+.card-content {
+    margin: auto;
+    padding-left: var(--card-content-horizontal-padding);
+    padding-right: var(--card-content-horizontal-padding);
+}
+
+
+
+
+/* Animations for flipping the cards. */
+
+.flash-card-container .card-back {
     transform: rotateY(180deg);
 }
 
-.flash-card-container.practice-mode .flip-card.flipped .flip-card-inner {
+.flip-card.flipped .flip-card-inner {
     transform: rotateY(180deg);
 }
 
-/* Custom dialog for clear attempts */
-dialog.custom-dialog {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-    padding: 2em 2em 1.5em;
-    background: #fff;
-    color: #222;
-    font-family: inherit;
-    max-width: 320px;
-    text-align: center;
-    z-index: 1000;
+.card.card-back {
+    transform: rotateY(180deg);
 }
 
-dialog.custom-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.25);
+.flash-card-container .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
 }
 
-dialog.custom-dialog p {
-    font-size: 1.1em;
-    margin-bottom: 1.2em;
+.hide-front .card-front {
+    opacity: 0;
+    pointer-events: none;
 }
 
-dialog.custom-dialog menu {
-    display: flex;
-    flex-direction: column;
-    gap: 0.7em;
-    padding: 0;
-    margin: 0;
-}
-
-dialog.custom-dialog button {
-    font-size: 1em;
-    padding: 0.6em 1.2em;
-    border: none;
-    border-radius: 8px;
-    background: #c2e9fb;
-    color: #222;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-dialog.custom-dialog button[value="clear-all"] {
-    background: #ffb3b3;
-    color: #222;
-}
-
-dialog.custom-dialog button[value="clear-current"] {
-    background: #ffe9a7;
-    color: #222;
-}
-
-dialog.custom-dialog button[value="cancel"] {
-    background: #eee;
-    color: #666;
-}
-
-dialog.custom-dialog button:hover {
-    filter: brightness(0.95);
+.hide-back .card-back {
+    opacity: 0;
+    pointer-events: none;
 }
