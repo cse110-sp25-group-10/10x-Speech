@@ -1,0 +1,245 @@
+:root {
+    /** Sizing Variables */
+    --card-width: 45rem;                /* Note: Width = 2*height */
+    --card-height: 22.5rem;
+    --card-border-width: 0.5rem;
+    --card-border-radius: 0.5rem;
+    --card-content-horizontal-padding: 1rem;
+
+    /** Color Variables */
+    --card-background-color:  rgb(241, 236, 254);
+    --card-border-color: rgb(176, 202, 227);
+
+    /** Other Variables */
+    --card-border-style: solid;
+
+    /** Text variables */
+    --card-font: "Rubik";
+    --card-font-serif: sans-serif;
+    --card-text-size: 2rem;
+}
+
+#study-screen-header {
+    display: flex;
+    justify-content: center;
+    
+    flex-direction: row;
+    gap: 10px;
+    margin: 0;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+#deck-name.title {
+    background-color:var(--white-transparent);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    min-width: max-content;
+    padding-left: var(--card-content-horizontal-padding);
+    padding-right: var(--card-content-horizontal-padding);
+}
+
+#deck-name {
+    background-color: var(--white-transparent);
+    color: var(--black);
+    border-radius: 10px;
+}
+
+#back-button, #shuffle-toggle-button {
+    background-color: var(--white-transparent);
+    height: 2em;
+    width: 4em;
+    align-self: flex-start;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 0;
+    min-width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#back-button {
+    height: 2.5em;
+    width: 2.5em;   
+}
+
+#study-controls {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* These are the buttons in the menu. */
+#prev-card,
+#next-card {
+    height: 2em;
+    width: 4em;
+}
+
+#flip-card {
+    gap: 0.5em;
+    height: 2em;
+    width: 4em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    justify-self: center;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* This is the practice button */
+#practice-button {
+    height: 2em;
+    width: 12em;
+}
+
+/* The practice button turns red when clicked. */
+#practice-button.active {
+    background-color: rgb(247, 104, 123);
+}
+
+#study-footer {
+    display: flex;
+    position: relative;
+    justify-content: center;
+}
+
+.timer {
+    background-color: var(--white-transparent);
+    border-radius: 10px;
+    color: var(--black);
+    
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.5em;
+    font-style: normal;
+
+    width: 4em;
+    height: 2em;
+
+    position: absolute;
+    left: 0em;
+    top: -2em;
+
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
+}
+
+
+
+
+
+
+/* We have these containers and styles in order to accomodate card flipping. */
+.flip-card {
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* We have these containers and styles in order to accomodate card flipping. */
+.flip-card-inner {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    height: 350px;
+    transition: transform 0.6s cubic-bezier(0.4, 2.08, 0.55, 0.44);
+    transform-style: preserve-3d;
+    display: block;
+}
+
+/* The actual card rendering */
+ .card-front,
+ .card-back {
+
+    /* card background color */
+    background-color: var(--card-background-color);
+    
+    /* card border styling */
+    border-style: var(--card-border-style);
+    border-radius: var(--card-border-radius);
+    border-color: var(--card-border-color);
+    border-width: var(--card-border-width);
+
+    /* card font */
+    font-family: var(--card-font), var(--card-font-serif);
+    font-size: var(--card-text-size);
+
+    /* card size/shape */
+    height: 100%;
+    width: 100%;
+
+    /* text alignment */
+    display: flex;
+    text-align: left; 
+
+    /* This tells desktop users that the cards are clickable */
+    cursor: pointer;
+
+    /* This is stuff required to get the animated component rendering properly. */
+    position: absolute;
+    backface-visibility: hidden;
+    transform: none;
+    direction: ltr;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+    left: 0;
+    top: 0;
+
+    /* This CSS allows one face to be shown at a time when the card flips. */
+    transition: opacity 0.2s;
+
+}
+
+
+/* This styles the text inside of the cards */
+.card-content {
+    margin: auto;
+    padding-left: var(--card-content-horizontal-padding);
+    padding-right: var(--card-content-horizontal-padding);
+}
+
+
+
+
+/* Animations for flipping the cards. */
+
+.flash-card-container .card-back {
+    transform: rotateY(180deg);
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.card.card-back {
+    transform: rotateY(180deg);
+}
+
+.flash-card-container .flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.hide-front .card-front {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.hide-back .card-back {
+    opacity: 0;
+    pointer-events: none;
+}
