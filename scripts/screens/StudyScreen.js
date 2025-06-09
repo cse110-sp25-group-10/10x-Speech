@@ -59,8 +59,6 @@ class StudyScreen extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: "open" });
-        this.shadowRoot.appendChild(template.content.cloneNode(true));
-
         this._deck = null;
         this.shuffledCards = [];
         this.shouldShuffle = false;
@@ -76,6 +74,9 @@ class StudyScreen extends HTMLElement {
     }
 
     connectedCallback() {
+
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+        
         // Get element references
         this.elements = {
             deckName: this.shadowRoot.querySelector("#deck-name"),
