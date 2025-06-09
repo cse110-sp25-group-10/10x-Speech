@@ -6,8 +6,8 @@ class ExistingScreen extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
             <header>
-                <h1 class="title">10x Cards</h1>
-                <h3 class="motto">Study Less, Learn 10x More</h3>
+                <h1 class="title">10x Speech</h1>
+                <h3 class="motto">Practice Less, Say 10x More</h3>
             </header>
             <main>
                 <menu class="top">
