@@ -6,7 +6,11 @@ template.innerHTML = `
     <link rel="stylesheet" href="../../stylesheets/styles.css">
     <link rel="stylesheet" href="../../stylesheets/study_screen.css">
     <header id="study-screen-header">
-        <button id="back-button">Back</button>
+        <button id="back-button">
+            <svg fill="#000000" width="2em" height="2em" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+            </g><g id="SVGRepo_iconCarrier"><path d="M27 18.039L16 9.501 5 18.039V14.56l11-8.54 11 8.538v3.481zm-2.75-.31v8.251h-5.5v-5.5h-5.5v5.5h-5.5v-8.25L16
+            11.543l8.25 6.186z"></path></g></svg></button>
         <h2 id="deck-name" class="title"></h2>
         <button id="shuffle-toggle-button">Shuffle: Off</button>
     </header id="study-screen-header">
@@ -22,10 +26,26 @@ template.innerHTML = `
             </div>
         </div>
     </section>
-    <button id="flip-card">Flip</button>
+    <button id="flip-card">
+        <svg fill="#000000" width="1em" height="1em" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round">
+            </g><g id="SVGRepo_iconCarrier"> <g data-name="Layer 2"> <g data-name="flip-2"> <rect width="24" height="24"
+            transform="rotate(180 12 12)" opacity="0"></rect> <path d="M6.09 19h12l-1.3 1.29a1 1 0 0 0 1.42 1.42l3-3a1 1 0 0
+            0 0-1.42l-3-3a1 1 0 0 0-1.42 0 1 1 0 0 0 0 1.42l1.3 1.29h-12a1.56 1.56 0 0 1-1.59-1.53V13a1 1 0 0 0-2 0v2.47A3.56 3.56 0
+            0 0 6.09 19z"></path> <path d="M5.79 9.71a1 1 0 1 0 1.42-1.42L5.91 7h12a1.56 1.56 0 0 1 1.59 1.53V11a1 1 0 0 0
+            2 0V8.53A3.56 3.56 0 0 0 17.91 5h-12l1.3-1.29a1 1 0 0 0 0-1.42 1 1 0 0 0-1.42 0l-3 3a1 1 0 0 0 0 1.42z"></path> </g> </g> </g>
+        </svg>
+         Flip
+    </button>
     <footer id="study-footer">
         <section class="status">
-            <span class="timer">Time: 0s</span>
+            <span class="timer">
+                <svg fill="#000000" width="1em" height="1em" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g data-name="Layer 2"> <g data-name="clock">
+                <rect width="24" height="24" transform="rotate(180 12 12)" opacity="0"></rect> <path d="M12 2a10 10 0 1
+                0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path> <path d="M16 11h-3V8a1 1 0 0 0-2 0v4a1
+                1 0 0 0 1 1h4a1 1 0 0 0 0-2z"></path> </g> </g> </g></svg> 0s</span>
         </section>
         <nav id="study-controls" class="controls bottom">
             <button id="prev-card" disabled>Previous</button>
