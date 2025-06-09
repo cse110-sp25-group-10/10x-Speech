@@ -70,8 +70,6 @@
 
 #back-button {
     background-color: var(--white-transparent);
-    height: 2em;
-    width: 4em;
     align-self: flex-start;
     white-space: nowrap;
     overflow: hidden;
