@@ -6,8 +6,8 @@ on:
     branches:
       - main
 
-jobs: # the things being executed
-  tests:
+jobs:
+  tests: # Runs unit tests, uploads reports to codecov.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,9 +23,9 @@ jobs: # the things being executed
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          slug: cse110-sp25-group-10/Flashcard-Project
+          slug: cse110-sp25-group-10/10x-Speech
 
-  lint: 
+  lint: # Runs all linters
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
