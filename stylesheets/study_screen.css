@@ -77,11 +77,13 @@
 #flip-card {
     height: 2em;
     width: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
     justify-self: center;
+    text-align: center;
     display: flex;
     justify-content: center;
-    align-content: center;
-    margin-top: 1em;
+    align-items: center;
 }
 
 /* This is the practice button */
@@ -95,17 +97,36 @@
     background-color: rgb(247, 104, 123)
 }
 
-.timer {
-    display: inline-block;
-    font-size: 1.3em;
-    font-family: "Jersey 10", sans-serif;
-    color: #c2e9fb;
-    margin-left: 1em;
-    vertical-align: middle;
-    letter-spacing: 1px;
-    min-width: 80px;
-    text-shadow: 1px 1px 2px #222;
+#study-footer {
+    display: flex;
+    position: relative;
+    justify-content: center;
 }
+
+.timer {
+    background-color: var(--white-transparent);
+    border-radius: 10px;
+    color: var(--black);
+    
+    font-family: "Jersey 10", sans-serif;
+    font-size: 1.5em;
+    font-style: normal;
+
+    width: 4em;
+    height: 2em;
+
+    position: absolute;
+    left: 0em;
+    top: -2em;
+
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
 
 
 

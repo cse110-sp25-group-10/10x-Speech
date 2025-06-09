@@ -23,7 +23,7 @@ template.innerHTML = `
         </div>
     </section>
     <button id="flip-card">Flip</button>
-    <footer>
+    <footer id="study-footer">
         <section class="status">
             <span class="timer">Time: 0s</span>
         </section>
