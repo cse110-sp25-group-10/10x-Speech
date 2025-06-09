@@ -14,7 +14,7 @@
     --card-border-style: solid;
 
     /** Text variables */
-    --card-font: 'Rubik';
+    --card-font: "Rubik";
     --card-font-serif: sans-serif;
     --card-text-size: 2rem;
 }
@@ -24,7 +24,6 @@
     justify-content: center;
     
     flex-direction: row;
-    padding: 20px;
     gap: 10px;
     margin: 0;
     margin-top: 30px;
@@ -103,7 +102,7 @@
 
 /* The practice button turns red when clicked. */
 #practice-button.active {
-    background-color: rgb(247, 104, 123)
+    background-color: rgb(247, 104, 123);
 }
 
 #study-footer {
@@ -200,6 +199,10 @@
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
     left: 0;
     top: 0;
+
+    /* This CSS allows one face to be shown at a time when the card flips. */
+    transition: opacity 0.2s;
+
 }
 
 
@@ -219,7 +222,7 @@
     transform: rotateY(180deg);
 }
 
-.flash-card-container .flip-card.flipped .flip-card-inner {
+.flip-card.flipped .flip-card-inner {
     transform: rotateY(180deg);
 }
 
@@ -227,14 +230,8 @@
     transform: rotateY(180deg);
 }
 
-.flip-card.flipped .flip-card-inner {
+.flash-card-container .flip-card.flipped .flip-card-inner {
     transform: rotateY(180deg);
-}
-
-/* This CSS allows one face to be shown at a time when the card flips. */
-.card-front,
-.card-back {
-    transition: opacity 0.2s;
 }
 
 .hide-front .card-front {
