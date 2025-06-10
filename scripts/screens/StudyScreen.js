@@ -230,6 +230,8 @@ class StudyScreen extends HTMLElement {
             this.elements.cardFrontContent.textContent = "This deck has no cards.";
             this.elements.cardBackContent.textContent = "";
             this.elements.practiceButton.setAttribute("disabled", "");
+            // Clear timer/practice info
+            this.elements.timer.textContent = "Time: 0s";
             return;
         }
 
@@ -242,11 +244,26 @@ class StudyScreen extends HTMLElement {
         this.elements.cardFrontContent.textContent = currentCard.frontText;
         this.elements.cardBackContent.textContent = currentCard.backText;
 
-        // Update timer display
-        if (!this.isPracticing && this.practiceTimes && typeof this.currentIndex === "number") {
-            const time = this.practiceTimes[this.currentIndex] || 0;
-            this.elements.timer.textContent = `Time: ${time}s`;
+        const originalIndex = this._deck.cards.findIndex(
+            (card) =>
+                card.frontText === currentCard.frontText && card.backText === currentCard.backText
+        );
+        let practiceTimeText = "";
+        if (
+            originalIndex !== -1 &&
+            Array.isArray(this._deck.cards[originalIndex].practiceTimes) &&
+            this._deck.cards[originalIndex].practiceTimes.length > 0
+        ) {
+            const times = this._deck.cards[originalIndex].practiceTimes;
+            const lastTime = times[times.length - 1];
+            practiceTimeText = `Last practice: ${lastTime}s`;
+        } else {
+            practiceTimeText = "No practice data";
         }
+
+        // Update the timer area to include last practice
+        // If timer is running, keep the time, else default to 0s
+        this.elements.timer.textContent = `${practiceTimeText}`;
     }
 
     /**
