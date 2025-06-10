@@ -2,7 +2,7 @@
 [![codecov](https://codecov.io/gh/cse110-sp25-group-10/Flashcard-Project/graph/badge.svg?token=DAKDEQDBUL)](https://codecov.io/gh/cse110-sp25-group-10/Flashcard-Project)
 
 The deployed site can be found at [https://team10xflashcard.netlify.app/](https://team10xflashcard.netlify.app/).
-
+wfeaefafwaf
 10x Speech is an app that helps users practice 
 and study their speeches using cards.
 
