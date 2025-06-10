@@ -1,13 +1,13 @@
 :root {
     /** Sizing Variables */
-    --card-width: 45rem;                /* Note: Width = 2*height */
+    --card-width: 45rem; /* Note: Width = 2*height */
     --card-height: 22.5rem;
     --card-border-width: 0.5rem;
     --card-border-radius: 0.5rem;
     --card-content-horizontal-padding: 1rem;
 
     /** Color Variables */
-    --card-background-color:  rgb(241, 236, 254);
+    --card-background-color: rgb(241, 236, 254);
     --card-border-color: rgb(176, 202, 227);
 
     /** Other Variables */
@@ -21,7 +21,7 @@
 #study-screen-header {
     display: flex;
     justify-content: center;
-    
+
     flex-direction: row;
     gap: 10px;
     margin: 0;
@@ -31,7 +31,7 @@
 }
 
 #deck-name.title {
-    background-color:var(--white-transparent);
+    background-color: var(--white-transparent);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -80,7 +80,7 @@
     justify-content: center;
     align-items: center;
     height: 2.5em;
-    width: 2.5em;   
+    width: 2.5em;
     font-size: var(--size-2);
 }
 
@@ -133,12 +133,12 @@
     background-color: var(--white-transparent);
     border-radius: 10px;
     color: var(--black);
-    
+
     font-family: "Jersey 10", sans-serif;
     font-size: var(--size-1);
     font-style: normal;
 
-    width: 4em;
+    width: 6.5em;
     height: 2em;
 
     position: absolute;
@@ -152,13 +152,10 @@
     gap: 0.5em;
 }
 
-
 #card-container {
     max-width: 600px;
     margin-inline: auto;
 }
-
-
 
 /* We have these containers and styles in order to accomodate card flipping. */
 .flip-card {
@@ -183,12 +180,11 @@
 }
 
 /* The actual card rendering */
- .card-front,
- .card-back {
-
+.card-front,
+.card-back {
     /* card background color */
     background-color: var(--card-background-color);
-    
+
     /* card border styling */
     border-style: var(--card-border-style);
     border-radius: var(--card-border-radius);
@@ -205,7 +201,7 @@
 
     /* text alignment */
     display: flex;
-    text-align: left; 
+    text-align: left;
 
     /* This tells desktop users that the cards are clickable */
     cursor: pointer;
@@ -223,9 +219,7 @@
 
     /* This CSS allows one face to be shown at a time when the card flips. */
     transition: opacity 0.2s;
-
 }
-
 
 /* This styles the text inside of the cards */
 .card-content {
@@ -233,9 +227,6 @@
     padding-left: var(--card-content-horizontal-padding);
     padding-right: var(--card-content-horizontal-padding);
 }
-
-
-
 
 /* Animations for flipping the cards. */
 

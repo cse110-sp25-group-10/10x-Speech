@@ -74,9 +74,8 @@ class StudyScreen extends HTMLElement {
     }
 
     connectedCallback() {
-
         this.shadowRoot.appendChild(template.content.cloneNode(true));
-        
+
         // Get element references
         this.elements = {
             deckName: this.shadowRoot.querySelector("#deck-name"),
@@ -104,9 +103,11 @@ class StudyScreen extends HTMLElement {
         );
 
         this.elements.shuffleToggleButton = this.shadowRoot.querySelector("#shuffle-toggle-button");
-        this.elements.shuffleToggleButton.addEventListener("click", this.handleShuffleToggleClick.bind(this));
+        this.elements.shuffleToggleButton.addEventListener(
+            "click",
+            this.handleShuffleToggleClick.bind(this)
+        );
 
-        
         this.elements.nextButton.addEventListener("click", this.handleNextButtonClick.bind(this));
         this.elements.prevButton.addEventListener("click", this.handlePrevButtonClick.bind(this));
         this.elements.flipButton.addEventListener("click", this.handleFlipButtonClick.bind(this));
@@ -147,7 +148,7 @@ class StudyScreen extends HTMLElement {
             this.shuffledCards = this.shouldShuffle
                 ? shuffleCards([...this._deck.cards])
                 : [...this._deck.cards];
-        
+
             this.currentIndex = 0;
 
             // Update UI
@@ -176,7 +177,6 @@ class StudyScreen extends HTMLElement {
             // Switch to default layout
             this.elements.cardContainer.classList.remove("practice-mode");
             this.elements.shuffleToggleButton.disabled = false;
-
         }
         this.render();
     }
@@ -216,10 +216,7 @@ class StudyScreen extends HTMLElement {
         if (!this._deck) return;
 
         // Always reset flip on render in practice mode
-        // TODO: Determine the workflow we want (always reset on all screens?)
-        //if (this.isPracticing) {
         this.elements.flipCardContainer.classList.remove("flipped");
-        //}
 
         // Update deck name
         this.elements.deckName.textContent = `${this._deck.deckName}`;
@@ -229,6 +226,8 @@ class StudyScreen extends HTMLElement {
             this.elements.cardFrontContent.textContent = "This deck has no cards.";
             this.elements.cardBackContent.textContent = "";
             this.elements.practiceButton.setAttribute("disabled", "");
+            // Clear timer/practice info
+            this.elements.timer.textContent = "Time: 0s";
             return;
         }
 
@@ -240,6 +239,28 @@ class StudyScreen extends HTMLElement {
         const currentCard = this.shuffledCards[this.currentIndex];
         this.elements.cardFrontContent.textContent = currentCard.frontText;
         this.elements.cardBackContent.textContent = currentCard.backText;
+
+        const originalIndex = this._deck.cards.findIndex(
+            (card) =>
+                card.frontText === currentCard.frontText && card.backText === currentCard.backText
+        );
+        let practiceTimeText = "";
+        if (
+            originalIndex !== -1 &&
+            Array.isArray(this._deck.cards[originalIndex].practiceTimes) &&
+            this._deck.cards[originalIndex].practiceTimes.length > 0
+        ) {
+            const times = this._deck.cards[originalIndex].practiceTimes;
+            const lastTime = times[times.length - 1];
+            practiceTimeText = `Last practice: ${lastTime}s`;
+        } else {
+            practiceTimeText = "No practice data";
+        }
+
+        // Update the timer area to include last practice
+        // If timer is running, keep the time, else default to 0s
+        const timeText = this.timerInterval ? `Time: ${this.cardTime}s` : "Time: 0s";
+        this.elements.timer.textContent = `${practiceTimeText}`;
     }
 
     /**
@@ -279,7 +300,7 @@ class StudyScreen extends HTMLElement {
             if (originalIndex !== -1) {
                 const card = this._deck.cards[originalIndex];
                 if (!Array.isArray(card.practiceTimes)) card.practiceTimes = [];
-                
+
                 // Push new time into specific card
                 card.practiceTimes.push(this.practiceTimes[i]);
 
@@ -332,13 +353,16 @@ class StudyScreen extends HTMLElement {
 
     handleShuffleToggleClick() {
         this.shouldShuffle = !this.shouldShuffle;
-        this.elements.shuffleToggleButton.textContent = `Shuffle: ${this.shouldShuffle ? "On" : "Off"}`;
+        this.elements.shuffleToggleButton.textContent = `Shuffle: ${
+            this.shouldShuffle ? "On" : "Off"
+        }`;
     }
 
     updateShuffleButtonLabel() {
-        this.elements.shuffleToggleButton.textContent = `Shuffle: ${this.shouldShuffle ? "On" : "Off"}`;
+        this.elements.shuffleToggleButton.textContent = `Shuffle: ${
+            this.shouldShuffle ? "On" : "Off"
+        }`;
     }
-
 }
 
 customElements.define("study-screen", StudyScreen);
