@@ -170,9 +170,13 @@ class StudyScreen extends HTMLElement {
 
             this.stopTimer();
 
-            // TODO: You'll need to change this to get the time to render right!!!
-
-            this.elements.timer.textContent = "Time: 0s";
+            // Show the last card's time after ending practice
+            if (this.practiceTimes && typeof this.lastCardIndex === "number") {
+                const lastTime = this.practiceTimes[this.lastCardIndex] || 0;
+                this.elements.timer.textContent = `Time: ${lastTime}s`;
+            } else {
+                this.elements.timer.textContent = "Time: 0s";
+            }
 
             // Switch to default layout
             this.elements.cardContainer.classList.remove("practice-mode");
