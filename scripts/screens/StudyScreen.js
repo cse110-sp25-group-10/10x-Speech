@@ -263,7 +263,6 @@ class StudyScreen extends HTMLElement {
 
         // Update the timer area to include last practice
         // If timer is running, keep the time, else default to 0s
-        const timeText = this.timerInterval ? `Time: ${this.cardTime}s` : "Time: 0s";
         this.elements.timer.textContent = `${practiceTimeText}`;
     }
 
