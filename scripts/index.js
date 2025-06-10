@@ -132,6 +132,11 @@ function init() {
             initCreate();
         }
 
+        function handleStudyClick() {
+            clearEvents();
+            initStudy();
+        }
+
         async function deleteDeck() {
             if (selectedIndex !== -1) {
                 try {
@@ -170,7 +175,7 @@ function init() {
             editBtn.removeEventListener("click", editDeck);
             createBtn.removeEventListener("click", createDeck);
             deleteBtn.removeEventListener("click", deleteDeck);
-            studyBtn.removeEventListener("click", initStudy);
+            studyBtn.removeEventListener("click", handleStudyClick);
         }
     }
 
