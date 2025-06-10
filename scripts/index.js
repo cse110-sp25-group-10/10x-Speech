@@ -58,7 +58,6 @@ function init() {
         const deleteBtn = existingDecksScreen.querySelector("#delete-speech-button");
         const deckCount = existingDecksScreen.querySelector(".deck-count");
 
-
         const createBtn = document.createElement("button");
         createBtn.id = "create-speech-button";
         createBtn.textContent = "+";
@@ -92,7 +91,6 @@ function init() {
             }
             deckListContainer.appendChild(createBtn);
         }
-
 
         // Add event listeners
         deckListContainer.addEventListener("deck-select", selectDeck);
@@ -148,7 +146,7 @@ function init() {
                 deckCount.textContent = `${Object.keys(appState.decks).length}`;
             }
 
-            if( Object.keys(appState.decks).length === 0) {
+            if (Object.keys(appState.decks).length === 0) {
                 deckListContainer.innerHTML = `
                     <p>There are no decks yet. Please create one.</p>
                 `;
@@ -355,6 +353,14 @@ function init() {
             }
 
             event.preventDefault();
+
+            // Try to save deck name if not already set
+            const nameValid = await handleDeckNameSubmit();
+            if (!nameValid) {
+                // Deck name invalid, don't proceed
+                return;
+            }
+
             if (!appState.currentDeckInCreation) {
                 return;
             }
